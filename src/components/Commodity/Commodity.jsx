@@ -21,41 +21,6 @@ const Commodity = props => {
     props.setError(null);
   }
 
-  /* function handleClick(e) {
-    if (e.target.tagName !== "SPAN" && e.target.tagName !== "I") return;
-    // ***SPAN toggle selected
-    document
-      .getElementById("Tree")
-      .querySelectorAll("span")
-      .forEach(item => {
-        if (item.className === s.selected) item.className = null;
-      });
-    if (e.target.tagName === "SPAN") {
-      e.target.className = s.selected;
-    } else {
-      e.target.nextSibling.className = s.selected;
-    }
-    // SPAN***
-    let elem = e.target.closest("li");
-    if (!elem) return;
-    if (elem.id !== "0") {
-      let target = elem.querySelector("ul");
-      if (target) {
-        target.hidden = !target.hidden;
-        if (target.hidden) {
-          elem.className = "closed";
-          elem.firstElementChild.className = "fas fa-folder";
-        } else {
-          elem.className = "open";
-          elem.firstElementChild.className = "fas fa-folder-open";
-        }
-      }
-    }
-
-    if (props.pid === elem.id) return;
-    props.setPid(elem.id);
-  } */
-
   function newData() {
     props.getProductId('');
   }
@@ -97,7 +62,7 @@ const Commodity = props => {
           />
           : null}
         <div className={s.container}>
-          <Tree data={props.groups} price="Price" treeLabel="Groups" /* handleClick={handleClick} */ callback={changePid} pId={props.pid}/>
+          <Tree data={props.groups} price="Price" treeLabel="Groups" /* handleClick={handleClick} */ callback={changePid} pId={props.pid} />
           <div className={s.list}>
             <h3>Commodities</h3>
             <ListCommodities

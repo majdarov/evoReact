@@ -4,7 +4,6 @@ import App from "./App";
 import store from "./redux/redux-store";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { apiForIdb } from "./api/api";
 
 /** RENDER */
   ReactDOM.render(
@@ -17,4 +16,3 @@ import { apiForIdb } from "./api/api";
   );
 
   window.store = store;
-  window.apiForIdb = apiForIdb;

@@ -160,7 +160,7 @@ const FormProduct = props => {
       if (!state.isNewData) body.id = state.id;
       delete body.isNewData;
 
-      alert(JSON.stringify(body, null, 2));
+      // alert(JSON.stringify(body, null, 2));
 
       let i = 0;
       Object.keys(body).forEach(item => i++);

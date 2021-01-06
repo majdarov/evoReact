@@ -255,7 +255,7 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
       return res;
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return res.parent_id;
     })
     .then((pid) => {

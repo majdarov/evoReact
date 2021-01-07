@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import s from "./Commodity.module.css";
 import Tree from "../common/Tree/Tree";
 import ListCommodities from "./ListCommodities/ListCommodities";
@@ -7,6 +7,20 @@ import FormModalWrapper from "./Forms/FormModalWrapper";
 import FormProduct from "./Forms/FormProduct";
 
 const Commodity = props => {
+
+  const [groupName, setGroupName] = useState('Commodities');
+
+  useEffect(() => {
+    if (props.groups.length) {
+      if (props.pid !== '0') {
+        const group = props.groups.find(item => item.id === props.pid);
+        var gName = group.label;
+      } else {
+        gName = 'Commodities';
+      }
+      setGroupName(gName);
+    }
+  }, [props.groups, props.pid]);
 
   if (!props.isLoaded) {
     props.setPid('0');
@@ -25,7 +39,7 @@ const Commodity = props => {
     props.getProductId('');
   }
 
-  const changePid = eId => {
+  async function changePid(eId) {
     if (props.pid === eId) return;
     props.setPid(eId);
   }
@@ -64,7 +78,7 @@ const Commodity = props => {
         <div className={s.container}>
           <Tree data={props.groups} price="Price" treeLabel="Groups" /* handleClick={handleClick} */ callback={changePid} pId={props.pid} />
           <div className={s.list}>
-            <h3>Commodities</h3>
+            <h3>{groupName}</h3>
             <ListCommodities
               commodities={props.commodities}
               comIsLoaded={props.comIsLoaded}

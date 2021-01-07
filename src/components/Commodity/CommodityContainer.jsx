@@ -7,6 +7,7 @@ import { compose } from "redux";
 
 const mapState = state => {
   state = state.commodityPage;
+
   return {
     isLoaded: state.isLoaded,
     groups: state.groups,

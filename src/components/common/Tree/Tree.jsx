@@ -8,7 +8,7 @@ const Tree = props => {
   let tree = { id: "Tree", label: props.treeLabel, childs: [nodeRoot] };
   createTree(props.data, tree);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (props.pId) {
       document
         .getElementById("Tree")
@@ -18,12 +18,14 @@ const Tree = props => {
         });
       let nodeSelected = document.getElementById(props.pId);
       nodeSelected.querySelector("span").className = s.selected;
-      let ul = nodeSelected.closest('ul');
-      if (ul.hidden) {
-        ul.hidden = false;
-      }
+      let ul = nodeSelected.querySelector('ul');
+      // while (ul.closest('li').id !== '0') {
+        if (ul.hidden) {
+          ul.hidden = false;
+        }
+      // }
     }
-  }, [props.pId])
+  }, [props.pId]) */
 
   function handleClick(e) {
     if (e.target.tagName !== "SPAN" && e.target.tagName !== "I") return;

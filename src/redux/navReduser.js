@@ -12,8 +12,9 @@ let initialState = {
   title: '',
   navBar: [
     { link: '/', title: ['Начало', 'Start'] },
-    { link: '/muzik', title: ['Музыка', 'Music'] },
+    { link: '/settings', title: ['Настройки', 'Settings'] },
     { link: '/commodity', title: ['Товары', 'Products'] },
+    { link: '/muzik', title: ['Музыка', 'Music'] },
     { link: '/game', title: ['Играть', 'Game'] },
     { link: '/table', title: ['Экспорт Excel', 'Export Excel'] },
   ],

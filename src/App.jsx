@@ -13,7 +13,7 @@ import CommodityContainer from "./components/Commodity/CommodityContainer";
 import ImpExcel from "./components/ImpExcel/ImpExcel";
 import Wrapper from "./components/Example/Wrapper";
 import IdbTest from "./components/IdbTest/IdbTest";
-import Main from "./components/Main/Main";
+import MainSettings from "./components/Settings/MainSettings";
 import { initializeApp, initApp, setAppKey, setStoreKey } from './redux/appReducer';
 import { connect } from "react-redux";
 import { pushItems } from "./api/apiIDB";
@@ -49,7 +49,8 @@ const App = props => {
       <HeaderContainer />
       <NavbarContainer />
       <div className="app-content">
-        <Route exact path="/" component={Main}/>
+        <Route exact path="/"/>
+        <Route exact path="/settings" component={MainSettings}/>
         <Route path="/example" component={Wrapper} />
         <Route path="/muzik" component={MuzikContainer} />
         <Route path="/commodity" component={CommodityContainer} />

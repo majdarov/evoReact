@@ -1,9 +1,11 @@
 import { deleteDB, openDB } from 'idb';
 
 export async function initDb() {
-  const db = await openDB('Evo', 2, {
+  const db = await openDB('Evo', 3, {
     async upgrade(db, oldVersion, newVersion) {
       if (oldVersion < newVersion) {
+        alert('База данных будет обновлена до версии: ' + newVersion);
+        // await db.delete();
         console.log(`New version: ${newVersion}`);
       }
       if (!db.objectStoreNames.contains('groups')) {

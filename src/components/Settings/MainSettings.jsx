@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { setAppKey, setStoreKey, setStores, initApp } from "../../redux/appReducer";
 import { apiForIdb } from "../../api/api";
@@ -12,15 +12,23 @@ function addKey(id) {
     return key;
 }
 
-const Main = props => {
+const MainSettings = props => {
 
 
     let inpRef = React.createRef();
 
     async function saveData() {
-        await saveConfig({fileName: `backup_config_${new Date().toJSON()}`});
-        console.log('File with data saved');
+
+        await saveConfig({ fileName: `backup_config_${new Date().toJSON()}` });
+
+        console.log('File with config saved');
+        let saveData = window.confirm('Сохранить список товаров?');
+        if (saveData) {
+            await saveConfig({ type: 'commodities', fileName: `backup_commodities_${new Date().toJSON()}` });
+            console.log('File with Data saved');
+        }
     }
+
 
     async function setAppKeyAndStores(key) {
         localStorage.appKey = key;
@@ -48,13 +56,17 @@ const Main = props => {
         // props.initApp(true);
     }
 
+    const [clean, setClean] = useState(false);
+
     async function cleareStorage(storageName) {
+        setClean(true);
         localStorage.clear();
         await delDb(storageName);
         props.setAppKey(null);
         props.setStoreKey(null);
         props.initApp(false);
-
+        setClean(false);
+        window.location.reload();
     }
 
     async function restoreConfig() {
@@ -67,17 +79,39 @@ const Main = props => {
 
     return (
         <div>
-            <h1>MAIN</h1>
+            {props.appKey && props.storeKey && !props.isInit &&
+                <div>
+                    <h2>Идет инициализация приложения...</h2>
+                </div>
+            }
+            {!props.appKey &&
+                <div>
+                    <h2>Необходимо инициализировать приложение!</h2>
+                    <p>Введите токен приложения...</p>
+                </div>
+            }
+            {clean &&
+                <div>
+                    <h2>Идет очистка хранилища...</h2>
+                    <p>Страница перезагрузится автоматически.</p>
+                    <p>Если процесс затянулся, перезагрузите страницу вручную.</p>
+                </div>
+            }
             {!props.appKey &&
                 <div>
                     <input id={'appKey'} />
-                    <button onClick={clickAddAppKey}>AddAppKey</button>
+                    <button onClick={clickAddAppKey}>Установить токен приложения</button>
                 </div>
             }
-            { !!props.appKey && !props.isInit && <p>{props.appKey}</p>}
+            {!!props.appKey && !props.isInit &&
+                <div>
+                    <h3>Токен приложения</h3>
+                    <p>{props.appKey}</p>
+                </div>
+            }
             { props.appKey && !!props.stores.length && !props.storeKey &&
                 <div style={{ cursor: 'pointer' }}>
-                    Select store
+                    <h3>Выберите магазин</h3>
                     <ul>
                         {props.stores.map(item => {
                             return (
@@ -87,19 +121,27 @@ const Main = props => {
                     </ul>
                 </div>
             }
-            { !!props.storeKey && !props.isInit && <p>{props.storeKey}</p>}
-            { props.isInit && <h2>App Is Initialized</h2>}
-            { props.isInit &&
+            { !!props.storeKey && !props.isInit &&
+                <div>
+                    <h3>Выбранный магазин</h3>
+                    <p>{props.storeKey}</p>
+                </div>
+            }
+            { props.isInit && !clean && <h2>Приложение инициализировано!</h2>}
+            { props.isInit && !clean &&
                 <div>
                     <button onClick={() => cleareStorage('Evo')}>cleare Storage</button>
                     <button onClick={saveData}>Save Config</button>
                 </div>
             }
             {
-                !props.isInit &&
-                <label>Restore config
+                !props.appKey &&
+                <div>
+                    <p>или выберите восстановление конфигурации...</p>
+                    <label>Восстановить конфигурацию из файла
                     <input type="file" ref={inpRef} onChange={restoreConfig} hidden />
-                </label>
+                    </label>
+                </div>
             }
         </div>
     );
@@ -114,4 +156,4 @@ const mapState = state => {
     }
 }
 
-export default connect(mapState, { setAppKey, setStoreKey, setStores, initApp })(Main);
+export default connect(mapState, { setAppKey, setStoreKey, setStores, initApp })(MainSettings);

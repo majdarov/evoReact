@@ -9,7 +9,7 @@ header h2 {
 
 header {
   grid-area: h;
-  background-color: darkorange;
+  background-color: rgb(195, 209, 228);
   position: sticky;
   top: 0;
 }

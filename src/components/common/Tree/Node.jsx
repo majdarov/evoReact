@@ -2,8 +2,7 @@ import React from "react";
 
 const Node = props => {
   let ul;
-  let closed = props.hidden ? "fas fa-folder" : "fas fa-folder-open";
-  let open = !props.hidden ? "open" : "closed";
+  const [closed, open] = props.hidden ? ["fas fa-folder", "closed"] : ["fas fa-folder-open", "open"];
   if (props.children.length) {
     ul = <ul hidden={props.hidden}>{props.children}</ul>;
   }

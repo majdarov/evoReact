@@ -62,7 +62,6 @@ function findNode(pid, pNode) {
 
 function createTree(data, root) {
   let notFoundNodes = [];
-    // debugger;
   data.forEach(item => {
     let node = createNode(item);
     let notFoundNode = addNode(node, root);
@@ -70,7 +69,6 @@ function createTree(data, root) {
       notFoundNodes.push(notFoundNode);
     }
   });
-  // debugger
   if (notFoundNodes.length) {
     createTree(notFoundNodes, root);
   }

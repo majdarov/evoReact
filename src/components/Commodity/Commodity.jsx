@@ -6,6 +6,25 @@ import Preloader from "../common/Preloader/Preloader";
 import FormModalWrapper from "./Forms/FormModalWrapper";
 import FormProduct from "./Forms/FormProduct";
 
+function toggleHidden(pid) {
+  if (pid === '0') return;
+  let tree = document.getElementById('Tree');
+  tree.querySelectorAll('span').forEach(item => {
+    item.className = '';
+  })
+  let li = document.getElementById(pid);
+  li.querySelector('span').className = s.selected;
+  let ul = li.closest('ul');
+  if (ul.hidden) {
+    ul.hidden = !ul.hidden;
+  }
+  let currentLi = ul.closest('li');
+  while (currentLi.id !== '0') {
+    currentLi.classList = 'open';
+    currentLi = currentLi.closest('ul').closest('li');
+  }
+}
+
 const Commodity = props => {
 
   const [groupName, setGroupName] = useState('Commodities');
@@ -15,6 +34,8 @@ const Commodity = props => {
       if (props.pid !== '0') {
         const group = props.groups.find(item => item.id === props.pid);
         var gName = group.label;
+        toggleHidden(props.pid);
+
       } else {
         gName = 'Commodities';
       }
@@ -76,7 +97,13 @@ const Commodity = props => {
           />
           : null}
         <div className={s.container}>
-          <Tree data={props.groups} price="Price" treeLabel="Groups" /* handleClick={handleClick} */ callback={changePid} pId={props.pid} />
+          <Tree
+            data={props.groups}
+            price="Price"
+            treeLabel="Groups"
+            callback={changePid}
+            pId={props.pid}
+          />
           <div className={s.list}>
             <h3>{groupName}</h3>
             <ListCommodities

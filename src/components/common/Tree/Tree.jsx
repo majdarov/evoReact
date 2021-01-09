@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import s from "./Tree.module.css";
 import createTree from "./treeFunction";
 import Node from "./Node";
@@ -8,27 +8,8 @@ const Tree = props => {
   let tree = { id: "Tree", label: props.treeLabel, childs: [nodeRoot] };
   createTree(props.data, tree);
 
-  /* useEffect(() => {
-    if (props.pId) {
-      document
-        .getElementById("Tree")
-        .querySelectorAll("span")
-        .forEach(item => {
-          if (item.className === s.selected) item.className = null;
-        });
-      let nodeSelected = document.getElementById(props.pId);
-      nodeSelected.querySelector("span").className = s.selected;
-      let ul = nodeSelected.querySelector('ul');
-      // while (ul.closest('li').id !== '0') {
-        if (ul.hidden) {
-          ul.hidden = false;
-        }
-      // }
-    }
-  }, [props.pId]) */
-
   function handleClick(e) {
-    if (e.target.tagName !== "SPAN" && e.target.tagName !== "I") return;
+    if (e.target.tagName !== "SPAN" && e.target.tagName !== "I" && e.target.tagName !== "LI") return;
     // ***SPAN toggle selected
     document
       .getElementById("Tree")
@@ -36,13 +17,18 @@ const Tree = props => {
       .forEach(item => {
         if (item.className === s.selected) item.className = null;
       });
+    let elem;
     if (e.target.tagName === "SPAN") {
       e.target.className = s.selected;
+      elem = e.target.closest("li");
+    } else if (e.target.tagName === "LI") {
+      e.target.querySelector('span').className = s.selected;
+      elem = e.target;
     } else {
       e.target.nextSibling.className = s.selected;
+      elem = e.target.closest("li");
     }
     // SPAN***
-    let elem = e.target.closest("li");
     if (!elem) return;
     if (elem.id !== "0") {
       let target = elem.querySelector("ul");

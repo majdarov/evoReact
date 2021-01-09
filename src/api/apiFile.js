@@ -1,12 +1,13 @@
 import { getGroup, getProduct } from './apiIDB';
+import { compose } from './apiUtils';
 
-function blobFromObj(obj) {
+function blobFromObj({ obj, ...rest }) {
   let json = JSON.stringify(obj, null, 2);
   let blob = new Blob([json], { type: 'application/json' });
-  return blob;
+  return { blob, ...rest };
 }
 
-function blobToUrl(blob, fileName = 'test') {
+function blobToUrl({ blob, fileName = 'test' }) {
   let link = document.createElement('a');
   link.download = `${fileName}.json`;
   link.href = URL.createObjectURL(blob);
@@ -33,7 +34,7 @@ async function getObjfromIdb() {
   return obj;
 }
 
-export async function saveConfig({ type, fileName = 'config'}) {
+export async function saveConfig({ type, fileName = 'config' }) {
   let obj = {};
 
   switch (type) {
@@ -47,9 +48,7 @@ export async function saveConfig({ type, fileName = 'config'}) {
       obj.config = getObjfromLocalStorage();
       break;
   }
-
-  let blob = blobFromObj(obj);
-  blobToUrl(blob, fileName);
+  compose(blobToUrl, blobFromObj)({ obj, fileName });
 }
 
 export async function readJsonFile(input) {

@@ -24,6 +24,7 @@ function TextArea(props) {
           value={props.value}
           placeholder={placeholder}
           className={className}
+          disabled={props.disabled}
           autoFocus
         />
     );

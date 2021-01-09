@@ -30,6 +30,7 @@ async function getProductsForIdb() {
   products = products.map(item => {
     if (!item.parent_id) item.parent_id = '0';
     if (!item.barcodes) item.barcodes = [];
+    if (!item.photos) item.photos = [];
     return item;
   })
   await pushItems('products', products);

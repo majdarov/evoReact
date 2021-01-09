@@ -23,6 +23,7 @@ function toggleHidden(pid) {
   let currentLi = ul.closest('li');
   while (currentLi.id !== '0') {
     currentLi.classList = 'open';
+    currentLi.closest('ul').hidden = false;
     currentLi = currentLi.closest('ul').closest('li');
   }
 }

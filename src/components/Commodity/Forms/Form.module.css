@@ -156,7 +156,7 @@ button
 }
 
 .view-barcode {
-  font-size: 4rem;
+  font-size: 2rem;
   font-family: 'Code EAN13';
 }
 .view-barcode ul > li {
@@ -170,7 +170,7 @@ button
 .view-barcode li:hover .del-bc::before {
   display: inline-block;
   font-family: 'Font Awesome 5 Free';
-  font-size: 1.5rem;
+  font-size: 1rem;
   content: '\f2ed';
   font-weight: 900;
   color: tomato;

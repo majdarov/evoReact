@@ -59,10 +59,6 @@
   background-color: lavender;
 }
 
-.buttons {
-  padding: 3px;
-}
-
 .del {
   margin-left: 5px;
 }
@@ -75,6 +71,20 @@
 }
 
 .head {
+  display: block;
   position: sticky;
   top: 0;
+}
+
+.buttons {
+  display: inline-block;
+  padding: 3px;
+}
+
+.search {
+  display: inline-block;
+}
+
+.search input {
+  margin: 0.5rem;
 }

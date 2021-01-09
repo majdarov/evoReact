@@ -102,7 +102,7 @@ input[name='description'] {
 
 label {
   font-weight: bold;
-  border: 1px blueviolet dashed;
+  border: 1px blueviolet solid;
   padding: 3px;
   color: indigo;
 }

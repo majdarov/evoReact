@@ -5,15 +5,17 @@ import ListCommodities from "./ListCommodities/ListCommodities";
 import Preloader from "../common/Preloader/Preloader";
 import FormModalWrapper from "./Forms/FormModalWrapper";
 import FormProduct from "./Forms/FormProduct";
+import { getProduct } from "../../api/apiIDB";
 
 function toggleHidden(pid) {
-  if (pid === '0') return;
   let tree = document.getElementById('Tree');
   tree.querySelectorAll('span').forEach(item => {
     item.className = '';
   })
   let li = document.getElementById(pid);
   li.querySelector('span').className = s.selected;
+  if (pid === '0') return;
+
   let ul = li.closest('ul');
   if (ul.hidden) {
     ul.hidden = !ul.hidden;
@@ -31,11 +33,10 @@ const Commodity = props => {
 
   useEffect(() => {
     if (props.groups.length) {
+      toggleHidden(props.pid);
       if (props.pid !== '0') {
         const group = props.groups.find(item => item.id === props.pid);
         var gName = group.label;
-        toggleHidden(props.pid);
-
       } else {
         gName = 'Commodities';
       }
@@ -60,9 +61,28 @@ const Commodity = props => {
     props.getProductId('');
   }
 
-  async function changePid(eId) {
+  function changePid(eId) {
     if (props.pid === eId) return;
     props.setPid(eId);
+  }
+
+  async function searchProducts(e) {
+    setGroupName('Результаты поиска');
+    let name = new RegExp(e.target.value, 'gi');
+    let products = (await getProduct()).filter(item => item.name.match(name));
+    props.setCommodities(products);
+  }
+
+  function clearSearch(e) {
+    if (e.target.tagName !== 'I') return;
+    e.target.closest('div').querySelector('input').value = '';
+    props.getProducts(props.pid);
+    if (props.pid !== '0') {
+      var gName = props.groups.find(item => item.id === props.pid).label;
+    } else {
+      gName = 'Commodities';
+    }
+    setGroupName(gName);
   }
 
   if (props.error) {
@@ -74,7 +94,14 @@ const Commodity = props => {
       <>
         <div className={s.head}>
           <div className={s.buttons}>
-            <button onClick={newData}>New Product</button>
+            <button onClick={newData}>+Товар</button>
+          </div>
+          <div className={s.search} onClick={clearSearch}>
+            <label>
+              Поиск товара
+              <input type="text" onChange={searchProducts} />
+              <i className='fa fa-times'></i>
+            </label>
           </div>
         </div>
         {props.viewForm ?

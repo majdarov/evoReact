@@ -1,7 +1,7 @@
 import Commodity from "./Commodity";
 import { setPidAC, getGroups, getProducts,
   setViewForm, getProductId, deleteProduct,setFormData,
-  toggleFormPostAC, postFormData, setFormErrorAC, setErrorAC } from "../../redux/commodityReduser";
+  toggleFormPostAC, postFormData, setFormErrorAC, setErrorAC, setCommodities } from "../../redux/commodityReduser";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
@@ -53,6 +53,7 @@ export default compose(
   toggleFormPost,
   postFormData,
   setFormError,
-  setError
+  setError,
+  setCommodities
 })
 )(Commodity);

@@ -40,7 +40,7 @@ export async function getGroup(id) {
 export async function getProduct(id) {
   const db = await initDb();
   let product;
-  if (id === 'all') {
+  if (id === 'all' || !id) {
     product = await db.getAll('products');
   } else {
     product = await db.get('products', id);
@@ -51,6 +51,11 @@ export async function getProduct(id) {
 export async function getProductsPid(pid) {
   const db = await initDb();
   const products = await db.getAllFromIndex('products', 'parent_id', pid);
+  return products;
+}
+export async function getProductsName(name) {
+  const db = await initDb();
+  const products = await db.getAllFromIndex('products', 'name', name);
   return products;
 }
 

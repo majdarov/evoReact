@@ -284,4 +284,6 @@ export const deleteProduct = (id, pid) => async (dispatch) => {
   }
 }
 
+export const setCommodities = commodities => dispatch => dispatch(getCommoditiesAC(commodities));
+
 export default commodityReduser;

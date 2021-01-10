@@ -1,5 +1,11 @@
 import { apiForIdb } from '../api/api';
-import { deleteData, getGroup, getProduct, getProductsPid, putData } from '../api/apiIDB';
+import {
+  deleteData,
+  getGroup,
+  getProduct,
+  getProductsPid,
+  putData,
+} from '../api/apiIDB';
 import { chooseError } from '../components/Errors/chooseError';
 
 const GET_GROUPS = 'GET-GROUPS';
@@ -13,6 +19,7 @@ const SET_FORM_DATA = 'SET-FORM-DATA';
 const TOGGLE_FORM_POST = 'TOGGLE-FORM-POST';
 const SET_FORM_ERROR = 'SET-FORM-ERROR';
 const SET_APP_KEY = 'SET-APP-KEY';
+const SET_FORM_PHOTOS = 'SET-FORM-FOTOS';
 
 export const getGroupsAC = (groups) => {
   return { type: GET_GROUPS, groups };
@@ -59,6 +66,10 @@ export const setAppKeyAC = (key) => {
   return { type: SET_APP_KEY, key };
 };
 
+export const setFormPhotosAC = (photos) => {
+  return { type: SET_FORM_PHOTOS, photos };
+};
+
 let initialState = {
   groups: [],
   commodities: [],
@@ -90,6 +101,7 @@ let initialState = {
     formPost: false,
     resMessage: null,
     formError: null,
+    photos: [],
   },
 };
 
@@ -161,6 +173,9 @@ const commodityReduser = (state = initialState, action) => {
     case SET_FORM_DATA:
       return { ...state, form: { ...state.form, formData: action.formData } };
 
+    case SET_FORM_PHOTOS:
+      return { ...state, form: action.photos };
+
     default:
       return state;
   }
@@ -168,8 +183,7 @@ const commodityReduser = (state = initialState, action) => {
 
 export const getProducts = (pId) => {
   return (dispatch) => {
-    getProductsPid(pId)
-      .then((res) => dispatch(getCommoditiesAC(res)));
+    getProductsPid(pId).then((res) => dispatch(getCommoditiesAC(res)));
   };
 };
 
@@ -207,8 +221,8 @@ export const updateProducts = (pId) => {
     // productsApi.getData('products/update').then((res) => {
     //   dispatch(updateCommodityAC());
     //   dispatch(setUpdatedAC(false));
-      alert(`Updated at ${Date()}`);
-      dispatch(setPidAC(pId || 0));
+    alert(`Updated at ${Date()}`);
+    dispatch(setPidAC(pId || 0));
     // });
   };
 };
@@ -216,7 +230,9 @@ export const updateProducts = (pId) => {
 export const setUpdated = (updated) => (dispatch) =>
   dispatch(setUpdatedAC(updated));
 
-export const setViewForm = (view) => (dispatch) => dispatch(viewFormAC(view));
+export const setViewForm = (view) => (dispatch) => {
+  dispatch(viewFormAC(view))
+};
 
 export const setFormData = (formData) => (dispatch) => {
   formData = formData ? formData : initialState.form.formData;
@@ -250,7 +266,7 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
       break;
   }
   callbackApi(path, body)
-    .then(res => {
+    .then((res) => {
       putData(`${path}s`, res);
       return res;
     })
@@ -269,12 +285,12 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
       dispatch(setFormErrorAC(chooseError(err)));
       dispatch(toggleFormPostAC(false));
     });
-}
+};
 
 export const deleteProduct = (id, pid) => async (dispatch) => {
   try {
     let res = await apiForIdb.deleteData('product', id);
-    console.log(res.status)
+    console.log(res.status);
     await deleteData('products', id);
     dispatch(setPidAC(pid));
     return id;
@@ -282,8 +298,12 @@ export const deleteProduct = (id, pid) => async (dispatch) => {
     console.dir(err);
     dispatch(setErrorAC(chooseError(err)));
   }
-}
+};
 
-export const setCommodities = commodities => dispatch => dispatch(getCommoditiesAC(commodities));
+export const setCommodities = (commodities) => (dispatch) =>
+  dispatch(getCommoditiesAC(commodities));
+
+export const setFormPhotos = (photos) => (dispatch) =>
+  dispatch(setFormPhotosAC(photos));
 
 export default commodityReduser;

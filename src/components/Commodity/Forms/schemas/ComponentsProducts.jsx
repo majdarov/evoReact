@@ -136,11 +136,10 @@ export const ComponentsProducts = {
         )
     },
     Picture: props => {
-
         return (
             <div className={props.divPicture} onClick={props.pictureClick}>
-                <img id={props.photo} className={props.className}
-                    src={`/images/Price/${props.photo}`}
+                <img id={props.photo.name} className={props.className}
+                    src={URL.createObjectURL(props.photo)}
                     alt="no" tabIndex='-1'
                 />
                 <span></span>

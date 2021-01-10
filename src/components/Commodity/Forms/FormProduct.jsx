@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './Form.module.css';
 import { useState } from "react";
 import Preloader from '../../common/Preloader/Preloader';
@@ -8,6 +8,7 @@ import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequ
 import FormImg from './FormImg';
 import FormModalWrapper from './FormModalWrapper';
 import noPhoto from '../../../Assets/img/terminal-5.png';
+import setFormPhotos from '../../../redux/commodityReduser';
 // import Tree from '../../common/Tree/Tree';
 
 const FormProduct = props => {
@@ -19,13 +20,21 @@ const FormProduct = props => {
     ...props.formData,
     allow_edit: isNewData,
     parent_id: parentId,
-    // photos: [...props.formData.photos],
-    // barcodes: [...props.formData.barcodes],
+    photos: [...props.formData.photos],
+    barcodes: [...props.formData.barcodes],
     isNewData,
     bigImg: null,
     currentBarcode: '',
     // treeView: false
   });
+
+  useEffect(() => {
+    return () => {
+      if (state.photos.length) {
+        state.photos.forEach(item => URL.revokeObjectURL(item))
+      }
+    }
+  })
 
 
   if (!state.code) {
@@ -43,11 +52,16 @@ const FormProduct = props => {
   const formChanged = () => {
     let changes = [];
     for (let key in props.formData) {
-      if (state[key] !== props.formData[key]) {
-        changes.push({ [key]: state[key] });
+      if (key === 'photos' || key === 'barcodes') {
+
+        if (state[key].length !== props.formData[key].length)
+          changes.push({ [key]: state[key] });
+      } else {
+        if (state[key] !== props.formData[key]) {
+          changes.push({ [key]: state[key] });
+        }
       }
     }
-    // console.log(changes);
     if (changes.length === 1 && changes[0].code) changes = [];
     return changes.length;
   }
@@ -74,7 +88,7 @@ const FormProduct = props => {
     } else if (name === 'picture') {
       let photos = state.photos;
       Array.from(fileInput.current.files).forEach(item => {
-        photos.push(item.name);
+        photos.push(item);
       })
       setState({ ...state, photos });
       return;
@@ -83,7 +97,7 @@ const FormProduct = props => {
       Object.values(form.elements).forEach(item => {
         if (item.disabled && item.id !== s.uuid) item.removeAttribute('disabled');
       })
-      setState({...state, allow_edit: true});
+      setState({ ...state, allow_edit: true });
       form.allow_edit.parentNode.remove();
     } else {
       setState({ ...state, [name]: value });
@@ -130,7 +144,7 @@ const FormProduct = props => {
     ev.preventDefault();
     ev.stopPropagation();
     if (state.allow_edit && formChanged() && window.confirm('Save changes')) {
-
+      // if (state.photos.length) setFormPhotos([...state.photos]);
       let body = { ...state };
       if (body.parent_id === '0' || body.parent_id === 0) {
         delete body.parent_id;
@@ -281,7 +295,7 @@ const FormProduct = props => {
                   // <ComponentsProducts.Picture {...pProps} photo='image3D.png' /> :
                   <div><img src={noPhoto} alt="NoPhotos" className={s['picture-small']} /></div> :
                   state.photos.map(ph => {
-                    return <ComponentsProducts.Picture {...pProps} photo={ph} key={ph} />
+                    return <ComponentsProducts.Picture {...pProps} photo={ph} key={ph.name} />
                   })
               }
             </div>

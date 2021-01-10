@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 const mapState = state => {
+  const isInit = state.app.isInit;
   state = state.commodityPage;
-
   return {
     isLoaded: state.isLoaded,
     groups: state.groups,
@@ -19,7 +19,8 @@ const mapState = state => {
     viewForm: state.viewForm,
     formData: state.form.formData,
     formPost: state.form.formPost,
-    formError: state.form.formError
+    formError: state.form.formError,
+    isInit
   };
 };
 

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Header.module.css';
 import logo from '../../Assets/img/terminal-5.png';
 
 const Header = (props) => {
+
+    const [isInit, setIsInit] = useState(false);
 
     function clickLang(ev) {
         let lng;
@@ -14,9 +16,16 @@ const Header = (props) => {
             return;
         }
     }
-
+    useEffect(() => {
+        if (props.isInit) {
+            setIsInit(true)
+            setTimeout(() => setIsInit(false), 2000);
+        }
+    }, [props.isInit])
     return (
         <header>
+            { !props.isInit && <h4>Initializing App...</h4>}
+            { isInit && <h4>App Is Init!</h4>}
             <img src={logo} alt='Logo'></img>
             <h2>{props.title}</h2>
             <div onClick={clickLang}>

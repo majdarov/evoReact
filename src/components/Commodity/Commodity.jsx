@@ -85,8 +85,9 @@ const Commodity = props => {
     }
     setGroupName(gName);
   }
-
-  if (props.error) {
+  if (!props.isInit) {
+    props.history.push('/settings');
+  } else if (props.error) {
     return <div>Ошибка...{props.error.message}</div>;
   } else if (!props.isLoaded) {
     return <Preloader />

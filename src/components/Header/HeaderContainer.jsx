@@ -26,7 +26,8 @@ const mapStateToProps = state => {
         navBar: state.navigation.navBar,
         title: state.navigation.title,
         className,
-        currentLang: state.navigation.currentLang
+        currentLang: state.navigation.currentLang,
+        isInit: state.app.isInit
     }
 }
 

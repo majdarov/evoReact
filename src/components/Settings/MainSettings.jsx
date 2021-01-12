@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { setAppKey, setStoreKey, setStores, initApp } from "../../redux/appReducer";
+import { setAppKey, setStoreKey, setStores, toggleInitApp } from "../../redux/appReducer";
 import { apiForIdb } from "../../api/api";
 import { readJsonFile, saveConfig } from "../../api/apiFile";
-import { delDb } from "../../api/apiIDB";
+import { apiIDB } from "../../api/apiIDB";
 
 function addKey(id) {
     var key = document.getElementById(id).value;
@@ -61,10 +61,10 @@ const MainSettings = props => {
     async function cleareStorage(storageName) {
         setClean(true);
         localStorage.clear();
-        await delDb(storageName);
+        await apiIDB.delDb(storageName);
         props.setAppKey(null);
         props.setStoreKey(null);
-        props.initApp(false);
+        props.toggleInitApp(false);
         setClean(false);
         window.location.reload();
     }
@@ -156,4 +156,4 @@ const mapState = state => {
     }
 }
 
-export default connect(mapState, { setAppKey, setStoreKey, setStores, initApp })(MainSettings);
+export default connect(mapState, { setAppKey, setStoreKey, setStores, toggleInitApp })(MainSettings);

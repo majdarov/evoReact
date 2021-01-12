@@ -5,7 +5,7 @@ import ListCommodities from "./ListCommodities/ListCommodities";
 import Preloader from "../common/Preloader/Preloader";
 import FormModalWrapper from "./Forms/FormModalWrapper";
 import FormProduct from "./Forms/FormProduct";
-import { getProduct } from "../../api/apiIDB";
+import { apiIDB } from "../../api/apiIDB";
 
 function toggleHidden(pid) {
   let tree = document.getElementById('Tree');
@@ -59,7 +59,7 @@ const Commodity = props => {
   }
 
   function newData() {
-    props.getProductId('');
+    props.getProductId();
   }
 
   function changePid(eId) {
@@ -70,7 +70,7 @@ const Commodity = props => {
   async function searchProducts(e) {
     setGroupName('Результаты поиска');
     let name = new RegExp(e.target.value, 'gi');
-    let products = (await getProduct()).filter(item => item.name.match(name));
+    let products = (await apiIDB.getProduct()).filter(item => item.name.match(name));
     props.setCommodities(products);
   }
 
@@ -85,9 +85,12 @@ const Commodity = props => {
     }
     setGroupName(gName);
   }
+
   if (!props.isInit) {
     props.history.push('/settings');
-  } else if (props.error) {
+  }
+
+  if (props.error) {
     return <div>Ошибка...{props.error.message}</div>;
   } else if (!props.isLoaded) {
     return <Preloader />

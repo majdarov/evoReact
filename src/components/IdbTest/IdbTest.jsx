@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { apiForIdb } from '../../api/api';
 import Tree from '../common/Tree/Tree';
-import { getGroup, pushItems } from '../../api/apiIDB';
+import { apiIDB } from '../../api/apiIDB';
 
 const IdbTest = () => {
 
@@ -9,7 +9,7 @@ const IdbTest = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     async function callbackTree(id) {
-        let group = await getGroup(id);
+        let group = await apiIDB.getGroup(id);
         console.log(group);
         alert(JSON.stringify(group, null, 2));
     }
@@ -19,7 +19,7 @@ const IdbTest = () => {
         let res = await apiForIdb.getGroupsEvo();
         console.log(res);
         let g = await res.items;
-        await pushItems('groups', g);
+        await apiIDB.pushItems('groups', g);
         /*
          created_at: "2018-08-01T06:00:27.605+0000"
          id: "96639e0c-6409-9faa-d4e0-a8212b9fa795"
@@ -29,7 +29,7 @@ const IdbTest = () => {
          updated_at: "2019-04-13T07:58:19.537+0000"
          user_id: "01-000000000910281"
          */
-        let groups = await getGroup('all');
+        let groups = await apiIDB.getGroup('all');
         groups.forEach((item) => {
             // if (idx === 1) console.log(item);
             item.pid = item.parent_id ? item.parent_id : null;

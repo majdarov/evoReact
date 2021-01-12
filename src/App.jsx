@@ -14,17 +14,17 @@ import ImpExcel from "./components/ImpExcel/ImpExcel";
 import Wrapper from "./components/Example/Wrapper";
 import IdbTest from "./components/IdbTest/IdbTest";
 import MainSettings from "./components/Settings/MainSettings";
-import { initializeApp, initApp, setAppKey, setStoreKey } from './redux/appReducer';
+import { initializeApp, toggleInitApp, setAppKey, setStoreKey } from './redux/appReducer';
 import { connect } from "react-redux";
-import { pushItems } from "./api/apiIDB";
+import { apiIDB } from "./api/apiIDB";
 import { apiForIdb } from "./api/api";
 
 async function getProductsForIdb() {
-  // Get groups;
+  // Get groups
   let res = await apiForIdb.getGroupsEvo();
   let groups = await res.items;
-  await pushItems('groups', groups);
-
+  await apiIDB.pushItems('groups', groups);
+  // Get products
   res = await apiForIdb.getProductsEvo();
   let products = await res.items;
   products = products.map(item => {
@@ -33,7 +33,7 @@ async function getProductsForIdb() {
     if (!item.photos) item.photos = [];
     return item;
   })
-  await pushItems('products', products);
+  await apiIDB.pushItems('products', products);
 }
 
 const App = props => {
@@ -41,7 +41,7 @@ const App = props => {
   if (!props.isInit) props.initializeApp();
 
   if (props.appKey && props.storeKey && !props.isInit) {
-    getProductsForIdb().then(res => props.initApp(true));
+    getProductsForIdb().then(() => props.toggleInitApp(true));
 
   }
 
@@ -72,4 +72,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState, {initializeApp, initApp, setAppKey, setStoreKey})(App);
+export default connect(mapState, {initializeApp, toggleInitApp, setAppKey, setStoreKey})(App);

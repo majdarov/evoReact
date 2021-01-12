@@ -1,4 +1,4 @@
-import { getGroup, getProduct } from './apiIDB';
+import { apiIDB } from './apiIDB';
 import { compose } from './apiUtils';
 
 function blobFromObj({ obj, ...rest }) {
@@ -27,9 +27,9 @@ function getObjfromLocalStorage() {
 async function getObjfromIdb() {
   let obj = {};
 
-  obj.groups = await getGroup('all');
+  obj.groups = await apiIDB.getGroup('all');
 
-  obj.products = await getProduct('all');
+  obj.products = await apiIDB.getProduct('all');
 
   return obj;
 }

@@ -1,11 +1,5 @@
 import { apiForIdb } from '../api/api';
-import {
-  deleteData,
-  getGroup,
-  getProduct,
-  getProductsPid,
-  putData,
-} from '../api/apiIDB';
+import { apiIDB } from '../api/apiIDB';
 import { chooseError } from '../components/Errors/chooseError';
 
 const GET_GROUPS = 'GET-GROUPS';
@@ -119,7 +113,7 @@ const commodityReduser = (state = initialState, action) => {
         groups.push(group);
       });
       // groups.sort((a,b) => a.code - b.code);
-      return { ...state, groups: groups, isLoaded: true };
+      return { ...state, groups: [...groups], isLoaded: true };
 
     case SET_PID:
       return Object.assign({}, state, {
@@ -183,14 +177,14 @@ const commodityReduser = (state = initialState, action) => {
 
 export const getProducts = (pId) => {
   return (dispatch) => {
-    getProductsPid(pId).then((res) => dispatch(getCommoditiesAC(res)));
+    apiIDB.getProductsPid(pId).then((res) => dispatch(getCommoditiesAC(res)));
   };
 };
 
 export const getProductId = (id) => {
   if (!id) return (dispatch) => dispatch(viewFormAC(true));
   return (dispatch) => {
-    getProduct(id)
+    apiIDB.getProduct(id)
       .then((res) => {
         dispatch(setFormDataAC(res));
         return true;
@@ -203,15 +197,8 @@ export const getProductId = (id) => {
 
 export const getGroups = () => {
   return (dispatch) => {
-    getGroup('all').then((res) => {
-      let groups = res.map((item) => {
-        return {
-          ...item,
-          pid: item.parent_id ? item.parent_id : null,
-          label: item.name,
-        };
-      });
-      dispatch(getGroupsAC(groups));
+    apiIDB.getGroup('all').then((res) => {
+      dispatch(getGroupsAC(res));
     });
   };
 };
@@ -231,7 +218,7 @@ export const setUpdated = (updated) => (dispatch) =>
   dispatch(setUpdatedAC(updated));
 
 export const setViewForm = (view) => (dispatch) => {
-  dispatch(viewFormAC(view))
+  dispatch(viewFormAC(view));
 };
 
 export const setFormData = (formData) => (dispatch) => {
@@ -267,7 +254,7 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
   }
   callbackApi(path, body)
     .then((res) => {
-      putData(`${path}s`, res);
+      apiIDB.putData(`${path}s`, res);
       return res;
     })
     .then((res) => {
@@ -291,7 +278,7 @@ export const deleteProduct = (id, pid) => async (dispatch) => {
   try {
     let res = await apiForIdb.deleteData('product', id);
     console.log(res.status);
-    await deleteData('products', id);
+    await apiIDB.deleteData('products', id);
     dispatch(setPidAC(pid));
     return id;
   } catch (err) {

@@ -49,7 +49,7 @@ export const setStoreKey = (key) => (dispatch) => {
   return dispatch(setStoreKeyAC(key));
 };
 
-export const initApp = (init) => (dispatch) => {
+export const toggleInitApp = (init) => (dispatch) => {
   return dispatch(initAppAC(init));
 };
 

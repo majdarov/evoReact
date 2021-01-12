@@ -8,8 +8,6 @@ import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequ
 import FormImg from './FormImg';
 import FormModalWrapper from './FormModalWrapper';
 import noPhoto from '../../../Assets/img/terminal-5.png';
-import setFormPhotos from '../../../redux/commodityReduser';
-// import Tree from '../../common/Tree/Tree';
 
 const FormProduct = props => {
 

@@ -18,6 +18,7 @@ import { initializeApp, toggleInitApp, setAppKey, setStoreKey } from './redux/ap
 import { connect } from "react-redux";
 import { apiIDB } from "./api/apiIDB";
 import { apiForIdb } from "./api/api";
+import Documents from "./components/Documents/Documents";
 
 async function getProductsForIdb() {
   // Get groups
@@ -58,6 +59,7 @@ const App = props => {
         <Route path="/game" component={Game} />
         <Route path="/table" component={ImpExcel} />
         <Route path="/test" component={IdbTest} />
+        <Route path="/documents" component={Documents} />
       </div>
 
     </div>

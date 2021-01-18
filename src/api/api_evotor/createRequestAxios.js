@@ -53,6 +53,16 @@ function selectOption(action) {
     /*--------------------------------------*/
 
     /* Получить документы (за пред. месяц, продажа) */
+    /*
+      ACCEPT - Приемка товаров,
+      INVENTORY - Документ инвентаризации,
+      REVALUATION - Переоценка,
+      RETURN - Возврат поставщику,
+      WRITE_OFF - Списание,
+      SELL - Продажа,
+      PAYBACK - Возврат,
+
+    */
     case 'documents_v2':
       method = 'GET';
       if (action.value) {
@@ -60,9 +70,10 @@ function selectOption(action) {
       } else {
         url = 'stores/' + action.storeUuid + '/documents';
         if (!api_v2.cursor) {
-          let date = new Date();
-          date.setMonth(date.getMonth() - 1);
-          url += `?since=${date.getTime()}&type=SELL`;
+          // let date = new Date();
+          // date.setMonth(date.getMonth() - 1);
+          // url += `?since=${date.getTime()}&type=${action.docType}`;
+          url += `?type=${action.docType}`;
         }
       }
       return { ...api_v2, method, url };

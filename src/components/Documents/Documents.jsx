@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { apiForIdb } from '../../api/api';
 
 function dateToString(date = new Date()) {
@@ -12,16 +13,31 @@ function dateToString(date = new Date()) {
     return strDate;
 }
 
-function getMinData() {
-    let key = localStorage.getItem('storeKey');
-    let min = key.split('-')[0];
-    let year = min.slice(0, 4);
-    let month = min.slice(4, 6);
-    let day = min.slice(6)
-    return `${year}-${month}-${day}`;
+function getMinData(key) {
+    if (!key) return '';
+    try {
+        let min = key.split('-')[0];
+        let year = min.slice(0, 4);
+        let month = min.slice(4, 6);
+        let day = min.slice(6)
+        return `${year}-${month}-${day}`;
+    } catch(e) {
+        console.error(e.message)
+    }
 }
 
-const Documents = () => {
+const mapState = state => {
+    return {
+        isInit: state.app.isInit,
+        storeKey: state.app.storeKey,
+    }
+}
+
+const Documents = (props) => {
+
+    if (!props.isInit) {
+        props.history.push('/settings');
+    }
 
     const typesOfDocs = [
         ['ACCEPT', 'Приемка товаров'],
@@ -39,7 +55,7 @@ const Documents = () => {
     const [period, setPeriod] = useState({
         dateStart: new Date(),
         dateEnd: new Date(),
-        dateMin: getMinData()
+        dateMin: getMinData(props.storeKey)
     });
 
     useEffect(() => {
@@ -123,7 +139,7 @@ const Documents = () => {
             { !!docs.length &&
                 <ul>
                     {docs.map((item, idx) => {
-                        return (idx < 20) && <li key={item.id} id={item.id} onClick={docClick} style={{margin: '0.5rem'}}>
+                        return (idx < 20) && <li key={item.id} id={item.id} onClick={docClick} style={{ margin: '0.5rem' }}>
                             <span style={styleSpan}>{item.id}</span>
                         </li>
                     })}
@@ -133,4 +149,4 @@ const Documents = () => {
     );
 }
 
-export default Documents;
+export default connect(mapState)(Documents);

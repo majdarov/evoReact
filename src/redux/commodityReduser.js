@@ -184,7 +184,8 @@ export const getProducts = (pId) => {
 export const getProductId = (id) => {
   if (!id) return (dispatch) => dispatch(viewFormAC(true));
   return (dispatch) => {
-    apiIDB.getProduct(id)
+    apiIDB
+      .getProduct(id)
       .then((res) => {
         dispatch(setFormDataAC(res));
         return true;

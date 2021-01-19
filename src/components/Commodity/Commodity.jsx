@@ -30,6 +30,10 @@ function toggleHidden(pid) {
 
 const Commodity = props => {
 
+  if (!props.isInit) {
+    props.history.push('/settings');
+  }
+
   const [groupName, setGroupName] = useState('Commodities');
 
   useEffect(() => {
@@ -45,11 +49,11 @@ const Commodity = props => {
     }
   }, [props.groups, props.pid]);
 
-  if (!props.isLoaded) {
+  if (!props.isLoaded && props.isInit) {
     props.setPid('0');
     props.getGroups();
   }
-  if (!props.comIsLoaded) {
+  if (!props.comIsLoaded && props.isInit) {
     props.getProducts(props.pid);
   }
 
@@ -84,10 +88,6 @@ const Commodity = props => {
       gName = 'Commodities';
     }
     setGroupName(gName);
-  }
-
-  if (!props.isInit) {
-    props.history.push('/settings');
   }
 
   if (props.error) {

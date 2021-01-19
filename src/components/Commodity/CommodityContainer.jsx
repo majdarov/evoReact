@@ -1,9 +1,10 @@
 import Commodity from "./Commodity";
-import { setPidAC, getGroups, getProducts,
-  setViewForm, getProductId, deleteProduct,setFormData,
-  toggleFormPostAC, postFormData, setFormErrorAC, setErrorAC, setCommodities } from "../../redux/commodityReduser";
+import {
+  setPidAC, getGroups, getProducts,
+  setViewForm, getProductId, deleteProduct, setFormData,
+  toggleFormPostAC, postFormData, setFormErrorAC, setErrorAC, setCommodities
+} from "../../redux/commodityReduser";
 import { connect } from "react-redux";
-import { compose } from "redux";
 
 const mapState = state => {
   const isInit = state.app.isInit;
@@ -42,8 +43,7 @@ const setError = err => {
   return dispatch => dispatch(setErrorAC(err));
 }
 
-export default compose(
-  connect(mapState, {
+export default connect(mapState, {
   getGroups,
   getProducts,
   setPid,
@@ -56,5 +56,4 @@ export default compose(
   setFormError,
   setError,
   setCommodities
-})
-)(Commodity);
+})(Commodity);

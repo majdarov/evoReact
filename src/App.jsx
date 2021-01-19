@@ -22,19 +22,24 @@ import Documents from "./components/Documents/Documents";
 
 async function getProductsForIdb() {
   // Get groups
-  let res = await apiForIdb.getGroupsEvo();
-  let groups = await res.items;
-  await apiIDB.pushItems('groups', groups);
-  // Get products
-  res = await apiForIdb.getProductsEvo();
-  let products = await res.items;
-  products = products.map(item => {
-    if (!item.parent_id) item.parent_id = '0';
-    if (!item.barcodes) item.barcodes = [];
-    if (!item.photos) item.photos = [];
-    return item;
-  })
-  await apiIDB.pushItems('products', products);
+  try {
+    let res = await apiForIdb.getGroupsEvo();
+    let groups = await res.items;
+    await apiIDB.pushItems('groups', groups);
+    // Get products
+    res = await apiForIdb.getProductsEvo();
+    let products = await res.items;
+    products = products.map(item => {
+      if (!item.parent_id) item.parent_id = '0';
+      if (!item.barcodes) item.barcodes = [];
+      if (!item.photos) item.photos = [];
+      return item;
+    })
+    await apiIDB.pushItems('products', products);
+  } catch (e) {
+    console.error(e.message);
+    return e;
+  }
 }
 
 const App = props => {
@@ -42,8 +47,9 @@ const App = props => {
   if (!props.isInit) props.initializeApp();
 
   if (props.appKey && props.storeKey && !props.isInit) {
-    getProductsForIdb().then(() => props.toggleInitApp(true));
-
+    getProductsForIdb()
+    .then(() => props.toggleInitApp(true))
+    .catch(e => alert(e.message));
   }
 
   return (
@@ -51,8 +57,8 @@ const App = props => {
       <HeaderContainer />
       <NavbarContainer />
       <div className="app-content">
-        <Route exact path="/"/>
-        <Route exact path="/settings" component={MainSettings}/>
+        <Route exact path="/" />
+        <Route exact path="/settings" component={MainSettings} />
         <Route path="/example" component={Wrapper} />
         <Route path="/muzik" component={MuzikContainer} />
         <Route path="/commodity" component={CommodityContainer} />
@@ -74,4 +80,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState, {initializeApp, toggleInitApp, setAppKey, setStoreKey})(App);
+export default connect(mapState, { initializeApp, toggleInitApp, setAppKey, setStoreKey })(App);

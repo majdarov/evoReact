@@ -1,10 +1,24 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { apiForIdb } from '../../api/api';
 
 function dateToString(date = new Date()) {
     if (!date) return;
-    let strDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    function dblDigit(dgt) {
+        if (dgt.toString().length < 2) {
+            return `0${dgt}`;
+        } else { return dgt };
+    }
+    let strDate = `${date.getFullYear()}-${dblDigit(date.getMonth() + 1)}-${dblDigit(date.getDate())}`;
     return strDate;
+}
+
+function getMinData() {
+    let key = localStorage.getItem('storeKey');
+    let min = key.split('-')[0];
+    let year = min.slice(0, 4);
+    let month = min.slice(4, 6);
+    let day = min.slice(6)
+    return `${year}-${month}-${day}`;
 }
 
 const Documents = () => {
@@ -22,12 +36,15 @@ const Documents = () => {
     const [docs, setDocs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const [period, setPeriod] = useState(null);
+    const [period, setPeriod] = useState({
+        dateStart: new Date(),
+        dateEnd: new Date(),
+        dateMin: getMinData()
+    });
 
-    let dateStart = new Date();
-    dateStart.setHours(0, 0, 0);
-    let dateEnd = new Date();
-    setPeriod({ dateStart, dateEnd });
+    useEffect(() => {
+        period.dateStart.setHours(0, 0, 0);
+    }, [period])
 
     async function butGetDocs() {
         setIsLoading(true);
@@ -39,14 +56,35 @@ const Documents = () => {
         }
         let res = await apiForIdb.getDocuments(docType, p);
         console.log(res);
-        // await apiIDB.pushItems('groups', g);
-        // let groups = await apiIDB.getGroup('all');
         setDocs(res.items);
         setIsLoading(false);
     }
 
     function changeDate(e) {
-        console.log(e)
+        let date = new Date(e.currentTarget.value);
+        if (e.currentTarget.name === 'dateStart') {
+            date.setHours(0);
+        } else {
+            date.setHours(23);
+        }
+        setPeriod({ ...period, [e.currentTarget.name]: date });
+        // console.log(e.currentTarget.name + ' : ' + e.currentTarget.value)
+    }
+
+    async function docClick(e) {
+        if (e.target.tagName !== 'SPAN') return;
+        let id = e.currentTarget.id;
+        let doc = await apiForIdb.getDocuments(null, null, id);
+        console.log(doc.body);
+    }
+
+    const styleSpan = {
+        cursor: 'pointer',
+        border: '1px solid green',
+        paddingTop: '0.5rem',
+        paddingLeft: '0.5rem',
+        paddingRight: '0.5rem',
+        background: 'yellow'
     }
 
     return (
@@ -57,12 +95,16 @@ const Documents = () => {
                 <input type="date" name="dateStart"
                     id="dateStart"
                     value={dateToString(period.dateStart)}
+                    min={period.dateMin}
+                    max={dateToString(period.dateEnd)}
                     onChange={changeDate}
                 />
                 <label htmlFor="dateEnd">Date end:</label>
                 <input type="date" name="dateEnd"
                     id="dateEnd"
                     value={dateToString(period.dateEnd)}
+                    min={period.dateMin}
+                    max={dateToString(period.dateEnd)}
                     onChange={changeDate}
                 />
             </div>
@@ -81,7 +123,9 @@ const Documents = () => {
             { !!docs.length &&
                 <ul>
                     {docs.map((item, idx) => {
-                        return (idx < 10) && <li key={item.id}>{item.id}</li>
+                        return (idx < 20) && <li key={item.id} id={item.id} onClick={docClick} style={{margin: '0.5rem'}}>
+                            <span style={styleSpan}>{item.id}</span>
+                        </li>
                     })}
                 </ul>
             }

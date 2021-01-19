@@ -30,8 +30,8 @@ export const apiForIdb = {
     let request = await createRequest({ type: `delete_${path}_v2`, id });
     return await fetchEvo(request);
   },
-  async getDocuments(docType) {
-    let request = await createRequest({ type: 'documents_v2', docType });
+  async getDocuments(docType, period = null) {
+    let request = await createRequest({ type: 'documents_v2', docType, period });
     return await fetchEvo(request);
   },
 };

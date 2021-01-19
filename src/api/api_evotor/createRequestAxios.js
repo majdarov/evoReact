@@ -1,7 +1,6 @@
 import api_v2 from './api_v2_axios.json';
 
 async function createRequest(action) {
-
   api_v2.headers['X-Authorization'] = localStorage.appKey;
 
   action.storeUuid = localStorage.storeKey;
@@ -70,10 +69,17 @@ function selectOption(action) {
       } else {
         url = 'stores/' + action.storeUuid + '/documents';
         if (!api_v2.cursor) {
-          // let date = new Date();
-          // date.setMonth(date.getMonth() - 1);
-          // url += `?since=${date.getTime()}&type=${action.docType}`;
-          url += `?type=${action.docType}`;
+          if (action.period) {
+            let dateStart = action.period.dateStart;
+            let dateEnd = action.period.dateEnd;
+            let until = dateEnd ? `&until=${dateEnd}` : null;
+            url += `?since=${dateStart}${until}`;
+          } else {
+            let date = new Date();
+            date.setMonth(date.getMonth() - 1);
+            url += `?since=${date.getTime()}`;
+          }
+          url += `&type=${action.docType}`;
         }
       }
       return { ...api_v2, method, url };
@@ -81,8 +87,7 @@ function selectOption(action) {
 
     case 'put_product_v2':
       method = 'PUT';
-      url =
-        'stores/' + action.storeUuid + '/products/' + action.body.id;
+      url = 'stores/' + action.storeUuid + '/products/' + action.body.id;
       body = JSON.stringify(action.body);
       return { ...api_v2, method, url, body };
 

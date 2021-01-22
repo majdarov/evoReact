@@ -51,7 +51,7 @@ const Header = (props) => {
             { isInit && <h4>App Is Init!</h4>}
             {updated && <ProgressBar limit={20} delay={500} text='updated' />}
             {!isInit && !updated && <div style={{ cursor: 'pointer' }} onClick={clickDateUpdate}>
-                <h5 style={styleH5}>Синхронизировано - {lastUpdate}</h5>
+                <h5 style={styleH5}>{lastUpdate && 'Синхронизировано - '}{lastUpdate}</h5>
             </div>}
             <img src={logo} alt='Logo'></img>
             <h2>{props.title}</h2>

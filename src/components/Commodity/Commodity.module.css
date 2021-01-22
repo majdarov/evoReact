@@ -73,7 +73,8 @@
 .head {
   display: block;
   position: sticky;
-  top: 0;
+  top: 7rem;
+  z-index: 101;
 }
 
 .buttons {

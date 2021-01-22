@@ -39,8 +39,6 @@ const Header = (props) => {
 
     useEffect(() => {
         setNeedUpdate(props.testNeedUpdate(props.lastUpdate));
-        let date = new Date(+props.lastUpdate);
-        setLastUpdate(date.toString());
     }, [props])
 
     let styleH5 = (needUpdate && { color: 'red' }) || { color: 'blue' };

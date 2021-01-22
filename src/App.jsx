@@ -47,8 +47,8 @@ async function fetchGroupsProducts() {
     })
     await apiIDB.pushItems('products', products);
     localStorage.setItem('lastUpdate', Date.now())
-    console.log('LS: ' + localStorage.lastUpdate);
-    setLastUpdate(localStorage.lastUpdate);
+    console.log('LS: ' + new Date(+localStorage.lastUpdate));
+    setLastUpdate();
   } catch (e) {
     console.error(e.message);
     return e;

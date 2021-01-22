@@ -77,8 +77,8 @@ export const initializeApp = () => (dispatch) => {
   }
 };
 
-export const setLastUpdate = (date) => (dispatch) => {
-  return dispatch(setLastUpdateAC(date));
+export const setLastUpdate = () => (dispatch) => {
+  dispatch(setLastUpdateAC(localStorage.lastUpdate));
 };
 
 export default appReducer;

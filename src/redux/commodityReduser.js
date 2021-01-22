@@ -204,20 +204,6 @@ export const getGroups = () => {
   };
 };
 
-export const updateProducts = (pId) => {
-  return (dispatch) => {
-    // productsApi.getData('products/update').then((res) => {
-    //   dispatch(updateCommodityAC());
-    //   dispatch(setUpdatedAC(false));
-    alert(`Updated at ${Date()}`);
-    dispatch(setPidAC(pId || 0));
-    // });
-  };
-};
-
-export const setUpdated = (updated) => (dispatch) =>
-  dispatch(setUpdatedAC(updated));
-
 export const setViewForm = (view) => (dispatch) => {
   dispatch(viewFormAC(view));
 };

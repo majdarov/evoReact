@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import Header from './Header';
 import { withRouter } from 'react-router-dom';
 import { getTitle, chooseLang } from '../../redux/navReduser';
-// import { updateProducts, setUpdated } from '../../redux/commodityReduser';
 import { useEffect } from 'react';
+import { setLastUpdate } from '../../redux/appReducer';
 
 const HeaderContainer = props => {
 
@@ -21,7 +21,6 @@ const HeaderContainer = props => {
 const mapStateToProps = state => {
 
     let className;
-
     return {
         navBar: state.navigation.navBar,
         title: state.navigation.title,
@@ -32,4 +31,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { getTitle,  chooseLang })(withRouter(HeaderContainer));
+export default connect(mapStateToProps, { getTitle, chooseLang, setLastUpdate })(withRouter(HeaderContainer));

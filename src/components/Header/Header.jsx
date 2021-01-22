@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Header.module.css';
 import logo from '../../Assets/img/terminal-5.png';
 import ProgressBar from '../common/ProgressBar/ProgressBar';
+import { fetchGroupsProducts, testNeedUpdate } from '../../api/apiUtils';
 
 const Header = (props) => {
 
@@ -22,7 +23,8 @@ const Header = (props) => {
     }
     async function clickDateUpdate() {
         setUpdated(true);
-        await props.syncProducts();
+        await fetchGroupsProducts();
+        props.setLastUpdate();
         setUpdated(false);
     }
 
@@ -38,7 +40,7 @@ const Header = (props) => {
     }, [props.isInit, props.lastUpdate])
 
     useEffect(() => {
-        setNeedUpdate(props.testNeedUpdate(props.lastUpdate));
+        setNeedUpdate(testNeedUpdate(props.lastUpdate));
     }, [props])
 
     let styleH5 = (needUpdate && { color: 'red' }) || { color: 'blue' };

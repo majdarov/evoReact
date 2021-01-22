@@ -15,7 +15,6 @@ let initialState = {
     { link: '/settings', title: ['Настройки', 'Settings'] },
     { link: '/commodity', title: ['Товары', 'Products'] },
     { link: '/documents', title: ['Документы', 'Documents'] },
-    { link: '/muzik', title: ['Музыка', 'Music'] },
     { link: '/game', title: ['Играть', 'Game'] },
     { link: '/table', title: ['Экспорт Excel', 'Export Excel'] },
   ],

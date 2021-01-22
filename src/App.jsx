@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 import "./css/fontawesome.css";
 import "./css/solid.css";
@@ -7,7 +7,6 @@ import "./css/brands.css";
 import { Route } from "react-router-dom";
 import Game from "./components/Game/Game";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
-import MuzikContainer from "./components/Muzik/MuzikContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import CommodityContainer from "./components/Commodity/CommodityContainer";
 import ImpExcel from "./components/ImpExcel/ImpExcel";
@@ -16,53 +15,19 @@ import IdbTest from "./components/IdbTest/IdbTest";
 import MainSettings from "./components/Settings/MainSettings";
 import { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate } from './redux/appReducer';
 import { connect } from "react-redux";
-import { apiIDB } from "./api/apiIDB";
-import { apiForIdb } from "./api/api";
 import Documents from "./components/Documents/Documents";
+import { fetchGroupsProducts, testNeedUpdate } from "./api/apiUtils";
 
-function testNeedUpdate(date) {
-  if (!date) return true;
-  let needUpdate = (Date.now() - date) / 1000 / 3600 / 24;
-  if (needUpdate > 1) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
-async function fetchGroupsProducts() {
-  // Get groups
-  try {
-    let res = await apiForIdb.getGroupsEvo();
-    let groups = await res.items;
-    await apiIDB.pushItems('groups', groups);
-    // Get products
-    res = await apiForIdb.getProductsEvo();
-    let products = await res.items;
-    products = products.map(item => {
-      if (!item.parent_id) item.parent_id = '0';
-      if (!item.barcodes) item.barcodes = [];
-      if (!item.photos) item.photos = [];
-      return item;
-    })
-    await apiIDB.pushItems('products', products);
-    localStorage.setItem('lastUpdate', Date.now())
-    console.log('LS: ' + new Date(+localStorage.lastUpdate));
-    setLastUpdate();
-  } catch (e) {
-    console.error(e.message);
-    return e;
-  }
-}
-
-async function getProductsForIdb(lastUpdate) {
-  if (testNeedUpdate(lastUpdate)) {
-    await fetchGroupsProducts();
-  }
-}
 
 const App = props => {
 
+  async function getProductsForIdb(lastUpdate) {
+    if (testNeedUpdate(lastUpdate)) {
+      await fetchGroupsProducts();
+      props.setLastUpdate();
+    }
+  }
 
   if (!props.isInit) props.initializeApp();
 
@@ -74,13 +39,12 @@ const App = props => {
 
   return (
     <div className="app">
-      <HeaderContainer syncProducts={fetchGroupsProducts} testNeedUpdate={testNeedUpdate} />
+      <HeaderContainer />
       <NavbarContainer />
       <div className="app-content">
         <Route exact path="/" />
         <Route exact path="/settings" component={MainSettings} />
         <Route path="/example" component={Wrapper} />
-        <Route path="/muzik" component={MuzikContainer} />
         <Route path="/commodity" component={CommodityContainer} />
         <Route path="/game" component={Game} />
         <Route path="/table" component={ImpExcel} />
@@ -101,4 +65,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState, { initializeApp, toggleInitApp, setAppKey, setStoreKey })(App);
+export default connect(mapState, { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate })(App);

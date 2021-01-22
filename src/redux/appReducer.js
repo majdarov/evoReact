@@ -50,19 +50,19 @@ const appReducer = (state = initialState, action) => {
 };
 
 export const setAppKey = (key) => (dispatch) => {
-  return dispatch(setAppKeyAC(key));
+  dispatch(setAppKeyAC(key));
 };
 
 export const setStoreKey = (key) => (dispatch) => {
-  return dispatch(setStoreKeyAC(key));
+  dispatch(setStoreKeyAC(key));
 };
 
 export const toggleInitApp = (init) => (dispatch) => {
-  return dispatch(initAppAC(init));
+  dispatch(initAppAC(init));
 };
 
 export const setStores = (stores) => (dispatch) => {
-  return dispatch(setStoresAC(stores));
+  dispatch(setStoresAC(stores));
 };
 
 export const initializeApp = () => (dispatch) => {
@@ -77,8 +77,12 @@ export const initializeApp = () => (dispatch) => {
   }
 };
 
-export const setLastUpdate = () => (dispatch) => {
+export const setLastUpdate = () => (dispatch, getState) => {
+  const dateBefore = getState().app.lastUpdate;
+  console.log('Date Before: ' + (new Date(dateBefore)).toString());
   dispatch(setLastUpdateAC(localStorage.lastUpdate));
+  const dateAfter = getState().app.lastUpdate;
+  console.log('Date After: ' + (new Date(dateAfter)).toString());
 };
 
 export default appReducer;

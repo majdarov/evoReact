@@ -2,6 +2,7 @@ const SET_APP_KEY = 'SET-APP-KEY';
 const SET_STORE_KEY = 'SET-STORE-KEY';
 const INIT_APP = 'INIT-APP';
 const SET_STORES = 'SET-STORES';
+const SET_LAST_UPDATE = 'SET-LAST-UPDATE';
 
 export const setAppKeyAC = (key) => {
   return { type: SET_APP_KEY, key };
@@ -19,11 +20,16 @@ export const setStoresAC = (stores) => {
   return { type: SET_STORES, stores };
 };
 
+export const setLastUpdateAC = (dateUpdate) => {
+  return { type: SET_LAST_UPDATE, dateUpdate };
+};
+
 const initialState = {
   appKey: null,
   storeKey: null,
   isInit: false,
   stores: [],
+  lastUpdate: null,
 };
 
 const appReducer = (state = initialState, action) => {
@@ -36,6 +42,8 @@ const appReducer = (state = initialState, action) => {
       return { ...state, isInit: action.init };
     case SET_STORES:
       return { ...state, stores: [...action.stores] };
+    case SET_LAST_UPDATE:
+      return { ...state, lastUpdate: +action.dateUpdate };
     default:
       return state;
   }
@@ -63,7 +71,14 @@ export const initializeApp = () => (dispatch) => {
     if (localStorage.storeKey) {
       dispatch(setStoreKeyAC(localStorage.storeKey));
     }
+    if (localStorage.lastUpdate) {
+      dispatch(setLastUpdateAC(localStorage.lastUpdate));
+    }
   }
+};
+
+export const setLastUpdate = (date) => (dispatch) => {
+  return dispatch(setLastUpdateAC(date));
 };
 
 export default appReducer;

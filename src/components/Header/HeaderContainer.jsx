@@ -27,7 +27,8 @@ const mapStateToProps = state => {
         title: state.navigation.title,
         className,
         currentLang: state.navigation.currentLang,
-        isInit: state.app.isInit
+        isInit: state.app.isInit,
+        lastUpdate: state.app.lastUpdate,
     }
 }
 

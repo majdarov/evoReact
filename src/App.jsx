@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import "./css/fontawesome.css";
 import "./css/solid.css";
@@ -14,13 +14,23 @@ import ImpExcel from "./components/ImpExcel/ImpExcel";
 import Wrapper from "./components/Example/Wrapper";
 import IdbTest from "./components/IdbTest/IdbTest";
 import MainSettings from "./components/Settings/MainSettings";
-import { initializeApp, toggleInitApp, setAppKey, setStoreKey } from './redux/appReducer';
+import { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate } from './redux/appReducer';
 import { connect } from "react-redux";
 import { apiIDB } from "./api/apiIDB";
 import { apiForIdb } from "./api/api";
 import Documents from "./components/Documents/Documents";
 
-async function getProductsForIdb() {
+function testNeedUpdate(date) {
+  if (!date) return true;
+  let needUpdate = (Date.now() - date) / 1000 / 3600 / 24;
+  if (needUpdate > 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+async function fetchGroupsProducts() {
   // Get groups
   try {
     let res = await apiForIdb.getGroupsEvo();
@@ -36,25 +46,35 @@ async function getProductsForIdb() {
       return item;
     })
     await apiIDB.pushItems('products', products);
+    localStorage.setItem('lastUpdate', Date.now())
+    console.log('LS: ' + localStorage.lastUpdate);
+    setLastUpdate(localStorage.lastUpdate);
   } catch (e) {
     console.error(e.message);
     return e;
   }
 }
 
+async function getProductsForIdb(lastUpdate) {
+  if (testNeedUpdate(lastUpdate)) {
+    await fetchGroupsProducts();
+  }
+}
+
 const App = props => {
+
 
   if (!props.isInit) props.initializeApp();
 
   if (props.appKey && props.storeKey && !props.isInit) {
-    getProductsForIdb()
-    .then(() => props.toggleInitApp(true))
-    .catch(e => alert(e.message));
+    getProductsForIdb(props.lastUpdate)
+      .then(() => props.toggleInitApp(true))
+      .catch(e => alert(e.message));
   }
 
   return (
     <div className="app">
-      <HeaderContainer />
+      <HeaderContainer syncProducts={fetchGroupsProducts} testNeedUpdate={testNeedUpdate} />
       <NavbarContainer />
       <div className="app-content">
         <Route exact path="/" />
@@ -76,7 +96,8 @@ const mapState = state => {
   return {
     appKey: state.app.appKey,
     storeKey: state.app.storeKey,
-    isInit: state.app.isInit
+    isInit: state.app.isInit,
+    lastUpdate: state.app.lastUpdate
   }
 }
 

@@ -73,7 +73,7 @@
 .head {
   display: block;
   position: sticky;
-  top: 7rem;
+  top: 5rem;
   z-index: 101;
 }
 

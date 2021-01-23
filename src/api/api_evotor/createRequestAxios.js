@@ -85,6 +85,18 @@ function selectOption(action) {
       return { ...api_v2, method, url };
     /*----------------------------------------------*/
 
+    /* Получить список сотрудников */
+      case 'get_employees':
+        method = 'GET';
+        if (action.employee_id) {
+          url = 'employees/' + action.employee_id;
+          action.employee_id = '';
+        } else {
+          url = 'employees';
+        }
+        return { ...api_v2, method, url };
+    /*---------------------------------------------*/
+
     case 'put_product_v2':
       method = 'PUT';
       url = 'stores/' + action.storeUuid + '/products/' + action.body.id;

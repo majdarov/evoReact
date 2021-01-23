@@ -3,6 +3,7 @@ import './Header.module.css';
 import logo from '../../Assets/img/terminal-5.png';
 import ProgressBar from '../common/ProgressBar/ProgressBar';
 import { fetchGroupsProducts, testNeedUpdate } from '../../api/apiUtils';
+// import ProgressBar2 from '../common/ProgressBar/ProgressBar2';
 
 const Header = (props) => {
 
@@ -50,7 +51,7 @@ const Header = (props) => {
         <header>
             { !props.isInit && <h4>Initializing App...</h4>}
             { isInit && <h4>App Is Init!</h4>}
-            {updated && <ProgressBar limit={20} delay={500} text='updated' />}
+            {updated && <ProgressBar limit={20} delay={500} text='updated - ' />}
             {!isInit && !updated && <div style={{ cursor: 'pointer' }} onClick={clickDateUpdate}>
                 <h5 style={styleH5}>{lastUpdate && 'Синхронизировано - '}{lastUpdate}</h5>
             </div>}

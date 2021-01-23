@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { apiForIdb } from '../../api/api';
+import ProgressBar from '../common/ProgressBar/ProgressBar';
 
 function dateToString(date = new Date()) {
     if (!date) return;
@@ -21,7 +22,7 @@ function getMinData(key) {
         let month = min.slice(4, 6);
         let day = min.slice(6)
         return `${year}-${month}-${day}`;
-    } catch(e) {
+    } catch (e) {
         console.error(e.message)
     }
 }
@@ -46,11 +47,13 @@ const Documents = (props) => {
         ['RETURN', 'Возврат поставщику'],
         ['WRITE_OFF', 'Списание'],
         ['SELL', 'Продажа'],
-        ['PAYBACK', 'Возврат']
+        ['PAYBACK', 'Возврат'],
+        ['employees', 'Сотрудники']
     ]
 
     const [docs, setDocs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [docType, setDocType] = useState(typesOfDocs[0][0]);
 
     const [period, setPeriod] = useState({
         dateStart: new Date(),
@@ -64,13 +67,17 @@ const Documents = (props) => {
 
     async function butGetDocs() {
         setIsLoading(true);
-        let docType = document.getElementById('typeDocs').value;
         console.log(docType);
-        let p = {
-            dateStart: period.dateStart.getTime(),
-            dateEnd: period.dateEnd.getTime()
+        let res;
+        if (docType === 'employees') {
+            res = await apiForIdb.getEmoloyees();
+        } else {
+            let p = {
+                dateStart: period.dateStart.getTime(),
+                dateEnd: period.dateEnd.getTime()
+            }
+            res = await apiForIdb.getDocuments(docType, p);
         }
-        let res = await apiForIdb.getDocuments(docType, p);
         console.log(res);
         setDocs(res.items);
         setIsLoading(false);
@@ -90,8 +97,18 @@ const Documents = (props) => {
     async function docClick(e) {
         if (e.target.tagName !== 'SPAN') return;
         let id = e.currentTarget.id;
-        let doc = await apiForIdb.getDocuments(null, null, id);
-        console.log(doc.body);
+        let doc;
+        if (docType === 'employees') {
+            doc = await apiForIdb.getEmoloyees(id);
+        } else {
+            doc = await apiForIdb.getDocuments(null, null, id);
+        }
+        console.log(doc);
+    }
+
+    function changeType(e) {
+        setDocType(e.target.value);
+        setDocs([]);
     }
 
     const styleSpan = {
@@ -105,7 +122,7 @@ const Documents = (props) => {
 
     return (
         <>
-            <h1>Documents</h1>
+            <h1>Documents {docType}</h1>
             <div>
                 <label htmlFor="dateStart">Date start:</label>
                 <input type="date" name="dateStart"
@@ -126,7 +143,7 @@ const Documents = (props) => {
             </div>
             <label>
                 DocType
-            <select name="type_docs" id="typeDocs">
+            <select name="type_docs" id="typeDocs" onChange={changeType}>
                     {
                         typesOfDocs.map(item => {
                             return <option key={item[0]} value={item[0]}>{item[1]}</option>
@@ -135,7 +152,7 @@ const Documents = (props) => {
                 </select>
             </label>
             <button onClick={() => butGetDocs()} disabled={isLoading}>get Documents</button>
-            { isLoading && <p>Loading...</p>}
+            { isLoading && <ProgressBar limit={20} delay={500} text={'Loading '} />}
             { !!docs.length &&
                 <ul>
                     {docs.map((item, idx) => {

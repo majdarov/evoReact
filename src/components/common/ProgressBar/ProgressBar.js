@@ -17,12 +17,14 @@ let ProgressBar = (props) => {
     return () => clearInterval(timer);
   }, [props.delay, props.limit]);
 
+  const styleSpan = {
+    backgroundColor: 'blue',
+    color: 'blue',
+  };
+
   return (
     <div>
-      <h5>
-        {props.text}
-        {p}
-      </h5>
+      <h5 style={{display: 'inline'}}>{props.text}</h5><span style={styleSpan}>{p}</span>
     </div>
   );
 };

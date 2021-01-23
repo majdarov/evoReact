@@ -23,7 +23,8 @@ const Header = (props) => {
     }
     async function clickDateUpdate() {
         setUpdated(true);
-        await fetchGroupsProducts();
+        let load = await fetchGroupsProducts();
+        console.log('fetchGroupsProducts - ' + load);
         props.setLastUpdate();
         setUpdated(false);
     }

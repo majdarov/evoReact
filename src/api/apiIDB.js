@@ -28,7 +28,6 @@ export async function initDb() {
 }
 
 export const apiIDB = {
-
   async getGroup(id) {
     const db = await initDb();
     let group;
@@ -93,4 +92,4 @@ export const apiIDB = {
     await db.delete(storeName, id);
     return id;
   },
-}
+};

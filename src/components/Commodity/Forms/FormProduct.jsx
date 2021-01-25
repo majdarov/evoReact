@@ -11,14 +11,14 @@ import noPhoto from '../../../Assets/img/terminal-5.png';
 
 const FormProduct = props => {
 
-  let parentId = props.pid; /* props.formData.parent_id === null ? '0' : props.formData.parent_id; */
+  let parentId = props.formData.parent_id === null ? '0' : props.formData.parent_id;
   let isNewData = !props.formData.id;
   const fileInput = React.createRef();
   const [state, setState] = useState({
     ...props.formData,
     allow_edit: isNewData,
     parent_id: parentId,
-    photos: [...props.formData.photos],
+    photos: (props.formData.photos?.length && [...props.formData.photos]) || [],
     barcodes: [...props.formData.barcodes],
     isNewData,
     bigImg: null,
@@ -60,7 +60,7 @@ const FormProduct = props => {
         }
       }
     }
-    if (changes.length === 1 && changes[0].code) changes = [];
+    if (changes.length === 1 && isNewData && changes[0].code) changes = [];
     return changes.length;
   }
 

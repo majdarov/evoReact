@@ -29,7 +29,7 @@ const ImpExcel = props => {
 
   return (
     <div className={s.page}>
-      <input type="file" id="input" onChange={(e) => inpChange(e)} />
+      <input type="file" id="input" onChange={inpChange} />
       <h1>LATEST NEWS</h1>
       <div className={s.archive}>{childElements}</div>
     </div>

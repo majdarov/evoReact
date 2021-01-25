@@ -30,11 +30,11 @@ const ListCommodities = props => {
     } else if (!props.comIsLoaded) {
         return <Preloader />
     } else {
-        liElements = commodities.sort(item => item.name).map(item => {
+        liElements = commodities.sort().map(item => {
             return (
                 <li id={item.uuid} key={item.uuid} className={s.clickable}
                     onClick={liClick} data-price={item.price} data-code={item.code}>
-                    {item.label} | {item.price ? item.price.toFixed(2) : '0.00'}
+                    {item.label} | {item.price ? item.price.toFixed(2) : '0.00'} | {item.quantity ? item.quantity.toFixed(2) : '0.00'}
                     <span className={s.del}></span>
                 </li>
             )

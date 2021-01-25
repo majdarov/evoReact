@@ -1,15 +1,15 @@
 import { apiIDB } from './apiIDB';
 import { compose } from './apiUtils';
 
-function blobFromObj({ obj, ...rest }) {
+export function blobFromObj({ obj, ...rest }) {
   let json = JSON.stringify(obj, null, 2);
   let blob = new Blob([json], { type: 'application/json' });
   return { blob, ...rest };
 }
 
-function blobToUrl({ blob, fileName = 'test' }) {
+export function blobToUrl({ blob, fileName = 'test', ext = 'json' }) {
   let link = document.createElement('a');
-  link.download = `${fileName}.json`;
+  link.download = `${fileName}.${ext}`;
   link.href = URL.createObjectURL(blob);
   link.click();
   URL.revokeObjectURL(link.href);

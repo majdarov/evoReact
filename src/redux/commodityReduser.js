@@ -177,7 +177,10 @@ const commodityReduser = (state = initialState, action) => {
 
 export const getProducts = (pId) => {
   return (dispatch) => {
-    apiIDB.getProductsPid(pId).then((res) => dispatch(getCommoditiesAC(res)));
+    apiIDB.getProductsPid(pId).then((res) => {
+      // console.log(res)
+      dispatch(getCommoditiesAC(res))
+    });
   };
 };
 
@@ -187,6 +190,7 @@ export const getProductId = (id) => {
     apiIDB
       .getProduct(id)
       .then((res) => {
+        // console.log(res)
         dispatch(setFormDataAC(res));
         return true;
       })

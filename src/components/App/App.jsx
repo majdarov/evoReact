@@ -1,22 +1,22 @@
 import React from "react";
 import "./App.css";
-import "./css/fontawesome.css";
-import "./css/solid.css";
-import "./css/regular.css";
-import "./css/brands.css";
+import "../../Assets/css/fontawesome.css";
+import "../../Assets/css/solid.css";
+import "../../Assets/css/regular.css";
+import "../../Assets/css/brands.css";
 import { Route } from "react-router-dom";
-import Game from "./components/Game/Game";
-import NavbarContainer from "./components/Navbar/NavbarContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
-import CommodityContainer from "./components/Commodity/CommodityContainer";
-import ImpExcel from "./components/ImpExcel/ImpExcel";
-import Wrapper from "./components/Example/Wrapper";
-import IdbTest from "./components/IdbTest/IdbTest";
-import MainSettings from "./components/Settings/MainSettings";
-import { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate } from './redux/appReducer';
+import Game from "../Game";
+import NavbarContainer from "../Navbar/NavbarContainer";
+import HeaderContainer from "../Header/HeaderContainer";
+import CommodityContainer from "../Commodity";
+import ImpExcel from "../ImpExcel/ImpExcel";
+import Wrapper from "../Example/Wrapper";
+import IdbTest from "../IdbTest/IdbTest";
+import MainSettings from "../Settings/MainSettings";
+import { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate } from '../../redux/appReducer';
 import { connect } from "react-redux";
-import Documents from "./components/Documents/Documents";
-import { fetchGroupsProducts, testNeedUpdate } from "./api/apiUtils";
+import Documents from "../Documents";
+import { fetchGroupsProducts, testNeedUpdate } from "../../api/apiUtils";
 
 
 

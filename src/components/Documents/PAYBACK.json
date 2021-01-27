@@ -1,0 +1,26 @@
+{
+  "message": "Request failed with status code 404",
+  "name": "Error",
+  "stack": "Error: Request failed with status code 404\n    at createError (http://localhost:3000/evoReact/static/js/0.chunk.js:1117:15)\n    at settle (http://localhost:3000/evoReact/static/js/0.chunk.js:1351:12)\n    at XMLHttpRequest.handleLoad (http://localhost:3000/evoReact/static/js/0.chunk.js:591:7)",
+  "config": {
+    "url": "stores/20180608-EEA0-408D-807D-6AB73272E383/documents/f1c3068e-768c-474b-9799-8df945b4e9b6",
+    "method": "get",
+    "headers": {
+      "Accept": "application/vnd.evotor.v2+json",
+      "X-Authorization": "6ef2370f-ed79-43b7-8a7c-f7b83175fef2"
+    },
+    "params": null,
+    "baseURL": "https://api.evotor.ru/",
+    "transformRequest": [
+      null
+    ],
+    "transformResponse": [
+      null
+    ],
+    "timeout": 0,
+    "xsrfCookieName": "XSRF-TOKEN",
+    "xsrfHeaderName": "X-XSRF-TOKEN",
+    "maxContentLength": -1,
+    "maxBodyLength": -1
+  }
+}

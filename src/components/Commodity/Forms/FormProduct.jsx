@@ -153,6 +153,7 @@ const FormProduct = props => {
       delete body.bigImg;
       delete body.currentBarcode;
       delete body.treeView;
+      delete body.alcocodes;
 
       let missData = validateRequiredData(body);
       if (missData.length) {
@@ -334,7 +335,9 @@ const FormProduct = props => {
               <input name="cost_price" defaultValue={formatPrice(state.cost_price)} className={s.price}
                 onBlur={handleBlur} disabled={disabled} /><span></span>
               <label>Allow to sell:</label>
-              <input type="checkbox" name="allow_to_sell" defaultChecked={state.allow_to_sell} disabled={disabled} />
+              <input type="checkbox" name="allow_to_sell"
+                defaultChecked={state.allow_to_sell} disabled={disabled}
+                onChange={handleChange} />
             </div>
           </fieldset>
           <div className={s.buttons}>

@@ -50,7 +50,8 @@ const Documents = (props) => {
         ['WRITE_OFF', 'Списание'],
         ['SELL', 'Продажа'],
         ['PAYBACK', 'Возврат'],
-        ['employees', 'Сотрудники']
+        ['employees', 'Сотрудники'],
+        ['ofd', 'Документы ОФД']
     ]
 
     const [docs, setDocs] = useState([]);
@@ -71,17 +72,28 @@ const Documents = (props) => {
         setIsLoading(true);
         console.log(docType);
         let res;
-        if (docType === 'employees') {
-            res = await apiForIdb.getEmoloyees();
-        } else {
-            let p = {
-                dateStart: period.dateStart.getTime(),
-                dateEnd: period.dateEnd.getTime()
+        try {
+            if (docType === 'employees') {
+                res = await apiForIdb.getEmoloyees();
+            } else if (docType === 'ofd') {
+                res = await apiForIdb.getOfdDocuments();
+            } else {
+                let p = {
+                    dateStart: period.dateStart.getTime(),
+                    dateEnd: period.dateEnd.getTime()
+                }
+                res = await apiForIdb.getDocuments(docType, p);
             }
-            res = await apiForIdb.getDocuments(docType, p);
+            if (!res.items) {
+                setDocs([]);
+            } else {
+                setDocs(res.items);
+            }
+        } catch (e) {
+            alert(e.message);
+            setDocs([]);
         }
         console.log(res);
-        setDocs(res.items);
         setIsLoading(false);
     }
 
@@ -154,7 +166,7 @@ const Documents = (props) => {
                     }
                 </select>
             </label>
-            <button onClick={() => butGetDocs()} disabled={isLoading}>get Documents</button>
+            <button onClick={butGetDocs} disabled={isLoading}>get Documents</button>
             { isLoading && <ProgressBar limit={20} delay={500} text={'Loading '} />}
             { !!docs.length &&
                 <ul>

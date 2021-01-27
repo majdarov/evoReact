@@ -1,0 +1,102 @@
+{
+  "type": "INVENTORY",
+  "id": "487b821e-0d05-4585-92ce-f413bb15c26a",
+  "extras": {},
+  "number": 8090,
+  "close_date": "2019-03-26T11:50:13.000+0000",
+  "time_zone_offset": 14400000,
+  "session_id": "dd221300-69dc-4886-bdf9-56b971d79f0c",
+  "session_number": 263,
+  "close_user_id": "20180729-99CD-40AD-80CD-353310944A8D",
+  "device_id": "20180608-D09E-409D-8015-A35AAA2D3487",
+  "store_id": "20180608-EEA0-408D-807D-6AB73272E383",
+  "user_id": "01-000000000910281",
+  "body": {
+    "positions": [
+      {
+        "product_id": "ae04f645-bc67-4ac0-a639-7ad8f4db6ed6",
+        "quantity": 10,
+        "initial_quantity": 0,
+        "code": "1817",
+        "id": 51673,
+        "extra_keys": [],
+        "sub_positions": []
+      },
+      {
+        "product_id": "0b025c71-230a-4f8b-acdf-224e6df5550e",
+        "quantity": 10,
+        "initial_quantity": 0,
+        "code": "1819",
+        "id": 51674,
+        "extra_keys": [],
+        "sub_positions": []
+      },
+      {
+        "product_id": "3bff66bc-da4a-4390-87a6-03e866181a30",
+        "quantity": 10,
+        "initial_quantity": 0,
+        "code": "1820",
+        "id": 51675,
+        "extra_keys": [],
+        "sub_positions": []
+      },
+      {
+        "product_id": "aec87b26-bc23-4f71-8430-e1853546b92d",
+        "quantity": 10,
+        "initial_quantity": 0,
+        "code": "1821",
+        "id": 51676,
+        "extra_keys": [],
+        "sub_positions": []
+      },
+      {
+        "product_id": "00477B81-649D-30BF-AA4A-36077CD6C51A",
+        "quantity": 30,
+        "initial_quantity": 20,
+        "code": "1310",
+        "id": 51677,
+        "extra_keys": [],
+        "sub_positions": []
+      },
+      {
+        "product_id": "722b0386-5ae9-4050-8865-72764e7a1808",
+        "quantity": 10,
+        "initial_quantity": 0,
+        "code": "1816",
+        "id": 51678,
+        "extra_keys": [],
+        "sub_positions": []
+      },
+      {
+        "product_id": "5C9A26F0-2786-BEFE-E7BB-42290D4D1464",
+        "quantity": 10,
+        "initial_quantity": 10,
+        "code": "1165",
+        "id": 51679,
+        "extra_keys": [],
+        "sub_positions": []
+      },
+      {
+        "product_id": "8ec7a106-33e8-4e89-846b-6060172bbce3",
+        "quantity": 4,
+        "initial_quantity": 0,
+        "code": "1815",
+        "id": 51680,
+        "extra_keys": [],
+        "sub_positions": []
+      },
+      {
+        "product_id": "C7F9070F-DAA8-8B71-DCB7-ADE91ABC7721",
+        "quantity": 30,
+        "initial_quantity": 268,
+        "code": "1449",
+        "id": 51681,
+        "extra_keys": [],
+        "sub_positions": []
+      }
+    ],
+    "complete_inventory": false
+  },
+  "version": "V2",
+  "paging": {}
+}

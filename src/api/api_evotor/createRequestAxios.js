@@ -136,6 +136,19 @@ function selectOption(action) {
       url = 'stores/' + action.storeUuid + '/product-groups';
       body = JSON.stringify(action.body);
       return { ...api_v2, method, headers, url, body };
+
+    case 'get_ofd_documents':
+      method = 'GET';
+      url = `/api/v1/ofd/documents/${action.storeUuid}`;
+      let date = new Date();
+      /* let dateFrom = date.getTime();
+      date.setDate(date.getDate() - 1);
+      let dateTo = date.getTime(); */
+      let dateFrom = `${date.getFullYear()}-0${date.getMonth() + 1}-${date.getDate() - 1}T00:00:00.000Z`;
+      let dateTo = `${date.getFullYear()}-0${date.getMonth() + 1}-${date.getDate()}T00:00:00.000Z`;
+      let params = {deviceId: '20180608-D09E-409D-8015-A35AAA2D3487', type: 'SELL', from: dateFrom, to: dateTo};
+      return { ...api_v2, method, url, params };
+
     default:
       break;
   }

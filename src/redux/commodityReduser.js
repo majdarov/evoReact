@@ -250,13 +250,13 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
     })
     .then((res) => {
       // console.log(res);
-      return res.parent_id;
+      return res.parent_id ? res.parent_id : '0' ;
     })
     .then((pid) => {
+      dispatch(setPidAC(pid));
       dispatch(toggleFormPostAC(false));
       dispatch(viewFormAC(false));
       dispatch(setFormDataAC(initialState.form.formData));
-      dispatch(setPidAC(pid || 0));
     })
     .catch((err) => {
       console.dir(err);

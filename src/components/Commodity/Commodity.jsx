@@ -8,6 +8,7 @@ import FormProduct from "./Forms/FormProduct";
 import { apiIDB } from "../../api/apiIDB";
 
 function toggleHidden(pid) {
+  if (!pid) pid = '0';
   let tree = document.getElementById('Tree');
   tree.querySelectorAll('span').forEach(item => {
     item.className = '';

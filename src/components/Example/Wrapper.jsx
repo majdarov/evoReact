@@ -17,7 +17,7 @@ const Wrapper = (props) => {
             {count < 5 && <Example count={count} />}
             {count < 5 && <Example count={-1} />}
             { (count < 3) && <ProgressBar limit={10} text='test' delay={500} /> }
-            <ProgressBar2 limit={10} text='test' delay={500} />
+            <ProgressBar2 limit={20} text='test' delay={500} />
         </>
     );
 }

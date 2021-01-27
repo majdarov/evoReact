@@ -114,7 +114,7 @@ export function validateRequiredData(body) {
   const reqData = [
     'type',
     'name',
-    'price',
+    // 'price',
     'measure_name',
     'tax',
     'allow_to_sell'

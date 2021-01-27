@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { setAppKey, setStoreKey, setStores, toggleInitApp } from "../../redux/appReducer";
+import { setAppKey, setStoreKey, setStores, toggleInitApp } from "../../redux/Actions";
 import { apiForIdb } from "../../api/api";
 import { readJsonFile, saveConfig } from "../../api/apiFile";
 import { apiIDB } from "../../api/apiIDB";

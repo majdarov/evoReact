@@ -1,68 +1,16 @@
-import { apiForIdb } from '../api/api';
-import { apiIDB } from '../api/apiIDB';
-import { chooseError } from '../components/Errors/chooseError';
-
-const GET_GROUPS = 'GET-GROUPS';
-const SET_PID = 'SET-PID';
-const GET_COMMODITIES = 'GET-COMMODITIES';
-const SET_ERROR = 'SET-ERROR';
-const UPDATE_COMMODITY = 'UPDATE-COMMODITY';
-const SET_UPDATED = 'SET-UPDATED';
-const VIEW_FORM = 'VIEW-FORM';
-const SET_FORM_DATA = 'SET-FORM-DATA';
-const TOGGLE_FORM_POST = 'TOGGLE-FORM-POST';
-const SET_FORM_ERROR = 'SET-FORM-ERROR';
-const SET_APP_KEY = 'SET-APP-KEY';
-const SET_FORM_PHOTOS = 'SET-FORM-FOTOS';
-
-export const getGroupsAC = (groups) => {
-  return { type: GET_GROUPS, groups };
-};
-
-export const setPidAC = (pid) => {
-  return { type: SET_PID, pid: pid };
-};
-
-export const getCommoditiesAC = (commodities) => {
-  return { type: GET_COMMODITIES, commodities };
-};
-
-export const setErrorAC = (error) => {
-  return { type: SET_ERROR, error };
-};
-
-export const setFormErrorAC = (error) => {
-  return { type: SET_FORM_ERROR, error };
-};
-
-export const updateCommodityAC = () => {
-  return { type: UPDATE_COMMODITY };
-};
-
-export const setUpdatedAC = (update) => {
-  return { type: SET_UPDATED, update };
-};
-
-export const viewFormAC = (view) => {
-  return { type: VIEW_FORM, viewForm: view };
-};
-
-export const setFormDataAC = (formData) => {
-  formData = formData === null ? initialState.form.formData : formData;
-  return { type: SET_FORM_DATA, formData };
-};
-
-export const toggleFormPostAC = (formPost) => {
-  return { type: TOGGLE_FORM_POST, formPost };
-};
-
-export const setAppKeyAC = (key) => {
-  return { type: SET_APP_KEY, key };
-};
-
-export const setFormPhotosAC = (photos) => {
-  return { type: SET_FORM_PHOTOS, photos };
-};
+import {
+  GET_GROUPS,
+  SET_PID,
+  GET_COMMODITIES,
+  SET_ERROR,
+  UPDATE_COMMODITY,
+  SET_UPDATED,
+  VIEW_FORM,
+  SET_FORM_DATA,
+  TOGGLE_FORM_POST,
+  SET_FORM_ERROR,
+  SET_FORM_PHOTOS,
+} from './Types';
 
 let initialState = {
   groups: [],
@@ -165,7 +113,9 @@ const commodityReduser = (state = initialState, action) => {
       return { ...state, form: { ...state.form, formPost: action.formPost } };
 
     case SET_FORM_DATA:
-      return { ...state, form: { ...state.form, formData: action.formData } };
+      const formData =
+        action.formData === null ? initialState.form.formData : action.formData;
+      return { ...state, form: { ...state.form, formData } };
 
     case SET_FORM_PHOTOS:
       return { ...state, form: action.photos };
@@ -174,114 +124,5 @@ const commodityReduser = (state = initialState, action) => {
       return state;
   }
 };
-
-export const getProducts = (pId) => {
-  return (dispatch) => {
-    apiIDB.getProductsPid(pId).then((res) => {
-      // console.log(res)
-      dispatch(getCommoditiesAC(res))
-    });
-  };
-};
-
-export const getProductId = (id) => {
-  if (!id) return (dispatch) => dispatch(viewFormAC(true));
-  return (dispatch) => {
-    apiIDB
-      .getProduct(id)
-      .then((res) => {
-        // console.log(res)
-        dispatch(setFormDataAC(res));
-        return true;
-      })
-      .then((result) => {
-        if (result) dispatch(viewFormAC(true));
-      });
-  };
-};
-
-export const getGroups = () => {
-  return (dispatch) => {
-    apiIDB.getGroup('all').then((res) => {
-      dispatch(getGroupsAC(res));
-    });
-  };
-};
-
-export const setViewForm = (view) => (dispatch) => {
-  dispatch(viewFormAC(view));
-};
-
-export const setFormData = (formData) => (dispatch) => {
-  formData = formData ? formData : initialState.form.formData;
-  dispatch(setFormDataAC(formData));
-};
-
-export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
-  // debugger
-  let path;
-  switch (typeData) {
-    case 'product':
-      path = 'product';
-      break;
-    case 'group':
-      path = 'group';
-      break;
-    default:
-      path = 'product';
-      break;
-  }
-  let callbackApi;
-  switch (typeQuery) {
-    case 'post':
-      callbackApi = apiForIdb.postData;
-      break;
-    case 'put':
-      callbackApi = apiForIdb.putData;
-      break;
-    default:
-      callbackApi = apiForIdb.postData;
-      break;
-  }
-  callbackApi(path, body)
-    .then((res) => {
-      apiIDB.putData(`${path}s`, res);
-      return res;
-    })
-    .then((res) => {
-      // console.log(res);
-      return res.parent_id ? res.parent_id : '0' ;
-    })
-    .then((pid) => {
-      dispatch(setPidAC(pid));
-      dispatch(toggleFormPostAC(false));
-      dispatch(viewFormAC(false));
-      dispatch(setFormDataAC(initialState.form.formData));
-    })
-    .catch((err) => {
-      console.dir(err);
-      dispatch(setFormErrorAC(chooseError(err)));
-      dispatch(toggleFormPostAC(false));
-    });
-};
-
-export const deleteProduct = (id, pid) => async (dispatch) => {
-  try {
-    let res = await apiForIdb.deleteData('product', id);
-    console.log(res.status);
-    await apiIDB.deleteData('products', id);
-    dispatch(setPidAC(pid));
-    return id;
-  } catch (err) {
-    console.dir(err);
-    dispatch(setErrorAC(chooseError(err)));
-  }
-};
-
-export const setCommodities = (commodities) => (dispatch) =>
-  dispatch(getCommoditiesAC(commodities));
-
-export const setFormPhotos = (photos) => (dispatch) =>
-  dispatch(setFormPhotosAC(photos));
 
 export default commodityReduser;

@@ -1,28 +1,10 @@
-const SET_APP_KEY = 'SET-APP-KEY';
-const SET_STORE_KEY = 'SET-STORE-KEY';
-const INIT_APP = 'INIT-APP';
-const SET_STORES = 'SET-STORES';
-const SET_LAST_UPDATE = 'SET-LAST-UPDATE';
-
-export const setAppKeyAC = (key) => {
-  return { type: SET_APP_KEY, key };
-};
-
-export const setStoreKeyAC = (key) => {
-  return { type: SET_STORE_KEY, key };
-};
-
-export const initAppAC = (init) => {
-  return { type: INIT_APP, init };
-};
-
-export const setStoresAC = (stores) => {
-  return { type: SET_STORES, stores };
-};
-
-export const setLastUpdateAC = (dateUpdate) => {
-  return { type: SET_LAST_UPDATE, dateUpdate };
-};
+import {
+  SET_APP_KEY,
+  SET_STORE_KEY,
+  INIT_APP,
+  SET_STORES,
+  SET_LAST_UPDATE,
+} from './Types'
 
 const initialState = {
   appKey: null,
@@ -47,42 +29,6 @@ const appReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
-
-export const setAppKey = (key) => (dispatch) => {
-  dispatch(setAppKeyAC(key));
-};
-
-export const setStoreKey = (key) => (dispatch) => {
-  dispatch(setStoreKeyAC(key));
-};
-
-export const toggleInitApp = (init) => (dispatch) => {
-  dispatch(initAppAC(init));
-};
-
-export const setStores = (stores) => (dispatch) => {
-  dispatch(setStoresAC(stores));
-};
-
-export const initializeApp = () => (dispatch) => {
-  if (localStorage.appKey) {
-    dispatch(setAppKeyAC(localStorage.appKey));
-    if (localStorage.storeKey) {
-      dispatch(setStoreKeyAC(localStorage.storeKey));
-    }
-    if (localStorage.lastUpdate) {
-      dispatch(setLastUpdateAC(localStorage.lastUpdate));
-    }
-  }
-};
-
-export const setLastUpdate = () => (dispatch, getState) => {
-  const dateBefore = getState().app.lastUpdate;
-  console.log('Date Before: ' + (new Date(dateBefore)).toString());
-  dispatch(setLastUpdateAC(localStorage.lastUpdate));
-  const dateAfter = getState().app.lastUpdate;
-  console.log('Date After: ' + (new Date(dateAfter)).toString());
 };
 
 export default appReducer;

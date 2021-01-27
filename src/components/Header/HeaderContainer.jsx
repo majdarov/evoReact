@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
 import { withRouter } from 'react-router-dom';
-import { getTitle, chooseLang } from '../../redux/navReduser';
 import { useEffect } from 'react';
-import { setLastUpdate } from '../../redux/appReducer';
+import { getTitle, chooseLang, setLastUpdate } from '../../redux/Actions';
 
 const HeaderContainer = props => {
 

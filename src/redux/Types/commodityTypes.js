@@ -1,0 +1,11 @@
+export const GET_GROUPS = 'GET-GROUPS';
+export const SET_PID = 'SET-PID';
+export const GET_COMMODITIES = 'GET-COMMODITIES';
+export const SET_ERROR = 'SET-ERROR';
+export const UPDATE_COMMODITY = 'UPDATE-COMMODITY';
+export const SET_UPDATED = 'SET-UPDATED';
+export const VIEW_FORM = 'VIEW-FORM';
+export const SET_FORM_DATA = 'SET-FORM-DATA';
+export const TOGGLE_FORM_POST = 'TOGGLE-FORM-POST';
+export const SET_FORM_ERROR = 'SET-FORM-ERROR';
+export const SET_FORM_PHOTOS = 'SET-FORM-FOTOS';

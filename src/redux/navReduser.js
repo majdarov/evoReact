@@ -1,10 +1,4 @@
-const GET_TITLE = 'GET-TITLE';
-
-const CHOOSE_LANG = 'CHOOSE-LANG';
-
-export const getTitleAC = (path) => ({ type: GET_TITLE, path });
-
-export const chooseLangAC = (lng) => ({ type: CHOOSE_LANG, lng });
+import { GET_TITLE, CHOOSE_LANG } from './Types';
 
 let initialState = {
   langs: { ru: 0, en: 1 },
@@ -38,17 +32,5 @@ const navReduser = (state = initialState, action) => {
       return state;
   }
 };
-
-export const getTitle = (path) => {
-  return (dispatch) => {
-    dispatch(getTitleAC(path));
-  };
-};
-
-export const chooseLang = lng => {
-  return dispatch => {
-    dispatch(chooseLangAC(lng))
-  };
-}
 
 export default navReduser;

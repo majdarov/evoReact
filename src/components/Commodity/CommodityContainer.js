@@ -1,9 +1,9 @@
 import Commodity from "./Commodity";
 import {
-  setPidAC, getGroups, getProducts,
+  setPid, getGroups, getProducts,
   setViewForm, getProductId, deleteProduct, setFormData,
-  toggleFormPostAC, postFormData, setFormErrorAC, setErrorAC, setCommodities
-} from "../../redux/commodityReduser";
+  toggleFormPost, postFormData, setFormError, setError, setCommodities
+} from "../../redux/Actions";
 import { connect } from "react-redux";
 
 const mapState = state => {
@@ -24,24 +24,6 @@ const mapState = state => {
     isInit
   };
 };
-
-const setPid = (pId) => {
-  return (dispatch) => {
-    dispatch(setPidAC(pId));
-  };
-};
-
-const toggleFormPost = formPost => {
-  return dispatch => dispatch(toggleFormPostAC(formPost));
-}
-
-const setFormError = err => {
-  return dispatch => dispatch(setFormErrorAC(err));
-}
-
-const setError = err => {
-  return dispatch => dispatch(setErrorAC(err));
-}
 
 export default connect(mapState, {
   getGroups,

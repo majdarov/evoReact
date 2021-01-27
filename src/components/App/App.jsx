@@ -13,7 +13,7 @@ import ImpExcel from "../ImpExcel/ImpExcel";
 import Wrapper from "../Example/Wrapper";
 import IdbTest from "../IdbTest/IdbTest";
 import MainSettings from "../Settings/MainSettings";
-import { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate } from '../../redux/appReducer';
+import { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate } from '../../redux/Actions';
 import { connect } from "react-redux";
 import Documents from "../Documents";
 import { fetchGroupsProducts, testNeedUpdate } from "../../api/apiUtils";

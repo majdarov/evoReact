@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { getTitleAC } from "../../redux/navReduser";
+import { getTitle } from "../../redux/Actions";
 import { connect } from "react-redux";
 
 const mapState = (state, ownProps) => {
@@ -11,7 +11,7 @@ const mapDispatch = (dispatch, ownProps) => {
   let { to } = ownProps;
   return {
     onClick: () => {
-      dispatch(getTitleAC(to));
+      getTitle(to);
     },
   };
 };

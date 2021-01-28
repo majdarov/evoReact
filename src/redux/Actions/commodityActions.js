@@ -110,7 +110,11 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
   }
   callbackApi(path, body)
     .then((res) => {
-      apiIDB.putData(`${path}s`, res);
+      if (res.status < 400 || res.id) {
+        apiIDB.putData(`${path}s`, res);
+      } else {
+        throw chooseError(res)
+      }
       return res;
     })
     .then((res) => {
@@ -125,6 +129,7 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
     })
     .catch((err) => {
       console.dir(err);
+      alert(err);
       dispatch(setFormErrorAC(chooseError(err)));
       dispatch(toggleFormPostAC(false));
     });
@@ -149,10 +154,12 @@ export const setCommodities = (commodities) => (dispatch) =>
 export const setFormPhotos = (photos) => (dispatch) =>
   dispatch(setFormPhotosAC(photos));
 
-export const setPid = pId => dispatch => dispatch(setPidAC(pId));
+export const setPid = (pId) => (dispatch) => dispatch(setPidAC(pId));
 
-export const setError = err => dispatch => dispatch(setErrorAC(err));
+export const setError = (err) => (dispatch) => dispatch(setErrorAC(err));
 
-export const setFormError = err => dispatch => dispatch(setFormErrorAC(err));
+export const setFormError = (err) => (dispatch) =>
+  dispatch(setFormErrorAC(err));
 
-export const toggleFormPost = formPost => dispatch => dispatch(toggleFormPostAC(formPost));
+export const toggleFormPost = (formPost) => (dispatch) =>
+  dispatch(toggleFormPostAC(formPost));

@@ -1,18 +1,47 @@
 {
   "type": "SELL",
-  "id": "4bd1070e-a1e0-445d-8852-09edfdb3d7bd",
+  "id": "cc25801d-21cf-4e10-87cd-b90511b3994a",
   "extras": {},
-  "number": 31348,
-  "close_date": "2021-01-24T08:02:16.000+0000",
+  "number": 31268,
+  "close_date": "2021-01-21T12:06:48.000+0000",
   "time_zone_offset": 14400000,
-  "session_id": "e32e4eb0-8b36-4ff0-bb76-4ff31e2eca5e",
-  "session_number": 918,
-  "close_user_id": "20180729-99CD-40AD-80CD-353310944A8D",
+  "session_id": "f21c1e47-17c0-4fc5-b9d4-054461a40875",
+  "session_number": 915,
+  "close_user_id": "20180723-2409-409D-80DB-BBF4F69C8314",
   "device_id": "20180608-D09E-409D-8015-A35AAA2D3487",
   "store_id": "20180608-EEA0-408D-807D-6AB73272E383",
   "user_id": "01-000000000910281",
   "body": {
     "positions": [
+      {
+        "quantity": 3,
+        "initial_quantity": 0,
+        "product_type": "NORMAL",
+        "alcohol_by_volume": 0,
+        "alcohol_product_kind_code": 0,
+        "tare_volume": 0,
+        "product_name": "Позиция по свободной цене",
+        "measure_name": "дроб",
+        "id": 190742,
+        "uuid": "ac30747f-ce13-4b24-8190-f56709a9a58d",
+        "extra_keys": [],
+        "sub_positions": [],
+        "measure_precision": 3,
+        "price": 100,
+        "cost_price": 0,
+        "result_price": 100,
+        "sum": 300,
+        "tax": {
+          "type": "NO_VAT",
+          "sum": 0,
+          "result_sum": 0
+        },
+        "result_sum": 300,
+        "print_group_id": "46dd89f0-3a54-470a-a166-ad01fa34b86a",
+        "settlement_method": {
+          "type": "CHECKOUT_FULL"
+        }
+      },
       {
         "quantity": 1,
         "initial_quantity": 0,
@@ -22,21 +51,50 @@
         "tare_volume": 0,
         "product_name": "Позиция по свободной цене",
         "measure_name": "дроб",
-        "id": 191208,
-        "uuid": "071a7f9d-6bdd-45dc-b8bb-eb902e209d45",
+        "id": 190744,
+        "uuid": "cc07d8c7-e398-4cda-806a-11838deb1ad6",
         "extra_keys": [],
         "sub_positions": [],
         "measure_precision": 3,
-        "price": 95,
+        "price": 30,
         "cost_price": 0,
-        "result_price": 95,
-        "sum": 95,
+        "result_price": 30,
+        "sum": 30,
         "tax": {
           "type": "NO_VAT",
           "sum": 0,
           "result_sum": 0
         },
-        "result_sum": 95,
+        "result_sum": 30,
+        "print_group_id": "46dd89f0-3a54-470a-a166-ad01fa34b86a",
+        "settlement_method": {
+          "type": "CHECKOUT_FULL"
+        }
+      },
+      {
+        "quantity": 1,
+        "initial_quantity": 0,
+        "product_type": "NORMAL",
+        "alcohol_by_volume": 0,
+        "alcohol_product_kind_code": 0,
+        "tare_volume": 0,
+        "product_name": "Позиция по свободной цене",
+        "measure_name": "дроб",
+        "id": 190746,
+        "uuid": "8ca4378a-7fc2-47f6-8913-6734177f0c46",
+        "extra_keys": [],
+        "sub_positions": [],
+        "measure_precision": 3,
+        "price": 30,
+        "cost_price": 0,
+        "result_price": 30,
+        "sum": 30,
+        "tax": {
+          "type": "NO_VAT",
+          "sum": 0,
+          "result_sum": 0
+        },
+        "result_sum": 30,
         "print_group_id": "46dd89f0-3a54-470a-a166-ad01fa34b86a",
         "settlement_method": {
           "type": "CHECKOUT_FULL"
@@ -46,13 +104,13 @@
     "doc_discounts": [],
     "payments": [
       {
-        "id": "e15a09ff-ad51-4d19-99b8-de34766f1530",
-        "sum": 95,
+        "id": "544a05e6-07b6-4b7b-b566-684f72368509",
+        "sum": 360,
         "type": "ELECTRON",
         "parts": [
           {
             "print_group_id": "46dd89f0-3a54-470a-a166-ad01fa34b86a",
-            "part_sum": 95,
+            "part_sum": 360,
             "change": 0
           }
         ],
@@ -77,24 +135,24 @@
     ],
     "pos_print_results": [
       {
-        "receipt_number": 1998,
-        "document_number": 5888,
-        "session_number": 927,
-        "receipt_date": "24012021",
-        "receipt_time": "1202",
-        "fiscal_sign_doc_number": "1288656480",
-        "fiscal_document_number": 29505,
+        "receipt_number": 1930,
+        "document_number": 5689,
+        "session_number": 924,
+        "receipt_date": "21012021",
+        "receipt_time": "1606",
+        "fiscal_sign_doc_number": "3598853045",
+        "fiscal_document_number": 29431,
         "fn_serial_number": "8711000101642871",
         "kkt_serial_number": "00307400654306",
         "kkt_reg_number": "0001979540033112",
         "print_group_id": "46dd89f0-3a54-470a-a166-ad01fa34b86a",
-        "check_sum": 95
+        "check_sum": 360
       }
     ],
-    "sum": 95,
-    "result_sum": 95
+    "sum": 360,
+    "result_sum": 360
   },
-  "created_at": "2021-01-24T08:02:18.315+0000",
+  "created_at": "2021-01-21T12:06:49.336+0000",
   "version": "V2",
   "paging": {}
 }

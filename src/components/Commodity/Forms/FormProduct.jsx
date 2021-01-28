@@ -97,6 +97,10 @@ const FormProduct = props => {
       })
       setState({ ...state, allow_edit: true });
       form.allow_edit.parentNode.remove();
+    } else if (name === 'allow_to_sell') {
+      value = elem.checked;
+      // console.log(name + ': ' + value)
+      setState({ ...state, [name]: value });
     } else {
       setState({ ...state, [name]: value });
     }
@@ -334,10 +338,11 @@ const FormProduct = props => {
               <label htmlFor='cost_price'>Cost Price:</label>
               <input name="cost_price" defaultValue={formatPrice(state.cost_price)} className={s.price}
                 onBlur={handleBlur} disabled={disabled} /><span></span>
-              <label>Allow to sell:</label>
-              <input type="checkbox" name="allow_to_sell"
-                defaultChecked={state.allow_to_sell} disabled={disabled}
-                onChange={handleChange} />
+              <label>Allow to sell:
+              <input type="checkbox" name="allow_to_sell" id="allow_to_sell"
+                  defaultChecked={state.allow_to_sell} disabled={disabled}
+                  onChange={handleChange} />
+              </label>
             </div>
           </fieldset>
           <div className={s.buttons}>

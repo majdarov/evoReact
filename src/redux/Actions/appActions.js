@@ -55,9 +55,9 @@ export const initializeApp = () => (dispatch) => {
 };
 
 export const setLastUpdate = () => (dispatch, getState) => {
-  const dateBefore = getState().app.lastUpdate;
-  console.log('Date Before: ' + new Date(dateBefore).toString());
+  // const dateBefore = getState().app.lastUpdate;
+  // console.log('Date Before: ' + new Date(dateBefore).toString());
   dispatch(setLastUpdateAC(localStorage.lastUpdate));
-  const dateAfter = getState().app.lastUpdate;
-  console.log('Date After: ' + new Date(dateAfter).toString());
+  // const dateAfter = getState().app.lastUpdate;
+  // console.log('Date After: ' + new Date(dateAfter).toString());
 };

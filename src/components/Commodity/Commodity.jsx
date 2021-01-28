@@ -50,18 +50,20 @@ const Commodity = props => {
     }
   }, [props.groups, props.pid]);
 
-  if (!props.isLoaded && props.isInit) {
-    props.setPid('0');
-    props.getGroups();
-  }
-  if (!props.comIsLoaded && props.isInit) {
-    props.getProducts(props.pid);
-  }
+  useEffect(() => {
+    if (!props.isLoaded && props.isInit) {
+      props.setPid('0');
+      props.getGroups();
+    }
+    if (!props.comIsLoaded && props.isInit) {
+      props.getProducts(props.pid);
+    }
 
-  if (props.error) {
-    alert(`${props.error.name}\n\r${props.error.message}`);
-    props.setError(null);
-  }
+    if (props.error) {
+      alert(`${props.error.name}\n\r${props.error.message}`);
+      props.setError(null);
+    }
+  }, [props])
 
   function newData() {
     props.getProductId();

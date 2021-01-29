@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import "../../Assets/css/fontawesome.css";
 import "../../Assets/css/solid.css";
@@ -13,7 +13,7 @@ import ImpExcel from "../ImpExcel/ImpExcel";
 import Wrapper from "../Example/Wrapper";
 import IdbTest from "../IdbTest/IdbTest";
 import MainSettings from "../Settings/MainSettings";
-import { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate } from '../../redux/Actions';
+import { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate, setPeriodUpdate } from '../../redux/Actions';
 import { connect } from "react-redux";
 import Documents from "../Documents";
 import { fetchGroupsProducts, testNeedUpdate } from "../../api/apiUtils";
@@ -22,20 +22,23 @@ import { fetchGroupsProducts, testNeedUpdate } from "../../api/apiUtils";
 
 const App = props => {
 
-  async function getProductsForIdb(lastUpdate) {
-    if (testNeedUpdate(lastUpdate)) {
-      await fetchGroupsProducts();
-      props.setLastUpdate();
+  useEffect(() => {
+
+    async function getProductsForIdb(lastUpdate, periodUpdate = 24) {
+      if (testNeedUpdate(lastUpdate, periodUpdate)) {
+        await fetchGroupsProducts();
+        props.setLastUpdate();
+      }
     }
-  }
 
-  if (!props.isInit) props.initializeApp();
+    if (!props.isInit) props.initializeApp();
 
-  if (props.appKey && props.storeKey && !props.isInit) {
-    getProductsForIdb(props.lastUpdate)
-      .then(() => props.toggleInitApp(true))
-      .catch(e => alert(e.message));
-  }
+    if (props.appKey && props.storeKey && !props.isInit) {
+      getProductsForIdb(props.lastUpdate, props.periodUpdate)
+        .then(() => props.toggleInitApp(true))
+        .catch(e => alert(e.message));
+    }
+  }, [props])
 
   return (
     <div className="app">
@@ -61,8 +64,9 @@ const mapState = state => {
     appKey: state.app.appKey,
     storeKey: state.app.storeKey,
     isInit: state.app.isInit,
-    lastUpdate: state.app.lastUpdate
+    lastUpdate: state.app.lastUpdate,
+    periodUpdate: state.app.periodUpdate,
   }
 }
 
-export default connect(mapState, { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate })(App);
+export default connect(mapState, { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate, setPeriodUpdate })(App);

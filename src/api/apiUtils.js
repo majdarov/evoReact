@@ -9,10 +9,14 @@ export function map(cb) {
   return (arr) => arr.map(cb);
 }
 
-export function testNeedUpdate(date) {
+export function testNeedUpdate(date, periodUpdate = 24) {
+  // debugger
+  if (typeof date === 'string') {
+    date = new Date(date).getTime();
+  }
   if (!date) return true;
-  let needUpdate = (Date.now() - date) / 1000 / 3600 / 24;
-  if (needUpdate > 1) {
+  let needUpdate = (Date.now() - date) / 1000 / 3600;
+  if (needUpdate > periodUpdate ) {
     return true;
   } else {
     return false;

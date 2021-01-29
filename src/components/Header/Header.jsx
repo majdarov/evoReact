@@ -11,6 +11,7 @@ const Header = (props) => {
     const [lastUpdate, setLastUpdate] = useState(null);
     const [updated, setUpdated] = useState(false);
     const [needUpdate, setNeedUpdate] = useState(false);
+    // const periodUpdate = props.periodUpdate;
 
     function clickLang(ev) {
         let lng;
@@ -42,8 +43,8 @@ const Header = (props) => {
     }, [props.isInit, props.lastUpdate])
 
     useEffect(() => {
-        setNeedUpdate(testNeedUpdate(props.lastUpdate));
-    }, [props])
+        setNeedUpdate(testNeedUpdate(lastUpdate, props.periodUpdate));
+    }, [lastUpdate, props.periodUpdate])
 
     let styleH5 = (needUpdate && { color: 'red' }) || { color: 'blue' };
 
@@ -52,9 +53,10 @@ const Header = (props) => {
             { !props.isInit && <h4>Initializing App...</h4>}
             { isInit && <h4>App Is Init!</h4>}
             {updated && <ProgressBar limit={20} delay={500} text='updated - ' />}
-            {!isInit && !updated && <div style={{ cursor: 'pointer' }} onClick={clickDateUpdate}>
-                <h5 style={styleH5}>{lastUpdate && 'Синхронизировано - '}{lastUpdate}</h5>
-            </div>}
+            {!isInit && !updated &&
+                <div style={{ cursor: 'pointer' }} onClick={clickDateUpdate}>
+                    <h5 style={styleH5}>{lastUpdate && 'Синхронизировано - '}{lastUpdate}</h5>
+                </div>}
             <img src={logo} alt='Logo'></img>
             <h2>{props.title}</h2>
             <div onClick={clickLang}>

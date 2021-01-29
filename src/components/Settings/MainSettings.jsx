@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { setAppKey, setStoreKey, setStores, toggleInitApp } from "../../redux/Actions";
+import { setAppKey, setStoreKey, setStores, toggleInitApp, setPeriodUpdate } from "../../redux/Actions";
 import { apiForIdb } from "../../api/api";
 import { readJsonFile, saveConfig } from "../../api/apiFile";
 import { apiIDB } from "../../api/apiIDB";
@@ -77,6 +77,15 @@ const MainSettings = props => {
         props.setStoreKey(config.storeKey);
     }
 
+    const [periodUpdate, setPUpdate] = useState(props.periodUpdate);
+
+    useEffect(() => setPUpdate(props.periodUpdate), [props.periodUpdate]);
+
+    function blurPeriodUpdate(ev) {
+        localStorage.setItem('periodUpdate', periodUpdate);
+        props.setPeriodUpdate(periodUpdate);
+    }
+
     return (
         <div>
             {props.appKey && props.storeKey && !props.isInit &&
@@ -132,6 +141,12 @@ const MainSettings = props => {
                 <div>
                     <button onClick={() => cleareStorage('Evo')}>cleare Storage</button>
                     <button onClick={saveData}>Save Config</button>
+                    <label htmlFor="periodUpdate">Период обновления(час.):</label>
+                    <input type="number" name="periodUpdate" id="periodUpdate"
+                        style={{width: '3rem'}}
+                        value={periodUpdate} onChange={ev => setPUpdate(ev.target.value)}
+                        onBlur={blurPeriodUpdate}
+                    />
                 </div>
             }
             {
@@ -152,8 +167,9 @@ const mapState = state => {
         appKey: state.app.appKey,
         storeKey: state.app.storeKey,
         isInit: state.app.isInit,
-        stores: state.app.stores
+        stores: state.app.stores,
+        periodUpdate: state.app.periodUpdate,
     }
 }
 
-export default connect(mapState, { setAppKey, setStoreKey, setStores, toggleInitApp })(MainSettings);
+export default connect(mapState, { setAppKey, setStoreKey, setStores, toggleInitApp, setPeriodUpdate })(MainSettings);

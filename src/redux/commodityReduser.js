@@ -1,7 +1,7 @@
 import {
-  GET_GROUPS,
+  SET_GROUPS,
   SET_PID,
-  GET_COMMODITIES,
+  SET_COMMODITIES,
   SET_ERROR,
   UPDATE_COMMODITY,
   SET_UPDATED,
@@ -49,7 +49,7 @@ let initialState = {
 
 const commodityReduser = (state = initialState, action) => {
   switch (action.type) {
-    case GET_GROUPS:
+    case SET_GROUPS:
       let groups = [];
       action.groups.forEach((item) => {
         let group = {
@@ -69,7 +69,7 @@ const commodityReduser = (state = initialState, action) => {
         comIsLoaded: false,
       });
 
-    case GET_COMMODITIES:
+    case SET_COMMODITIES:
       let commodities = [];
       action.commodities.forEach((item) => {
         // if (item.g) return;

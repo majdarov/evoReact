@@ -1,6 +1,6 @@
-export const GET_GROUPS = 'GET-GROUPS';
+export const SET_GROUPS = 'GET-GROUPS';
 export const SET_PID = 'SET-PID';
-export const GET_COMMODITIES = 'GET-COMMODITIES';
+export const SET_COMMODITIES = 'GET-COMMODITIES';
 export const SET_ERROR = 'SET-ERROR';
 export const UPDATE_COMMODITY = 'UPDATE-COMMODITY';
 export const SET_UPDATED = 'SET-UPDATED';

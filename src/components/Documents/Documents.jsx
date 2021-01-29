@@ -111,6 +111,10 @@ const Documents = (props) => {
     async function docClick(e) {
         if (e.target.tagName !== 'SPAN') return;
         let id = e.currentTarget.id;
+        if (id === 'Временно не работает!') {
+            alert(id);
+            return;
+        }
         let doc;
         if (docType === 'employees') {
             doc = await apiForIdb.getEmoloyees(id);

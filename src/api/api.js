@@ -35,8 +35,9 @@ export const apiForIdb = {
     return await fetchEvo(request);
   },
   async getOfdDocuments() {
-    let request = await createRequest({ type: 'get_ofd_documents' });
-    return await fetchEvo(request);
+    // let request = await createRequest({ type: 'get_ofd_documents' });
+    // return await fetchEvo(request);
+    return {items: [{id: 'Временно не работает!'}]};
   },
   async getEmoloyees(employee_id = null) {
     let request = await createRequest({ type: 'get_employees', employee_id });

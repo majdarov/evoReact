@@ -4,6 +4,7 @@ import {
   INIT_APP,
   SET_STORES,
   SET_LAST_UPDATE,
+  SET_PERIOD_UPDATE,
 } from './Types'
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   isInit: false,
   stores: [],
   lastUpdate: null,
+  periodUpdate: 24
 };
 
 const appReducer = (state = initialState, action) => {
@@ -26,6 +28,8 @@ const appReducer = (state = initialState, action) => {
       return { ...state, stores: [...action.stores] };
     case SET_LAST_UPDATE:
       return { ...state, lastUpdate: +action.dateUpdate };
+    case SET_PERIOD_UPDATE:
+      return { ...state, periodUpdate: action.periodUpdate };
     default:
       return state;
   }

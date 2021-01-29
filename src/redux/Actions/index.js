@@ -5,6 +5,7 @@ export {
   setStores,
   initializeApp,
   setLastUpdate,
+  setPeriodUpdate
 } from './appActions';
 
 export { getTitle, chooseLang } from './navigationActions';

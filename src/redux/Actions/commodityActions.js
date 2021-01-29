@@ -2,8 +2,8 @@ import { apiForIdb } from '../../api/api';
 import { apiIDB } from '../../api/apiIDB';
 import { chooseError } from '../../components/Errors/chooseError';
 import {
-  GET_COMMODITIES,
-  GET_GROUPS,
+  SET_COMMODITIES,
+  SET_GROUPS,
   SET_ERROR,
   SET_FORM_DATA,
   SET_FORM_ERROR,
@@ -13,14 +13,14 @@ import {
   VIEW_FORM,
 } from '../Types';
 
-const getGroupsAC = (groups) => {
-  return { type: GET_GROUPS, groups };
+const setGroupsAC = (groups) => {
+  return { type: SET_GROUPS, groups };
 };
 const setPidAC = (pid) => {
   return { type: SET_PID, pid: pid };
 };
-const getCommoditiesAC = (commodities) => {
-  return { type: GET_COMMODITIES, commodities };
+const setCommoditiesAC = (commodities) => {
+  return { type: SET_COMMODITIES, commodities };
 };
 const setErrorAC = (error) => {
   return { type: SET_ERROR, error };
@@ -45,7 +45,7 @@ export const getProducts = (pId) => {
   return (dispatch) => {
     apiIDB.getProductsPid(pId).then((res) => {
       // console.log(res)
-      dispatch(getCommoditiesAC(res));
+      dispatch(setCommoditiesAC(res));
     });
   };
 };
@@ -69,7 +69,7 @@ export const getProductId = (id) => {
 export const getGroups = () => {
   return (dispatch) => {
     apiIDB.getGroup('all').then((res) => {
-      dispatch(getGroupsAC(res));
+      dispatch(setGroupsAC(res));
     });
   };
 };
@@ -149,7 +149,7 @@ export const deleteProduct = (id, pid) => async (dispatch) => {
 };
 
 export const setCommodities = (commodities) => (dispatch) =>
-  dispatch(getCommoditiesAC(commodities));
+  dispatch(setCommoditiesAC(commodities));
 
 export const setFormPhotos = (photos) => (dispatch) =>
   dispatch(setFormPhotosAC(photos));

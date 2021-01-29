@@ -2,6 +2,7 @@ import {
   INIT_APP,
   SET_APP_KEY,
   SET_LAST_UPDATE,
+  SET_PERIOD_UPDATE,
   SET_STORES,
   SET_STORE_KEY,
 } from '../Types';
@@ -14,7 +15,7 @@ const setStoreKeyAC = (key) => {
   return { type: SET_STORE_KEY, key };
 };
 
-const initAppAC = (init) => {
+const toggleInitAppAC = (init) => {
   return { type: INIT_APP, init };
 };
 
@@ -26,6 +27,19 @@ const setLastUpdateAC = (dateUpdate) => {
   return { type: SET_LAST_UPDATE, dateUpdate };
 };
 
+const setPeriodUpdateAC = periodUpdate  => {
+  if (isNaN(+periodUpdate)) {
+    periodUpdate = 24;
+  } else if (+periodUpdate < 1) {
+    periodUpdate = 1;
+  } else if (+periodUpdate > 24) {
+    periodUpdate = 24;
+  } else {
+    periodUpdate = +periodUpdate;
+  }
+  return { type: SET_PERIOD_UPDATE, periodUpdate }
+}
+
 export const setAppKey = (key) => (dispatch) => {
   dispatch(setAppKeyAC(key));
 };
@@ -35,12 +49,13 @@ export const setStoreKey = (key) => (dispatch) => {
 };
 
 export const toggleInitApp = (init) => (dispatch) => {
-  dispatch(initAppAC(init));
+  dispatch(toggleInitAppAC(init));
 };
 
 export const setStores = (stores) => (dispatch) => {
   dispatch(setStoresAC(stores));
 };
+
 
 export const initializeApp = () => (dispatch) => {
   if (localStorage.appKey) {
@@ -50,6 +65,10 @@ export const initializeApp = () => (dispatch) => {
     }
     if (localStorage.lastUpdate) {
       dispatch(setLastUpdateAC(localStorage.lastUpdate));
+      dispatch(toggleInitAppAC(true));
+    }
+    if (localStorage.periodUpdate) {
+      dispatch(setPeriodUpdate(localStorage.periodUpdate));
     }
   }
 };
@@ -60,4 +79,8 @@ export const setLastUpdate = () => (dispatch, getState) => {
   dispatch(setLastUpdateAC(localStorage.lastUpdate));
   // const dateAfter = getState().app.lastUpdate;
   // console.log('Date After: ' + new Date(dateAfter).toString());
+};
+
+export const setPeriodUpdate = periodUpdate => dispatch => {
+  dispatch(setPeriodUpdateAC(periodUpdate));
 };

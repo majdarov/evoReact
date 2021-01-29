@@ -4,14 +4,15 @@ export {
   INIT_APP,
   SET_STORES,
   SET_LAST_UPDATE,
+  SET_PERIOD_UPDATE,
 } from './appTypes';
 
 export { GET_TITLE, CHOOSE_LANG } from './navigationTypes';
 
 export {
-  GET_GROUPS,
+  SET_GROUPS,
   SET_PID,
-  GET_COMMODITIES,
+  SET_COMMODITIES,
   SET_ERROR,
   UPDATE_COMMODITY,
   SET_UPDATED,

@@ -86,15 +86,15 @@ function selectOption(action) {
     /*----------------------------------------------*/
 
     /* Получить список сотрудников */
-      case 'get_employees':
-        method = 'GET';
-        if (action.employee_id) {
-          url = 'employees/' + action.employee_id;
-          action.employee_id = '';
-        } else {
-          url = 'employees';
-        }
-        return { ...api_v2, method, url };
+    case 'get_employees':
+      method = 'GET';
+      if (action.employee_id) {
+        url = 'employees/' + action.employee_id;
+        action.employee_id = '';
+      } else {
+        url = 'employees';
+      }
+      return { ...api_v2, method, url };
     /*---------------------------------------------*/
 
     case 'put_product_v2':
@@ -113,6 +113,18 @@ function selectOption(action) {
       method = 'DELETE';
       url = 'stores/' + action.storeUuid + '/products/' + action.id;
       return { ...api_v2, method, url };
+
+    case 'put_group_v2':
+      method = 'PUT';
+      url = 'stores/' + action.storeUuid + '/product-groups/' + action.body.id;
+      body = JSON.stringify(action.body);
+      return { ...api_v2, method, url, body };
+
+    case 'post_group_v2':
+      method = 'POST';
+      url = 'stores/' + action.storeUuid + '/product-groups/';
+      body = JSON.stringify(action.body);
+      return { ...api_v2, method, url, body };
 
     case 'put_array_products_v2':
       if (!action.body || !action.body.length) {
@@ -144,9 +156,18 @@ function selectOption(action) {
       /* let dateFrom = date.getTime();
       date.setDate(date.getDate() - 1);
       let dateTo = date.getTime(); */
-      let dateFrom = `${date.getFullYear()}-0${date.getMonth() + 1}-${date.getDate() - 1}T00:00:00.000Z`;
-      let dateTo = `${date.getFullYear()}-0${date.getMonth() + 1}-${date.getDate()}T00:00:00.000Z`;
-      let params = {deviceId: '20180608-D09E-409D-8015-A35AAA2D3487', type: 'SELL', from: dateFrom, to: dateTo};
+      let dateFrom = `${date.getFullYear()}-0${date.getMonth() + 1}-${
+        date.getDate() - 1
+      }T00:00:00.000Z`;
+      let dateTo = `${date.getFullYear()}-0${
+        date.getMonth() + 1
+      }-${date.getDate()}T00:00:00.000Z`;
+      let params = {
+        deviceId: '20180608-D09E-409D-8015-A35AAA2D3487',
+        type: 'SELL',
+        from: dateFrom,
+        to: dateTo,
+      };
       return { ...api_v2, method, url, params };
 
     default:

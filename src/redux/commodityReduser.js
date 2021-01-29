@@ -32,7 +32,7 @@ let initialState = {
       allow_to_sell: true,
       description: '',
       article_number: '',
-      // parent_id: null,
+      parent_id: null,
       type: 'NORMAL',
       price: 0,
       cost_price: 0,

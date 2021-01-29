@@ -105,6 +105,11 @@ export const ComponentsProducts = {
     },
     Barcodes: props => {
 
+        let barcodes = [];
+        if (props.barcodes?.length) {
+            barcodes = [...props.barcodes];
+        }
+
         const delBcClick = ev => {
             if (!props.allow_edit) return;
             let elem;
@@ -120,7 +125,7 @@ export const ComponentsProducts = {
                 <legend>Barcodes</legend>
                 <div className={props.view_barcode}>
                     <ul>
-                        {props.barcodes.map(b => {
+                        {barcodes.map(b => {
                             return (
                                 <li key={b} id={b} onClick={delBcClick}>{viewBarcode(b)}
                                     <span className={props.delBc}></span>

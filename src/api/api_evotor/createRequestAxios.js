@@ -126,6 +126,11 @@ function selectOption(action) {
       body = JSON.stringify(action.body);
       return { ...api_v2, method, url, body };
 
+    case 'delete_group_v2':
+      method = 'DELETE';
+      url = 'stores/' + action.storeUuid + '/product-groups/' + action.id;
+      return { ...api_v2, method, url };
+
     case 'put_array_products_v2':
       if (!action.body || !action.body.length) {
         return {};

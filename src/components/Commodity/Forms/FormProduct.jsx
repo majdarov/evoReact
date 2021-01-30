@@ -151,19 +151,30 @@ const FormProduct = props => {
     ev.stopPropagation();
     if (state.allow_edit && formChanged() && window.confirm('Save changes')) {
       // if (state.photos.length) setFormPhotos([...state.photos]);
-      let body = { ...state };
+      let body;
+      if (isGroup) {
+        body = {
+          id: state.id,
+          parent_id: state.parent_id,
+          name: state.name,
+          isNewData
+        }
+      } else {
+        body = { ...state };
+        delete body.createdAt;
+        delete body.updatedAt;
+        delete body.allow_edit;
+        delete body.bigImg;
+        delete body.currentBarcode;
+        delete body.treeView;
+        delete body.alcocodes;
+      }
+
       if (body.parent_id === '0' || body.parent_id === 0) {
         delete body.parent_id;
       }
-      delete body.createdAt;
-      delete body.updatedAt;
-      delete body.allow_edit;
-      delete body.bigImg;
-      delete body.currentBarcode;
-      delete body.treeView;
-      delete body.alcocodes;
 
-      let missData = validateRequiredData(body);
+      let missData = validateRequiredData(body, isGroup);
       if (missData.length) {
         let strMessage = '';
         missData.forEach(item => {

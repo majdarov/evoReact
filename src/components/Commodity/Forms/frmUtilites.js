@@ -1,10 +1,10 @@
-import { apiIDB } from "../../../api/apiIDB";
+import { apiIDB } from '../../../api/apiIDB';
 
 export const setNewCode = async () => {
   //let maxCode = Math.floor(Math.random() * 1e5);//await productsApi.getData('products', { max: 'code' });
   let arr = await apiIDB.getProduct();
   // debugger
-  let codes = arr.map(item => +item.code || 0);
+  let codes = arr.map((item) => +item.code || 0);
   let maxCode = Math.max.apply(null, codes);
   let newCode = maxCode + 1;
   return newCode;
@@ -98,36 +98,39 @@ export function validateZeroData(curr, prev) {
       arrNotChanged = !compare.resArrMinus.length && !compare.resArrPlus.length;
     } */
 
-    let isNotData =
-      curr[key] === null ||
-      curr[key] === undefined
-      // (curr.isNewData && !curr[key]);
+    let isNotData = curr[key] === null || curr[key] === undefined;
+    // (curr.isNewData && !curr[key]);
 
     // let isNotChanged = !curr.isNewData && curr[key] === prev[key];
 
     if (/* arrNotChanged || */ isNotData /* || isNotChanged */) {
-        delete curr[key];
+      delete curr[key];
     }
   }
 }
 
-export function validateRequiredData(body) {
-  const reqData = [
-    'type',
-    'name',
-    // 'price',
-    'measure_name',
-    'tax',
-    'allow_to_sell'
-  ]
+export function validateRequiredData(body, isGroup = false) {
+  let reqData;
 
+  if (isGroup) {
+    reqData = ['name'];
+  } else {
+    reqData = [
+      'type',
+      'name',
+      // 'price',
+      'measure_name',
+      'tax',
+      'allow_to_sell',
+    ];
+  }
   let missData = [];
 
-  Object.keys(body).forEach(key => {
+  Object.keys(body).forEach((key) => {
     if (!body[key] && reqData.includes(key)) {
       missData.push(key);
     }
-  })
+  });
 
   return missData;
 }

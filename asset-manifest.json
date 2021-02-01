@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/evoReact/static/css/main.0949c0b2.chunk.css",
-    "main.js": "/evoReact/static/js/main.95267d23.chunk.js",
-    "main.js.map": "/evoReact/static/js/main.95267d23.chunk.js.map",
+    "main.css": "/evoReact/static/css/main.094bd939.chunk.css",
+    "main.js": "/evoReact/static/js/main.6e6b2e36.chunk.js",
+    "main.js.map": "/evoReact/static/js/main.6e6b2e36.chunk.js.map",
     "runtime-main.js": "/evoReact/static/js/runtime-main.5d83a025.js",
     "runtime-main.js.map": "/evoReact/static/js/runtime-main.5d83a025.js.map",
-    "static/js/2.07d28699.chunk.js": "/evoReact/static/js/2.07d28699.chunk.js",
-    "static/js/2.07d28699.chunk.js.map": "/evoReact/static/js/2.07d28699.chunk.js.map",
+    "static/js/2.104346d2.chunk.js": "/evoReact/static/js/2.104346d2.chunk.js",
+    "static/js/2.104346d2.chunk.js.map": "/evoReact/static/js/2.104346d2.chunk.js.map",
     "index.html": "/evoReact/index.html",
-    "static/css/main.0949c0b2.chunk.css.map": "/evoReact/static/css/main.0949c0b2.chunk.css.map",
-    "static/js/2.07d28699.chunk.js.LICENSE.txt": "/evoReact/static/js/2.07d28699.chunk.js.LICENSE.txt",
+    "static/css/main.094bd939.chunk.css.map": "/evoReact/static/css/main.094bd939.chunk.css.map",
+    "static/js/2.104346d2.chunk.js.LICENSE.txt": "/evoReact/static/js/2.104346d2.chunk.js.LICENSE.txt",
     "static/media/brands.css": "/evoReact/static/media/fa-brands-400.e1c1a88e.woff",
     "static/media/regular.css": "/evoReact/static/media/fa-regular-400.eb99d507.eot",
     "static/media/solid.css": "/evoReact/static/media/fa-solid-900.afbdcbcc.woff",
@@ -18,8 +18,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.5d83a025.js",
-    "static/js/2.07d28699.chunk.js",
-    "static/css/main.0949c0b2.chunk.css",
-    "static/js/main.95267d23.chunk.js"
+    "static/js/2.104346d2.chunk.js",
+    "static/css/main.094bd939.chunk.css",
+    "static/js/main.6e6b2e36.chunk.js"
   ]
 }

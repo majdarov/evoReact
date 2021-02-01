@@ -118,7 +118,7 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
       return res;
     })
     .then((res) => {
-      // console.log(res);
+      if (typeData === 'group') return res.id;
       return res.parent_id ? res.parent_id : '0';
     })
     .then((pid) => {
@@ -126,9 +126,13 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
       dispatch(viewFormAC(false));
       dispatch(setFormDataAC(null));
       if (typeData === 'group') {
-        apiIDB.getGroup('all').then((res) => dispatch(setGroupsAC(res)));
+        apiIDB
+          .getGroup('all')
+          .then((res) => dispatch(setGroupsAC(res)))
+          .then(dispatch(setPidAC(pid)));
+      } else {
+        dispatch(setPidAC(pid));
       }
-      dispatch(setPidAC(pid));
     })
     .catch((err) => {
       console.dir(err);
@@ -138,10 +142,12 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
     });
 };
 
-export const deleteProduct = (id, pid = '0', path = 'product') => async (
+export const deleteProduct = (id, pid, path = 'product') => async (
   dispatch,
+  getState,
 ) => {
   try {
+    pid = !pid ? getState().commodityPage.pid : pid;
     let res = await apiForIdb.deleteData(path, id);
     // console.log(res.status);
     if (res.status >= 400) {

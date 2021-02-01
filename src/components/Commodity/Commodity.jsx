@@ -16,6 +16,7 @@ function toggleHidden(pid) {
     item.className = '';
   })
   let li = document.getElementById(pid);
+  if (!li) return;
   li.querySelector('span').className = s.selected;
   if (pid === '0') return;
 
@@ -35,11 +36,13 @@ const Commodity = props => {
 
   const [groupIsEmpty, setGroupIsEmpty] = useState(false);
 
-  // const headers = [
-  //   ['label', 'Name'],
-  //   ['price', 'Price'],
-  //   ['quantity', 'Quant']
-  // ];
+  const headers = [
+    ['Code'],
+    ['Name'],
+    ['Price'],
+    ['Quant'],
+    ['Del'],
+  ];
 
   if (!props.isInit) {
     props.history.push('/settings');
@@ -107,12 +110,15 @@ const Commodity = props => {
     setGroupName(gName);
   }
 
-  function delGroup(ev) {
+  async function delGroup(ev) {
     if (ev.target.tagName !== 'SPAN') return;
-    console.log(groupName);
     let confirmDel = window.confirm(`Вы действительно хотите удалить группу\n\r${groupName}\n\rid: ${props.pid}?`)
-    console.log(confirmDel);
-    props.deleteProduct(props.pid, null, 'group')
+    if (confirmDel) {
+      let parentGroup = (await apiIDB.getGroup(props.pid)).parent_id;
+      await props.deleteProduct(props.pid, parentGroup, 'group')
+    } else {
+      alert('DELETED CANCEL');
+    }
   }
 
   if (props.error) {
@@ -173,7 +179,12 @@ const Commodity = props => {
             /> */}
             {!props.comIsLoaded && <ProgressBar limit={20} text={'Processing...'} />}
             {props.comIsLoaded &&
-              <Table products={props.commodities} /* headers={headers} */callback={props.getProductId}/>}
+              <Table
+                products={props.commodities}
+                headers={headers}
+                callback={props.getProductId}
+                deleteProduct={props.deleteProduct}
+              />}
           </div>
 
         </div>

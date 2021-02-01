@@ -16,6 +16,7 @@ const useSortableData = (items, config = null) => {
 
   const sortedItems = useMemo(() => {
     let sortedProducts = [...items];
+    if (!sortedProducts.length) return [];
     if (sortConfig !== null) {
       sortedProducts.sort((a, b) => {
         if (a[sortConfig.key] > b[sortConfig.key])

@@ -48,7 +48,7 @@ const App = props => {
         <Route exact path="/" />
         <Route exact path="/settings" component={MainSettings} />
         <Route path="/example" component={Wrapper} />
-        <Route path="/commodity" component={CommodityContainer} />
+        {props.isInit && <Route path="/commodity" component={CommodityContainer} />}
         <Route path="/game" component={Game} />
         <Route path="/table" component={ImpExcel} />
         <Route path="/test" component={IdbTest} />

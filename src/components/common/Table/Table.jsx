@@ -5,9 +5,12 @@ import { clickTable } from './utilsTable';
 
 export default function Table(props) {
   const { products } = props;
+  const { items, requestSort, sortConfig } = useSortableData(products);
+
+  if (!items.length) return <p>Empty Group!</p>
+
   const schema = props.schema || Object.keys(products[0]);
   const headers = props.headers || [...schema];
-  const { items, requestSort, sortConfig } = useSortableData(products);
 
   const getClassName = name => {
     if (!sortConfig) return;
@@ -23,17 +26,17 @@ export default function Table(props) {
   }
 
   return (
-    <table onClick={ev => clickTable(ev, props.callback)}>
+    <table onClick={ev => clickTable(ev, props.callback, props.deleteProduct)}>
       {/* <caption>Commodities</caption> */}
       <thead>
         <tr>
           {
-            headers.map(item => {
+            headers.map((item, idx) => {
               if (item === 'uuid' || item === 'id') return null;
               return <th
                 key={item}
-                onClick={() => requestSort(item)}
-              >{item}<i className={getClassName(item)}></i></th>
+                onClick={() => requestSort(schema[idx + 1])}
+              >{item}<i className={getClassName(schema[idx + 1])}></i></th>
             })
           }
         </tr>
@@ -45,6 +48,7 @@ export default function Table(props) {
              if (item === 'uuid' || item === 'id') return null;
              return <td key={`${item}_${product.id || product.uuid}`} name={item}>{product[item]}</td>
             })}
+            <td key={`del_${product.id || product.uuid}`}><span className={s.del}></span></td>
           </tr>
         ))}
       </tbody>

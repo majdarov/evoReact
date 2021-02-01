@@ -39,3 +39,10 @@ td {
 td:hover {
   border: green 1px solid;
 }
+
+.del::before {
+  content: '\f2ed';
+  font-weight: 900;
+  color: tomato;
+  /* margin-left: 1rem; */
+}

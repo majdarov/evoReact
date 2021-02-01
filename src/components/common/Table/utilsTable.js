@@ -1,17 +1,37 @@
+import s from './Table.module.css';
+
 export function clickCell(ev) {
   let elem = ev.target;
-  if (elem.tagName !== 'TD') return;
-  let row = elem.closest('tr').id;
-  let column = elem.getAttribute('name');
-  let cell = elem.innerText;
-  return { row, column, cell };
+  if (elem.tagName === 'TD' || elem.closest('td')) {
+    let row = elem.closest('tr').id;
+    let column = elem.getAttribute('name');
+    let cell = elem.innerText;
+    return { row, column, cell };
+  } else {
+    return;
+  }
 }
 
-export function clickTable(ev, callback) {
+export async function clickTable(ev, callback, delRow) {
   let elem = ev.target;
-  let result;
-  if (elem.tagName === 'TD') {
-    result = clickCell(ev);
+  let result = clickCell(ev);
+  if (!result) return;
+  if (elem.tagName === 'SPAN') {
+    let testDel =
+      delRow &&
+      elem.className === s.del &&
+      window.confirm(
+        `${elem.innerText}\n\rYou'r realy wanted delete this product?`,
+      );
+
+    if (testDel) {
+      let id = result.row;
+      let res = await delRow(id, null, 'product');
+      alert(`Product id: ${res}\n\rDELETED!`);
+    } else {
+      alert('CANCEL DELETED!');
+    }
+    return;
   }
   if (callback) {
     callback(result.row);

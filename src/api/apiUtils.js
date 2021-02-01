@@ -47,3 +47,14 @@ export async function fetchGroupsProducts() {
     return e;
   }
 }
+
+export async function isEmptyGroup(pId) {
+  let groupsLength = (await apiIDB.getGroupsPid(pId)).length;
+  let productsLength = (await apiIDB.getProductsPid(pId)).length;
+  if (pId === '0' || !pId) return false;
+  if (!(groupsLength + productsLength)) {
+    return true;
+  } else {
+    return false;
+  }
+}

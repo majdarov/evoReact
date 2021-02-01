@@ -78,6 +78,7 @@ const commodityReduser = (state = initialState, action) => {
           code: item.code,
           label: item.name,
           price: item.price,
+          quantity: item.quantity,
         };
         commodities.push(commodity);
       });

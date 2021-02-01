@@ -138,15 +138,22 @@ export const postFormData = (typeData, typeQuery, body) => (dispatch) => {
     });
 };
 
-export const deleteProduct = (id, pid, path = 'product') => async (
+export const deleteProduct = (id, pid = '0', path = 'product') => async (
   dispatch,
 ) => {
   try {
     let res = await apiForIdb.deleteData(path, id);
-    console.log(res.status);
-    await apiIDB.deleteData(`${path}s`, id);
-    dispatch(setPidAC(pid));
-    return id;
+    // console.log(res.status);
+    if (res.status >= 400) {
+      throw new Error(`Error deleting object \n\r id: ${id}`);
+    } else {
+      await apiIDB.deleteData(`${path}s`, id);
+      if (path === 'group') {
+        apiIDB.getGroup('all').then((res) => dispatch(setGroupsAC(res)));
+      }
+      dispatch(setPidAC(pid || '0'));
+      return id;
+    }
   } catch (err) {
     console.dir(err);
     dispatch(setErrorAC(chooseError(err)));

@@ -2,9 +2,15 @@ import React from 'react';
 import s from '../Commodity.module.css';
 import Preloader from '../../common/Preloader/Preloader';
 
+function productsSort(a, b) {
+    if (a.label > b.label) return 1;
+    if (a.label < b.label) return -1;
+    return 0;
+}
+
 const ListCommodities = props => {
     let liElements;
-    let commodities = props.commodities;
+    let commodities = [...props.commodities];
 
     async function liClick(e) {
         let id;
@@ -30,7 +36,7 @@ const ListCommodities = props => {
     } else if (!props.comIsLoaded) {
         return <Preloader />
     } else {
-        liElements = commodities.sort().map(item => {
+        liElements = commodities.sort(productsSort).map(item => {
             return (
                 <li id={item.uuid} key={item.uuid} className={s.clickable}
                     onClick={liClick} data-price={item.price} data-code={item.code}>

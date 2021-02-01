@@ -211,7 +211,11 @@ button
 }
 
 .propertyes {
-  display: inline-grid;
-  justify-items: left;
+  display: inline;
+  /* justify-items: left; */
   border: gray dashed 1px;
+}
+
+.propertyes select>div {
+  width: min-content;
 }

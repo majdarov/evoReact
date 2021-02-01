@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-let ProgressBar2 = (props) => {
+const ProgressBar2 = ({limit = 10, delay = 500, text = 'Processing...'}) => {
   const [p, setP] = useState('');
 
   useEffect(() => {
-    let limit = props.limit;
     let c = 0;
     let timer = setInterval(() => {
       c++;
@@ -13,24 +12,24 @@ let ProgressBar2 = (props) => {
         setP('');
       }
       setP((p) => (p += c));
-    }, props.delay);
+    }, delay);
     return () => clearInterval(timer);
-  }, [props.delay, props.limit]);
+  }, [delay, limit]);
 
   const styleSpan = {
     backgroundColor: 'blue',
-    color: 'blue',
+    color: 'white',
   };
 
   const styleDiv = {
-    width: props.limit + 3 + 'ch',
+    width: limit + 3 + 'ch',
     border: 'solid 1px blue',
     padding: '2px'
   };
 
   return (
     <div className={'progressBar'}>
-      <h4 style={{ display: 'inline' }}>{props.text}</h4>
+      <h4 style={{ display: 'inline' }}>{text}</h4>
       <div style={styleDiv}>
         <span style={styleSpan}>{p}</span>
       </div>

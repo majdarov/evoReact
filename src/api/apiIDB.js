@@ -1,7 +1,7 @@
 import { deleteDB, openDB } from 'idb';
 
 export async function initDb() {
-  const db = await openDB('Evo', 3, {
+  const db = await openDB('Evo', 4, {
     async upgrade(db, oldVersion, newVersion) {
       if (oldVersion < newVersion) {
         alert('База данных будет обновлена до версии: ' + newVersion);
@@ -12,6 +12,7 @@ export async function initDb() {
         const store = db.createObjectStore('groups', { keyPath: 'id' });
         store.createIndex('name', 'name');
         store.createIndex('date', 'created_at');
+        store.createIndex('parent_id', 'parent_id');
       }
       if (!db.objectStoreNames.contains('products')) {
         const store = db.createObjectStore('products', { keyPath: 'id' });
@@ -50,6 +51,11 @@ export const apiIDB = {
     return product;
   },
 
+  async getGroupsPid(pid) {
+    const db = await initDb();
+    const groups = await db.getAllFromIndex('groups', 'parent_id', pid);
+    return groups;
+  },
   async getProductsPid(pid) {
     const db = await initDb();
     const products = await db.getAllFromIndex('products', 'parent_id', pid);

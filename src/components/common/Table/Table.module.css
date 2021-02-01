@@ -1,0 +1,41 @@
+.asc::before {
+  content: '\f078';
+  font-weight: 900;
+  color: rgb(137, 135, 243);
+  margin-left: 1rem;
+}
+
+.desc::before {
+  content: '\f077';
+  font-weight: 900;
+  color: rgb(137, 135, 243);
+  margin-left: 1rem;
+}
+
+thead {
+  position: sticky;
+  top: 7rem;
+  z-index: 103;
+}
+
+table tr:nth-child(2n) {
+  background-color: lightcyan;
+}
+
+th {
+  background-color: lightgray;
+  padding: 0.5rem;
+}
+
+td {
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+/* tr:hover {
+  background-color: lightpink;
+} */
+
+td:hover {
+  border: green 1px solid;
+}

@@ -7,11 +7,11 @@ import TextArea from '../../common/TextArea/TextArea';
 import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequiredData } from './frmUtilites';
 import FormImg from './FormImg';
 import FormModalWrapper from './FormModalWrapper';
-import noPhoto from '../../../Assets/img/terminal-5.png';
+// import noPhoto from '../../../Assets/img/terminal-5.png';
 
 const FormProduct = props => {
 
-  let parentId = props.formData.parent_id === null ? '0' : props.formData.parent_id;
+  let parentId = !props.formData.parent_id ? props.pid : props.formData.parent_id;
   let isNewData = !props.formData.id;
   const fileInput = React.createRef();
   const [isGroup, setIsGroup] = useState(false);
@@ -192,11 +192,11 @@ const FormProduct = props => {
       if (!state.isNewData) body.id = state.id;
       delete body.isNewData;
 
-      alert(JSON.stringify(body, null, 2));
+      // alert(JSON.stringify(body, null, 2));
 
       let i = 0;
       Object.keys(body).forEach(item => i++);
-      if (i <= 1) {
+      if (i <= 1 && !body.name) {
         alert('Данные не изменились!');
         return;
       }
@@ -315,7 +315,8 @@ const FormProduct = props => {
               {
                 !state.photos?.length ?
                   // <ComponentsProducts.Picture {...pProps} photo='image3D.png' /> :
-                  <div><img src={noPhoto} alt="NoPhotos" className={s['picture-small']} /></div> :
+                  // <div><img src={noPhoto} alt="NoPhotos" className={s['picture-small']} /></div> :
+                  null :
                   state.photos.map(ph => {
                     return <ComponentsProducts.Picture {...pProps} photo={ph} key={ph.name} />
                   })

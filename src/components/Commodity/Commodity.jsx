@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import s from "./Commodity.module.css";
 import Tree from "../common/Tree/Tree";
-import ListCommodities from "./ListCommodities/ListCommodities";
 import Preloader from "../common/Preloader/Preloader";
 import FormModalWrapper from "./Forms/FormModalWrapper";
 import FormProduct from "./Forms/FormProduct";
 import { apiIDB } from "../../api/apiIDB";
+import { isEmptyGroup } from "../../api/apiUtils";
+import Table from "../common/Table";
+import { ProgressBar } from "../common/ProgressBar";
 
 function toggleHidden(pid) {
   if (!pid) pid = '0';
@@ -31,9 +33,21 @@ function toggleHidden(pid) {
 
 const Commodity = props => {
 
+  const [groupIsEmpty, setGroupIsEmpty] = useState(false);
+
+  // const headers = [
+  //   ['label', 'Name'],
+  //   ['price', 'Price'],
+  //   ['quantity', 'Quant']
+  // ];
+
   if (!props.isInit) {
     props.history.push('/settings');
   }
+
+  useEffect(() => {
+    isEmptyGroup(props.pid).then(res => setGroupIsEmpty(res));
+  }, [props.pid])
 
   const [groupName, setGroupName] = useState('Commodities');
 
@@ -42,7 +56,7 @@ const Commodity = props => {
       toggleHidden(props.pid);
       if (props.pid !== '0') {
         const group = props.groups.find(item => item.id === props.pid);
-        var gName = group.label;
+        var gName = group?.label || 'Commodities';
       } else {
         gName = 'Commodities';
       }
@@ -93,6 +107,14 @@ const Commodity = props => {
     setGroupName(gName);
   }
 
+  function delGroup(ev) {
+    if (ev.target.tagName !== 'SPAN') return;
+    console.log(groupName);
+    let confirmDel = window.confirm(`Вы действительно хотите удалить группу\n\r${groupName}\n\rid: ${props.pid}?`)
+    console.log(confirmDel);
+    props.deleteProduct(props.pid, null, 'group')
+  }
+
   if (props.error) {
     return <div>Ошибка...{props.error.message}</div>;
   } else if (!props.isLoaded) {
@@ -140,15 +162,18 @@ const Commodity = props => {
             pId={props.pid}
           />
           <div className={s.list}>
-            <h3>{groupName}</h3>
-            <ListCommodities
+            <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3>
+            {/* <ListCommodities
               commodities={props.commodities}
               comIsLoaded={props.comIsLoaded}
               error={props.error}
               getProductId={props.getProductId}
               deleteProduct={props.deleteProduct}
               pid={props.pid}
-            />
+            /> */}
+            {!props.comIsLoaded && <ProgressBar limit={20} text={'Processing...'} />}
+            {props.comIsLoaded &&
+              <Table products={props.commodities} /* headers={headers} */callback={props.getProductId}/>}
           </div>
 
         </div>

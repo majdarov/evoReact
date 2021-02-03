@@ -45,7 +45,8 @@ const Tree = props => {
     }
 
     if (props.callback) {
-      props.callback(elem.id);
+      let tagName = e.target.tagName;
+      props.callback(elem.id, tagName);
     }
 
   }
@@ -74,7 +75,7 @@ const Tree = props => {
   let treeElements = createSubTree(nodeRoot);
 
   return (
-    <div id={tree.id} className={s.tree} onClick={/* (e) => props.handleClick(e) */ handleClick}>
+    <div id={tree.id} className={s.tree} onClick={handleClick}>
       <h3>{tree.label}</h3>
       <ul>{treeElements}</ul>
     </div>

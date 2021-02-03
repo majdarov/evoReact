@@ -194,16 +194,19 @@ button
 }
 
 .menu-buttons {
-  box-sizing: border-box;
-  display: flex;
-  justify-content: flex-end;
   padding: 0;
   margin: 0;
   font-size: large;
   opacity: 70%;
 }
-.menu-buttons span::before {
+.menu-buttons i::before {
   color: tomato;
+}
+.menu-buttons span {
+  float: left;
+}
+.menu-buttons i {
+  float: right;
 }
 
 .required {

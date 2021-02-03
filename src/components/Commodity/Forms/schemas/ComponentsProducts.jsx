@@ -78,23 +78,19 @@ export const ComponentsProducts = {
         )
     },
     GroupsTree: props => {
-        // gProps = { groups: props.groups, disabled, handleChange, parent_id: state.parent_id, id: s.group }
-        let groups = props.groups;
+        const groups = [...props.groups];
         let g = groups.find(item => item.id === props.parent_id);
         let gLabel = g ? g.label : 'Root';
         let onDivClick = props.disabled ? null : props.onClick;
 
-
-
         return (
             <>
                 {props.treeView &&
-                    <div className={props.classTree} onClick={props.closeTree}>
-                        <Tree data={props.groups} price="Price" treeLabel="Groups" callback={props.callbackTree} />
-                        <i className='fas fa-angle-down'></i>
+                    <div className={props.classTree} >
+                        <Tree data={groups} price="Price" treeLabel="Groups" callback={props.callbackTree} />
                     </div>
                 }
-                <div className={props.classDiv} onClick={onDivClick} tabIndex={-1} onBlur={props.onBlurGroup}>
+                <div className={props.classDiv} onClick={onDivClick} tabIndex={-1} /* onBlur={props.onBlurGroup} */>
                     <div name='parent_id'>
                         {gLabel}
                         <i className='fa fa-angle-down'></i>

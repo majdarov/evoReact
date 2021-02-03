@@ -11,8 +11,9 @@ import FormModalWrapper from './FormModalWrapper';
 
 const FormProduct = props => {
 
-  let parentId = !props.formData.parent_id ? props.pid : props.formData.parent_id;
   let isNewData = !props.formData.id;
+  let parentId = isNewData ? props.pid : props.formData.parent_id || 0;
+
   const fileInput = React.createRef();
   const [isGroup, setIsGroup] = useState(false);
   const [state, setState] = useState({
@@ -26,7 +27,7 @@ const FormProduct = props => {
     currentBarcode: '',
   });
 
-  useEffect(() => {
+  useEffect(() => { //cleare URL objects Photo
     return () => {
       if (state.photos?.length) {
         state.photos.forEach(item => URL.revokeObjectURL(item))
@@ -34,9 +35,8 @@ const FormProduct = props => {
     }
   })
 
-
   if (!state.code) {
-    setNewCode().then(code => setState({ ...state, code }));
+    setNewCode().then(code => setState({ ...state, code }))
   }
 
   if (props.formError) {
@@ -64,6 +64,9 @@ const FormProduct = props => {
           changes.push({ [key]: state[key] });
         }
       }
+    }
+    if (state.parent_id && !props.formData.parent_id) {
+      changes.push({ parent_id: state.parent_id })
     }
     if (changes.length === 1 && isNewData && changes[0].code) changes = [];
     return changes.length;
@@ -149,6 +152,7 @@ const FormProduct = props => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
+    // console.log(state);
     if (state.allow_edit && formChanged() && window.confirm('Save changes')) {
       // if (state.photos.length) setFormPhotos([...state.photos]);
       let body;
@@ -245,32 +249,29 @@ const FormProduct = props => {
     setState({ ...state, [arrName]: arr });
   }
 
-  const [pId, setPid] = useState(parentId);
-
   const [treeView, setTreeView] = useState(false);
 
-  const callbackTree = (eId) => {
-    let parent_id = eId ? eId : 0;
-    setPid(parent_id);
+  const callbackTree = async (id, tagName) => {
+    let parent_id = id ? id : 0;
+    if (tagName !== 'SPAN') return;
+    setState({ ...state, parent_id });
+    setTreeView(false);
+    // let eidName = (await apiIDB.getGroup(id))?.name;
+    // let pName = (await apiIDB.getGroup(parent_id))?.name;
+    // console.log(`callbackTree: parent_id-${pName}`, `eId-${eidName}`);
   }
 
   const clickGroups = () => {
     setTreeView(!treeView);
   }
 
-  const onBlurGroup = () => {
-    setState({ ...state, parent_id: pId });
-  }
-
-  const closeTree = e => {
-    if (e.target.tagName !== 'I') return;
-    setState({ ...state, parent_id: pId });
-    setTreeView(false);
-  }
+  // const onBlurGroup = () => {
+  //   setState({ ...state, parent_id: pId });
+  // }
 
   const gProps = {
-    groups: props.groups, disabled, parent_id: pId, onClick: clickGroups, onBlurGroup,
-    treeView, classDiv: s['g-tree'], classTree: s.tree, callbackTree, closeTree
+    groups: props.groups, disabled, parent_id: state.parent_id, onClick: clickGroups,
+    treeView, classDiv: s['g-tree'], classTree: s.tree, callbackTree
   };
 
   const mnProps = { disabled, handleChange, id: s.measure_name, measure_name: state.measure_name };
@@ -297,7 +298,7 @@ const FormProduct = props => {
         <form id={s['form-product']} onSubmit={handleSubmit} >
           <div className={s['menu-buttons']}>
             <span style={{ cursor: 'pointer' }} onClick={toggleGroup}>{isGroup ? 'Group' : 'Product'}</span>
-            <span className='fa fa-window-close' onClick={handleSubmit}></span>
+            <i className='fa fa-window-close' onClick={handleSubmit}></i>
           </div>
           <fieldset name='Product'>
             <legend>Product Info</legend>

@@ -11,18 +11,15 @@ import FormModalWrapper from './FormModalWrapper';
 
 const FormProduct = props => {
 
-  let isNewData = !props.formData.id;
-  let parentId = isNewData ? props.pid : props.formData.parent_id || 0;
-
+  const isNewData = !props.formData.id;
   const fileInput = React.createRef();
   const [isGroup, setIsGroup] = useState(false);
   const [state, setState] = useState({
     ...props.formData,
     allow_edit: isNewData,
-    parent_id: parentId,
+    parent_id: isNewData ? props.pid : props.formData.parent_id || 0, //parentId,
     photos: (props.formData.photos?.length && [...props.formData.photos]) || [],
     barcodes: [...props.formData.barcodes] || [],
-    isNewData,
     bigImg: null,
     currentBarcode: '',
   });
@@ -193,8 +190,7 @@ const FormProduct = props => {
       }
 
       validateZeroData(body, props.formData);
-      if (!state.isNewData) body.id = state.id;
-      delete body.isNewData;
+      if (!isNewData) body.id = state.id;
 
       // alert(JSON.stringify(body, null, 2));
 
@@ -204,7 +200,7 @@ const FormProduct = props => {
         alert('Данные не изменились!');
         return;
       }
-      let typeQuery = !state.isNewData ? 'put' : 'post';
+      let typeQuery = !isNewData ? 'put' : 'post';
       let path = isGroup ? 'group' : 'product';
       props.postFormData(path, typeQuery, body);
       props.toggleFormPost(true);
@@ -256,18 +252,17 @@ const FormProduct = props => {
     if (tagName !== 'SPAN') return;
     setState({ ...state, parent_id });
     setTreeView(false);
-    // let eidName = (await apiIDB.getGroup(id))?.name;
-    // let pName = (await apiIDB.getGroup(parent_id))?.name;
-    // console.log(`callbackTree: parent_id-${pName}`, `eId-${eidName}`);
   }
 
   const clickGroups = () => {
     setTreeView(!treeView);
   }
 
-  // const onBlurGroup = () => {
-  //   setState({ ...state, parent_id: pId });
-  // }
+  const chooseKeyDown = ev => {
+    // console.log(ev.keyCode, ev.metaKey)
+    if (ev.keyCode !== 27) return;
+    canselClick();
+  }
 
   const gProps = {
     groups: props.groups, disabled, parent_id: state.parent_id, onClick: clickGroups,
@@ -295,7 +290,7 @@ const FormProduct = props => {
           <FormModalWrapper
             form={<FormImg photo={state.bigImg} />}
           />}
-        <form id={s['form-product']} onSubmit={handleSubmit} >
+        <form id={s['form-product']} onSubmit={handleSubmit} onKeyDown={chooseKeyDown}>
           <div className={s['menu-buttons']}>
             <span style={{ cursor: 'pointer' }} onClick={toggleGroup}>{isGroup ? 'Group' : 'Product'}</span>
             <i className='fa fa-window-close' onClick={handleSubmit}></i>
@@ -305,7 +300,7 @@ const FormProduct = props => {
             <div>
               <b>ID: </b><input id={s.uuid} value={state.id || ''} disabled={!isNewData} onChange={handleChange} />
               {
-                state.isNewData ? null :
+                isNewData ? null :
                   <label>
                     Allow Edit:
             <input type='checkbox' id={s['allow-edit']} name={'allow_edit'} checked={state.allow_edit} onChange={handleChange} />

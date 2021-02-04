@@ -4,12 +4,21 @@ import createTree from "./treeFunction";
 import Node from "./Node";
 
 const Tree = props => {
+
   let nodeRoot = { id: 0, label: props.price, childs: [] };
   let tree = { id: "Tree", label: props.treeLabel, childs: [nodeRoot] };
+
   createTree(props.data, tree);
 
   function handleClick(e) {
-    if (e.target.tagName !== "SPAN" && e.target.tagName !== "I" && e.target.tagName !== "LI") return;
+    const testTarget = () => {
+      if (e.target.tagName !== "SPAN" &&
+          e.target.tagName !== "I" &&
+          e.target.tagName !== "LI" &&
+          e.target.className !== s['children-length']) return false;
+      return true;
+    }
+    if (!testTarget()) return;
     // ***SPAN toggle selected
     document
       .getElementById("Tree")
@@ -30,15 +39,16 @@ const Tree = props => {
     }
     // SPAN***
     if (!elem) return;
+    let hasChildren = !!elem.className.match(/children/)?.length
     if (elem.id !== "0") {
       let target = elem.querySelector("ul");
       if (target) {
         target.hidden = !target.hidden;
         if (target.hidden) {
-          elem.className = "closed";
+          elem.className = hasChildren ? "closed children" : "closed";
           elem.firstElementChild.className = "far fa-folder";
         } else {
-          elem.className = "open";
+          elem.className = hasChildren ? "open children" : "open";
           elem.firstElementChild.className = "far fa-folder-open";
         }
       }
@@ -68,6 +78,7 @@ const Tree = props => {
         label={item.label}
         children={children}
         hidden={hidden}
+        className={s['children-length']}
       />
     );
   }

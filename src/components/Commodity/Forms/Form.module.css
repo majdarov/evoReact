@@ -222,3 +222,12 @@ button
 .propertyes select>div {
   width: min-content;
 }
+
+#esc {
+  width: 0;
+  height: 0;
+}
+
+#esc:focus {
+  border: none;
+}

@@ -24,6 +24,13 @@ const FormProduct = props => {
     currentBarcode: '',
   });
 
+  useEffect(() => {
+    if (!state.allow_edit) {
+      let esc = document.getElementById(s.esc);
+      esc.focus();
+    }
+  })
+
   useEffect(() => { //cleare URL objects Photo
     return () => {
       if (state.photos?.length) {
@@ -293,6 +300,7 @@ const FormProduct = props => {
         <form id={s['form-product']} onSubmit={handleSubmit} onKeyDown={chooseKeyDown}>
           <div className={s['menu-buttons']}>
             <span style={{ cursor: 'pointer' }} onClick={toggleGroup}>{isGroup ? 'Group' : 'Product'}</span>
+            <input type="text" name="esc" id={s.esc} />
             <i className='fa fa-window-close' onClick={handleSubmit}></i>
           </div>
           <fieldset name='Product'>

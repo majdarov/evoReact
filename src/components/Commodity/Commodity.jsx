@@ -13,6 +13,7 @@ function toggleHidden(pid) {
   if (!pid) pid = '0';
   let tree = document.getElementById('Tree');
   tree.querySelectorAll('span').forEach(item => {
+    if (item.className.match(/children-length/)?.length) return;
     item.className = '';
   })
   let li = document.getElementById(pid);
@@ -26,7 +27,7 @@ function toggleHidden(pid) {
   }
   let currentLi = ul.closest('li');
   while (currentLi.id !== '0') {
-    currentLi.classList = 'open';
+    currentLi.className = 'open';
     currentLi.closest('ul').hidden = false;
     currentLi = currentLi.closest('ul').closest('li');
   }
@@ -55,19 +56,6 @@ const Commodity = props => {
   const [groupName, setGroupName] = useState('Commodities');
 
   useEffect(() => {
-    if (props.groups.length) {
-      toggleHidden(props.pid);
-      if (props.pid !== '0') {
-        const group = props.groups.find(item => item.id === props.pid);
-        var gName = group?.label || 'Commodities';
-      } else {
-        gName = 'Commodities';
-      }
-      setGroupName(gName);
-    }
-  }, [props.groups, props.pid]);
-
-  useEffect(() => {
     if (!props.isLoaded && props.isInit) {
       props.setPid('0');
       props.getGroups();
@@ -82,6 +70,19 @@ const Commodity = props => {
     }
   }, [props])
 
+  useEffect(() => {
+    if (props.groups.length) {
+      toggleHidden(props.pid);
+      if (props.pid !== '0') {
+        const group = props.groups.find(item => item.id === props.pid);
+        var gName = group?.label || 'Commodities';
+      } else {
+        gName = 'Commodities';
+      }
+      setGroupName(gName);
+    }
+  }, [props.groups, props.pid]);
+
   function newData() {
     props.getProductId();
   }
@@ -94,13 +95,15 @@ const Commodity = props => {
   async function searchProducts(e) {
     setGroupName('Результаты поиска');
     let name = new RegExp(e.target.value, 'gi');
+    if (name.source === '(?:)' || name.source.length < 2) {
+      returnBeforeSearch();
+      return;
+    }
     let products = (await apiIDB.getProduct()).filter(item => item.name.match(name));
     props.setCommodities(products);
   }
 
-  function clearSearch(e) {
-    if (e.target.tagName !== 'I') return;
-    e.target.closest('div').querySelector('input').value = '';
+  function returnBeforeSearch() {
     props.getProducts(props.pid);
     if (props.pid !== '0') {
       var gName = props.groups.find(item => item.id === props.pid).label;
@@ -108,6 +111,12 @@ const Commodity = props => {
       gName = 'Commodities';
     }
     setGroupName(gName);
+  }
+
+  function clearSearch(e) {
+    if (e.target.tagName !== 'I') return;
+    e.target.closest('div').querySelector('input').value = '';
+    returnBeforeSearch();
   }
 
   async function delGroup(ev) {

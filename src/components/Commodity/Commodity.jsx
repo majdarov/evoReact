@@ -72,7 +72,7 @@ const Commodity = props => {
 
   useEffect(() => {
     if (props.groups.length) {
-      toggleHidden(props.pid);
+      // toggleHidden(props.pid);
       if (props.pid !== '0') {
         const group = props.groups.find(item => item.id === props.pid);
         var gName = group?.label || 'Commodities';

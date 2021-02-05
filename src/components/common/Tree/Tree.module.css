@@ -1,5 +1,4 @@
 .tree {
-  /* grid-column: 1/2; */
   padding: 0.5rem;
   border: 1px solid blue;
   background-color: cornsilk;
@@ -17,33 +16,33 @@
 }
 
 .tree li {
-    white-space: nowrap;
-    cursor: pointer;
-    color:rgb(59, 57, 185);
+  white-space: nowrap;
+  cursor: pointer;
+  color: rgb(59, 57, 185);
 }
 
-.tree li[class~="children"]::before {
-  content: "\f105"; /* arrow-right */
+.tree li[class~='children']::before {
+  content: '\f105'; /* arrow-right */
   /* font-family: "Font Awesome 5 Free"; */
   font-weight: 900;
   margin-right: 0.3rem;
   color: rgb(137, 135, 243);
 }
-.tree li:not([class~="children"]):before {
-  content: "\f105";
+.tree li:not([class~='children']):before {
+  content: '\f105';
   font-weight: 900;
   margin-right: 0.3rem;
   color: transparent;
 }
 
-.tree li[class~="open"]::before {
-  content: "\f107"; /* arrow-down */
+.tree li[class='open children']::before {
+  content: '\f107'; /* arrow-down */
   /* font-family: "Font Awesome 5 Free"; */
   font-weight: 900;
   color: rgb(137, 135, 243);
 }
 
-.tree li[class~="open"] > ul:hover {
+.tree li[class~='open'] > ul:hover {
   border-left: solid 1px rgb(160, 158, 158);
 }
 
@@ -63,30 +62,14 @@ ul {
   border-bottom: grey solid 2px;
 }
 
-/* .tree h3::before {
-  content: "\f50c";
-  font-family: "Font Awesome 5 Brands";
-  font-weight: 400;
-  color: blue;
-  margin-right: 1rem;
+.selected {
+  background-color: lavender;
 }
 
-.tree h3::after {
-    content: "\f50c";
-    font-family: "Font Awesome 5 Brands";
-    font-weight: 400;
-    color: blue;
-    margin-left: 1rem;
-  } */
-
-  .selected {
-    background-color: lavender;
-  }
-
-  .children-length {
-    background-color: lightgrey;
-    color: rgb(59, 57, 185);
-    margin-left: 0.2rem;
-    padding: 3px;
-    border-radius: 20% ;
-  }
+.children-length {
+  background-color: lightgrey;
+  color: rgb(59, 57, 185);
+  margin-left: 0.2rem;
+  padding: 3px;
+  border-radius: 20%;
+}

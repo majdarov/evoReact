@@ -155,7 +155,8 @@ export const deleteProduct = (id, pid, path = 'product') => async (
     } else {
       await apiIDB.deleteData(`${path}s`, id);
       if (path === 'group') {
-        apiIDB.getGroup('all').then((res) => dispatch(setGroupsAC(res)));
+        let groups = await apiIDB.getGroup('all')
+        dispatch(setGroupsAC(groups));
       }
       dispatch(setPidAC(pid || '0'));
       return id;

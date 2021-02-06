@@ -9,30 +9,6 @@ import { isEmptyGroup } from "../../api/apiUtils";
 import Table from "../common/Table";
 import { ProgressBar } from "../common/ProgressBar";
 
-function toggleHidden(pid) {
-  if (!pid) pid = '0';
-  let tree = document.getElementById('Tree');
-  tree.querySelectorAll('span').forEach(item => {
-    if (item.className.match(/children-length/)?.length) return;
-    item.className = '';
-  })
-  let li = document.getElementById(pid);
-  if (!li) return;
-  li.querySelector('span').className = s.selected;
-  if (pid === '0') return;
-
-  let ul = li.closest('ul');
-  if (ul.hidden) {
-    ul.hidden = !ul.hidden;
-  }
-  let currentLi = ul.closest('li');
-  while (currentLi.id !== '0') {
-    currentLi.className = 'open';
-    currentLi.closest('ul').hidden = false;
-    currentLi = currentLi.closest('ul').closest('li');
-  }
-}
-
 const Commodity = props => {
 
   const [groupIsEmpty, setGroupIsEmpty] = useState(false);
@@ -51,7 +27,7 @@ const Commodity = props => {
 
   useEffect(() => {
     isEmptyGroup(props.pid).then(res => setGroupIsEmpty(res));
-  }, [props.pid])
+  })
 
   const [groupName, setGroupName] = useState('Commodities');
 
@@ -178,14 +154,6 @@ const Commodity = props => {
           />
           <div className={s.list}>
             <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3>
-            {/* <ListCommodities
-              commodities={props.commodities}
-              comIsLoaded={props.comIsLoaded}
-              error={props.error}
-              getProductId={props.getProductId}
-              deleteProduct={props.deleteProduct}
-              pid={props.pid}
-            /> */}
             {!props.comIsLoaded && <ProgressBar limit={20} text={'Processing...'} />}
             {props.comIsLoaded &&
               <Table

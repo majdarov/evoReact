@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CurrentPidContext } from './Tree';
 
 const Node = props => {
 
-  const [icon, setIcon] = useState(/* props.hidden ? 'far fa-folder' : 'far fa-folder-open' */);
+  const context = useContext(CurrentPidContext);
 
-  const [isOpen, setIsOpen] = useState(/* props.hidden ? 'closed' : 'open' */);
+  const [icon, setIcon] = useState(null/* props.hidden ? 'far fa-folder' : 'far fa-folder-open' */);
 
-  const [hasChildren, setHasChildren] = useState(!!props.children.length);
+  const [isOpen, setIsOpen] = useState(null/* props.hidden ? 'closed' : 'open' */);
+
+  const hasChildren = !!props.children.length;
 
   const [hidden, setHidden] = useState(props.hidden);
+
+  const [selected, setSelected] = useState(false);
 
   useEffect(() => {
     if (hidden) {
@@ -18,21 +23,21 @@ const Node = props => {
       setIcon("far fa-folder-open");
       setIsOpen(hasChildren ? "open children" : "open");
     }
-  }, [hidden, hasChildren])
+  }, [hidden, hasChildren, props.id])
 
   useEffect(() => {
-    if (hasChildren) {
-      setHasChildren(true);
-      setIsOpen(isOpen => `${isOpen} children`)
-    } else {
-      setHasChildren(false);
-      setIsOpen(isOpen => isOpen);
+    if (props.id === context.pId) {
+      setSelected(true);
     }
-  }, [hasChildren]);
+    if (context.arrNotHidden.length) {
+      if (context.arrNotHidden.includes(props.id)) setHidden(false);
+    }
+    return () => setSelected(false);
+  }, [context.arrNotHidden, context.pId, props.id])
 
   const clickGroup = (ev) => {
     ev.stopPropagation();
-    if (props.id) setHidden(hidden => !hidden);
+    if (props.id !== '0') setHidden(hidden => !hidden);
     if (props.callback) {
       let tagName = ev.target.tagName;
       props.callback(props.id.toString(), tagName);
@@ -43,10 +48,10 @@ const Node = props => {
     <>
       <li id={props.id} className={isOpen} onClick={clickGroup}>
         <i className={icon}></i>
-        <span>
+        <span className={(selected && props.classSelected) || ''}>
           {props.label}
         </span>
-        {!!props.id && hasChildren &&
+        {(props.id !== '0') && hasChildren &&
           <span className={props.className}>
             {props.children.length}
           </span>}

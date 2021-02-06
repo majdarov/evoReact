@@ -3,30 +3,30 @@
   border: 1px solid blue;
   background-color: cornsilk;
   cursor: default;
+  --tree-color: rgb(59, 57, 185);
+  --icon-color: rgb(137, 135, 243);
+  --icon2-color: rgb(247, 124, 10);
+  --icon-font: "Font Awesome 5 Free";
 }
 
 .tree i {
-  color: rgb(137, 135, 243);
   margin-right: 5px;
 }
 
 .tree span:hover {
   background-color: lavender;
-  /* font-family: "Font Awesome 5 Free"; */
 }
 
 .tree li {
   white-space: nowrap;
   cursor: pointer;
-  color: rgb(59, 57, 185);
+  color: var(--tree-color);
 }
 
 .tree li[class~='children']::before {
   content: '\f105'; /* arrow-right */
-  /* font-family: "Font Awesome 5 Free"; */
   font-weight: 900;
   margin-right: 0.3rem;
-  color: rgb(137, 135, 243);
 }
 .tree li:not([class~='children']):before {
   content: '\f105';
@@ -37,9 +37,7 @@
 
 .tree li[class='open children']::before {
   content: '\f107'; /* arrow-down */
-  /* font-family: "Font Awesome 5 Free"; */
   font-weight: 900;
-  color: rgb(137, 135, 243);
 }
 
 .tree li[class~='open'] > ul:hover {

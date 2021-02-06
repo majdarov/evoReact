@@ -48,7 +48,7 @@ function addNode(subNode, parentNode) {
 }
 
 function findNode(pid, pNode) {
-  if (pid === null) pid = 0;
+  if (pid === null) pid = '0';
   let result = pNode.childs.find(item => item.id === pid);
 
   if (result === undefined) {

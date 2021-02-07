@@ -20,4 +20,5 @@ header {
 .lng {
   display: flex;
   float: right;
+  padding: 1rem;
 }

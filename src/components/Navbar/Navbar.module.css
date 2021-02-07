@@ -5,7 +5,7 @@ nav {
 }
 
 .item {
-    display: inline;
+    display: inline-flex;
     /* border: 1px solid rgb(59, 57, 185); */
     margin-bottom: 3px;
     margin-right: 0.2rem;

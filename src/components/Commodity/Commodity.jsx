@@ -8,7 +8,6 @@ import { apiIDB } from "../../api/apiIDB";
 import { isEmptyGroup } from "../../api/apiUtils";
 import Table from "../common/Table";
 import { ProgressBar } from "../common/ProgressBar";
-import { setPid } from "../../redux/Actions/commodityActions";
 
 const Commodity = props => {
 
@@ -39,6 +38,7 @@ const Commodity = props => {
     }
     if (!props.comIsLoaded && props.isInit) {
       props.getProducts(props.pid);
+      // props.setCommodities(props.commodities.filter(item => item.parent_id === props.pid));
     }
 
     if (props.error) {
@@ -102,7 +102,6 @@ const Commodity = props => {
     if (confirmDel) {
       let parentGroup = (await apiIDB.getGroup(props.pid)).parent_id;
       if (!parentGroup) parentGroup = '0';
-      // setPid(parentGroup);
       await props.deleteProduct(props.pid, parentGroup, 'group')
     } else {
       alert('DELETED CANCEL');

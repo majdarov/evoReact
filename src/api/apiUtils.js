@@ -1,5 +1,6 @@
-import { apiForIdb } from "./api";
-import { apiIDB } from "./apiIDB";
+import { apiForIdb } from './api';
+import { apiIDB } from './apiIDB';
+import { setSyncData, clearSyncData, setGroups } from '../redux/Actions';
 
 export function compose(...fns) {
   return (x) => fns.reduceRight((acc, fn) => fn(acc), x);
@@ -16,7 +17,7 @@ export function testNeedUpdate(date, periodUpdate = 24) {
   }
   if (!date) return true;
   let needUpdate = (Date.now() - date) / 1000 / 3600;
-  if (needUpdate > periodUpdate ) {
+  if (needUpdate > periodUpdate) {
     return true;
   } else {
     return false;
@@ -32,16 +33,17 @@ export async function fetchGroupsProducts() {
     // Get products
     res = await apiForIdb.getProductsEvo();
     let products = await res.items;
-    products = products.map(item => {
+    products = products.map((item) => {
       if (!item.parent_id) item.parent_id = '0';
       if (!item.barcodes) item.barcodes = [];
       if (!item.photos) item.photos = [];
       return item;
-    })
+    });
     await apiIDB.pushItems('products', products);
-    localStorage.setItem('lastUpdate', Date.now())
+    localStorage.setItem('lastUpdate', Date.now());
     console.log('LS: ' + new Date(+localStorage.lastUpdate));
     return true;
+    // return { groups, products, load: true };
   } catch (e) {
     console.error(e.message);
     return e;
@@ -56,5 +58,48 @@ export async function isEmptyGroup(pId) {
     return true;
   } else {
     return false;
+  }
+}
+
+export async function syncGroupsProducts(callback = null) {
+  const log = text => {
+    console.log(text);
+    if (callback) callback(text);
+  }
+  try {
+    // Get groups
+    log('Get groups...');
+    let res = await apiForIdb.getGroupsEvo();
+    let groups = await res.items;
+    // Get products
+    log('Get products...');
+    res = await apiForIdb.getProductsEvo();
+    let products = await res.items;
+    products = products.map((item) => {
+      if (!item.parent_id) item.parent_id = '0';
+      if (!item.barcodes) item.barcodes = [];
+      if (!item.photos) item.photos = [];
+      return item;
+    });
+    localStorage.setItem('lastUpdate', Date.now());
+    console.log('LS: ' + new Date(+localStorage.lastUpdate));
+    log('Set sync data...');
+    setSyncData({ products, groups });
+    log('Clear storage...');
+    await apiIDB.clearStore('products');
+    await apiIDB.clearStore('groups');
+    log('Write groups in IDB...');
+    await apiIDB.pushItems('groups', groups);
+    log('Write products in IDB...');
+    await apiIDB.pushItems('products', products);
+    log('Set groups...');
+    setGroups(groups);
+    log('Clear sync data...');
+    clearSyncData();
+    return true;
+    // return { groups, products, load: true };
+  } catch (e) {
+    console.error(e.message);
+    return e;
   }
 }

@@ -3,8 +3,6 @@ import {
   SET_PID,
   SET_COMMODITIES,
   SET_ERROR,
-  UPDATE_COMMODITY,
-  SET_UPDATED,
   VIEW_FORM,
   SET_FORM_DATA,
   TOGGLE_FORM_POST,
@@ -64,10 +62,7 @@ const commodityReduser = (state = initialState, action) => {
       return { ...state, groups: [...groups], isLoaded: true };
 
     case SET_PID:
-      return Object.assign({}, state, {
-        pid: action.pid,
-        comIsLoaded: false,
-      });
+      return { ...state, pid: action.pid, comIsLoaded: false }
 
     case SET_COMMODITIES:
       let commodities = [];
@@ -82,30 +77,13 @@ const commodityReduser = (state = initialState, action) => {
         };
         commodities.push(commodity);
       });
-      return Object.assign({}, state, {
-        commodities: commodities,
-        comIsLoaded: true,
-      });
+      return {...state, commodities, comIsLoaded: true }
 
     case SET_ERROR:
-      return Object.assign({}, state, {
-        error: action.error,
-      });
+      return {...state, error: action.error }
 
     case SET_FORM_ERROR:
       return { ...state, form: { ...state.form, formError: action.error } };
-
-    case UPDATE_COMMODITY:
-      let lastUpdate = Date.now();
-      if (!state.updateOk) {
-        lastUpdate = state.lastUpdate;
-      } else {
-        lastUpdate = Date.now();
-      }
-      return { ...state, lastUpdate };
-
-    case SET_UPDATED:
-      return { ...state, isUpdated: action.update };
 
     case VIEW_FORM:
       return { ...state, viewForm: action.viewForm };

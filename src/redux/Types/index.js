@@ -5,6 +5,8 @@ export {
   SET_STORES,
   SET_LAST_UPDATE,
   SET_PERIOD_UPDATE,
+  SET_SYNC_DATA,
+  CLEAR_SYNC_DATA
 } from './appTypes';
 
 export { GET_TITLE, CHOOSE_LANG } from './navigationTypes';
@@ -14,8 +16,6 @@ export {
   SET_PID,
   SET_COMMODITIES,
   SET_ERROR,
-  UPDATE_COMMODITY,
-  SET_UPDATED,
   VIEW_FORM,
   SET_FORM_DATA,
   TOGGLE_FORM_POST,

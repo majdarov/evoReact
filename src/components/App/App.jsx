@@ -13,10 +13,17 @@ import ImpExcel from "../ImpExcel/ImpExcel";
 import Wrapper from "../Example/Wrapper";
 import IdbTest from "../IdbTest/IdbTest";
 import MainSettings from "../Settings/MainSettings";
-import { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate, setPeriodUpdate } from '../../redux/Actions';
+import {
+  initializeApp,
+  toggleInitApp,
+  setAppKey,
+  setStoreKey,
+  setLastUpdate,
+  setPeriodUpdate,
+} from '../../redux/Actions';
 import { connect } from "react-redux";
 import Documents from "../Documents";
-import { fetchGroupsProducts, testNeedUpdate } from "../../api/apiUtils";
+import { /* fetchGroupsProducts, */ syncGroupsProducts, testNeedUpdate } from "../../api/apiUtils";
 
 
 
@@ -26,7 +33,7 @@ const App = props => {
 
     async function getProductsForIdb(lastUpdate, periodUpdate = 24) {
       if (testNeedUpdate(lastUpdate, periodUpdate)) {
-        await fetchGroupsProducts();
+        await syncGroupsProducts();
         props.setLastUpdate();
       }
     }
@@ -69,4 +76,14 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState, { initializeApp, toggleInitApp, setAppKey, setStoreKey, setLastUpdate, setPeriodUpdate })(App);
+export default connect(
+  mapState,
+  {
+    initializeApp,
+    toggleInitApp,
+    setAppKey,
+    setStoreKey,
+    setLastUpdate,
+    setPeriodUpdate,
+  }
+)(App);

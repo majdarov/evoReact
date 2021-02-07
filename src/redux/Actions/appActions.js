@@ -5,6 +5,8 @@ import {
   SET_PERIOD_UPDATE,
   SET_STORES,
   SET_STORE_KEY,
+  SET_SYNC_DATA,
+  CLEAR_SYNC_DATA,
 } from '../Types';
 
 const setAppKeyAC = (key) => {
@@ -27,7 +29,7 @@ const setLastUpdateAC = (dateUpdate) => {
   return { type: SET_LAST_UPDATE, dateUpdate };
 };
 
-const setPeriodUpdateAC = periodUpdate  => {
+const setPeriodUpdateAC = (periodUpdate) => {
   if (isNaN(+periodUpdate)) {
     periodUpdate = 24;
   } else if (+periodUpdate < 1) {
@@ -37,8 +39,15 @@ const setPeriodUpdateAC = periodUpdate  => {
   } else {
     periodUpdate = +periodUpdate;
   }
-  return { type: SET_PERIOD_UPDATE, periodUpdate }
-}
+  return { type: SET_PERIOD_UPDATE, periodUpdate };
+};
+
+const setSyncDataAC = ({ products, groups }) => {
+  return { type: SET_SYNC_DATA, products, groups };
+};
+const clearSyncDataAC = () => {
+  return { type: CLEAR_SYNC_DATA };
+};
 
 export const setAppKey = (key) => (dispatch) => {
   dispatch(setAppKeyAC(key));
@@ -55,7 +64,6 @@ export const toggleInitApp = (init) => (dispatch) => {
 export const setStores = (stores) => (dispatch) => {
   dispatch(setStoresAC(stores));
 };
-
 
 export const initializeApp = () => (dispatch) => {
   if (localStorage.appKey) {
@@ -81,6 +89,14 @@ export const setLastUpdate = () => (dispatch, getState) => {
   // console.log('Date After: ' + new Date(dateAfter).toString());
 };
 
-export const setPeriodUpdate = periodUpdate => dispatch => {
+export const setPeriodUpdate = (periodUpdate) => (dispatch) => {
   dispatch(setPeriodUpdateAC(periodUpdate));
+};
+
+export const setSyncData = ({ products, groups }) => (dispatch) => {
+  dispatch(setSyncDataAC({ products, groups }));
+};
+
+export const clearSyncData = () => (dispatch) => {
+  dispatch(clearSyncDataAC());
 };

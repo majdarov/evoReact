@@ -74,6 +74,10 @@ export const getGroups = () => {
   };
 };
 
+export const setGroups = groups => dispatch => {
+  dispatch(setGroupsAC(groups));
+}
+
 export const setViewForm = (view) => (dispatch) => {
   dispatch(viewFormAC(view));
 };

@@ -98,4 +98,10 @@ export const apiIDB = {
     await db.delete(storeName, id);
     return id;
   },
+
+  async clearStore(storeName) {
+    const db = await initDb();
+    await db.clear(storeName);
+    return true;
+  }
 };

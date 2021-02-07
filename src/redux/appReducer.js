@@ -5,7 +5,9 @@ import {
   SET_STORES,
   SET_LAST_UPDATE,
   SET_PERIOD_UPDATE,
-} from './Types'
+  SET_SYNC_DATA,
+  CLEAR_SYNC_DATA,
+} from './Types';
 
 const initialState = {
   appKey: null,
@@ -13,7 +15,11 @@ const initialState = {
   isInit: false,
   stores: [],
   lastUpdate: null,
-  periodUpdate: 24
+  periodUpdate: 24,
+  syncData: {
+    products: [],
+    groups: [],
+  },
 };
 
 const appReducer = (state = initialState, action) => {
@@ -30,6 +36,16 @@ const appReducer = (state = initialState, action) => {
       return { ...state, lastUpdate: +action.dateUpdate };
     case SET_PERIOD_UPDATE:
       return { ...state, periodUpdate: action.periodUpdate };
+    case SET_SYNC_DATA:
+      return {
+        ...state,
+        syncData: {
+          products: [...action.products],
+          groups: [...action.groups],
+        },
+      };
+    case CLEAR_SYNC_DATA:
+      return { ...state, syncData: { products: [], groups: [] } };
     default:
       return state;
   }

@@ -5,7 +5,9 @@ export {
   setStores,
   initializeApp,
   setLastUpdate,
-  setPeriodUpdate
+  setPeriodUpdate,
+  setSyncData,
+  clearSyncData
 } from './appActions';
 
 export { getTitle, chooseLang } from './navigationActions';
@@ -23,5 +25,6 @@ export {
   setPid,
   setError,
   setFormError,
-  toggleFormPost
+  toggleFormPost,
+  setGroups,
 } from './commodityActions';

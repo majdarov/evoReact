@@ -11,7 +11,13 @@ header h2 {
 header {
   grid-area: h;
   background-image: linear-gradient(to right bottom, rgb(200, 200, 252), rgb(80, 80, 247));
+  border-radius: 5px;
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+.lng {
+  display: flex;
+  float: right;
 }

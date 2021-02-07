@@ -1,20 +1,23 @@
 nav {
     padding: 0.5rem;
-    grid-area: n;
+    /* grid-area: n; */
     background-color: inherit;
 }
 
 .item {
+    display: inline;
+    /* border: 1px solid rgb(59, 57, 185); */
     margin-bottom: 3px;
-    /* border-radius: 5px; */
-    padding: 3px;
+    margin-right: 0.2rem;
+    border-radius: 5px;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
     background-color: lavender;
     /* box-shadow: 2px 2px 1px darkslategrey; */
     text-align: center;
 }
 
 .item a {
-    color: tomato;
+    color: rgb(59, 57, 185);
     overflow: hidden;
     text-decoration: none;
     font-weight: bold;

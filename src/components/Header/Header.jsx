@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import './Header.module.css';
+import s from './Header.module.css';
 import logo from '../../Assets/img/terminal-5.png';
 import ProgressBar from '../common/ProgressBar/ProgressBar';
 import { /* fetchGroupsProducts, */ syncGroupsProducts, testNeedUpdate } from '../../api/apiUtils';
+import NavbarContainer from '../Navbar/NavbarContainer';
 // import ProgressBar2 from '../common/ProgressBar/ProgressBar2';
 
 const Header = (props) => {
@@ -60,10 +61,11 @@ const Header = (props) => {
                 </div>}
             <img src={logo} alt='Logo'></img>
             <h2>{props.title}</h2>
-            <div onClick={clickLang}>
+            <div className={s.lng} onClick={clickLang}>
                 <input name="lng" type="radio" value='ru' checked={!props.currentLang} onChange={(ev) => ev.target.checked = !props.currentLang} />RU
                 <input name="lng" type="radio" value='en' checked={props.currentLang} onChange={(ev) => ev.target.checked = props.currentLang} />EN
             </div>
+            <NavbarContainer />
         </header>
     );
 }

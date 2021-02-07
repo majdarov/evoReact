@@ -50,7 +50,7 @@ const App = props => {
   return (
     <div className="app">
       <HeaderContainer />
-      <NavbarContainer />
+      {/* <NavbarContainer /> */}
       <div className="app-content">
         <Route exact path="/" />
         <Route exact path="/settings" component={MainSettings} />

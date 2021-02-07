@@ -14,11 +14,11 @@ body {
 .app {
   margin: 0.5rem auto;
   display: grid;
-  grid-template-rows: 7rem 10fr;
+  grid-template-rows: 8rem 10fr;
   grid-template-columns: repeat(6, 2fr);
   grid-template-areas:
     "h h h h h h"
-    "n c c c c c";
+    "c c c c c c";
   grid-gap: 0.5rem;
   background-color: lightblue;
 }

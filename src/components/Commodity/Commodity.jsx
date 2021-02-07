@@ -8,6 +8,7 @@ import { apiIDB } from "../../api/apiIDB";
 import { isEmptyGroup } from "../../api/apiUtils";
 import Table from "../common/Table";
 import { ProgressBar } from "../common/ProgressBar";
+import { setPid } from "../../redux/Actions/commodityActions";
 
 const Commodity = props => {
 
@@ -27,7 +28,7 @@ const Commodity = props => {
 
   useEffect(() => {
     isEmptyGroup(props.pid).then(res => setGroupIsEmpty(res));
-  })
+  }, [props.pid])
 
   const [groupName, setGroupName] = useState('Commodities');
 
@@ -100,6 +101,8 @@ const Commodity = props => {
     let confirmDel = window.confirm(`Вы действительно хотите удалить группу\n\r${groupName}\n\rid: ${props.pid}?`)
     if (confirmDel) {
       let parentGroup = (await apiIDB.getGroup(props.pid)).parent_id;
+      if (!parentGroup) parentGroup = '0';
+      // setPid(parentGroup);
       await props.deleteProduct(props.pid, parentGroup, 'group')
     } else {
       alert('DELETED CANCEL');

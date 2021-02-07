@@ -26,7 +26,7 @@
 */
 
 function createNode(item) {
-  let node = {...item};
+  let node = { ...item };
   node.childs = [];
   return node;
 }
@@ -49,7 +49,7 @@ function addNode(subNode, parentNode) {
 
 function findNode(pid, pNode) {
   if (pid === null) pid = '0';
-  let result = pNode.childs.find(item => item.id === pid);
+  let result = pNode.childs.find((item) => item.id === pid);
 
   if (result === undefined) {
     for (let node of pNode.childs) {
@@ -62,7 +62,7 @@ function findNode(pid, pNode) {
 
 function createTree(data, root) {
   let notFoundNodes = [];
-  data.forEach(item => {
+  data.forEach((item) => {
     let node = createNode(item);
     let notFoundNode = addNode(node, root);
     if (notFoundNode) {
@@ -76,3 +76,17 @@ function createTree(data, root) {
   return root;
 }
 export default createTree;
+
+export function chooseNotHiddenGroups(startId = '0', groups = []) {
+  if (!startId || startId === '0' || !groups.length) return [];
+  let arr = [];
+  let current = groups.find((g) => g.id === startId);
+  if (!current || !current.pid) return [];
+  while (current.pid !== '0') {
+    let elem = groups.find((g) => g.id === current.pid);
+    if (!elem) break;
+    arr.push(elem.id);
+    current = elem;
+  }
+  return arr;
+}

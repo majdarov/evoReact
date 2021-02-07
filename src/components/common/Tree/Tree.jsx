@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import s from "./Tree.module.css";
-import createTree from "./treeFunction";
+import createTree, { chooseNotHiddenGroups } from "./treeFunction";
 import Node from "./Node";
 
 export const CurrentPidContext = React.createContext({ pId: 'no' });
@@ -40,22 +40,12 @@ const Tree = props => {
   }
 
   useEffect(() => {
-    if (props.pId && props.pId !== '0') {
-      let arr = [];
-      let current = props.data.find(g => g.id === props.pId);
-      if (!current.pid) current.pid = '0';
-      while (current.pid !== '0') {
-        let elem = props.data.find(g => g.id === current.pid);
-        if (!elem) break;
-        arr.push(elem.id);
-        current = elem;
-      }
-      setArrNotHidden([...arr]);
-    }
+    let arr = chooseNotHiddenGroups(props.pId, props.data);
+    setArrNotHidden([...arr]);
   }, [props.data, props.pId])
 
   return (
-    <div id={tree.id} className={s.tree} /* onClick={handleClick} */>
+    <div id={tree.id} className={s.tree}>
       <h3>{tree.label}</h3>
       <CurrentPidContext.Provider value={context}>
         <ul>{createSubTree(nodeRoot)}</ul>

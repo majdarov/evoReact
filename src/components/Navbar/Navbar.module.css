@@ -9,10 +9,14 @@ nav {
 }
 
 .item {
-  display: inline-flex;
-  border: 1px solid rgb(80, 80, 247);
-  border-radius: 0.2rem;
-  padding: 0.2rem 0.5rem;
+  display: inline-block;
+  border: 2px solid rgb(80, 80, 247);
+  /* clip-path: polygon(0 0, 90% 0, 100% 50%, 100% 100%, 0 100%); */
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 1rem;
+  border-right: 3.5px solid rgb(80, 80, 247);
+  border-bottom: none;
+  padding: 0.2rem 0.7rem;
   /* background-color: lavender; */
   text-align: center;
 }
@@ -26,4 +30,8 @@ nav {
 
 .item a.active {
   color: white;
+}
+
+.item:hover {
+  background-color: lavender;
 }

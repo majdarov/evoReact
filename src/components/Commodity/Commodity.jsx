@@ -29,7 +29,7 @@ const Commodity = props => {
     isEmptyGroup(props.pid).then(res => setGroupIsEmpty(res));
   }, [props.pid])
 
-  const [groupName, setGroupName] = useState('Commodities');
+  const [groupName, setGroupName] = useState('Товары');
 
   useEffect(() => {
     if (!props.isLoaded && props.isInit) {
@@ -52,9 +52,9 @@ const Commodity = props => {
       // toggleHidden(props.pid);
       if (props.pid !== '0') {
         const group = props.groups.find(item => item.id === props.pid);
-        var gName = group?.label || 'Commodities';
+        var gName = group?.label || 'Товары';
       } else {
-        gName = 'Commodities';
+        gName = 'Товары';
       }
       setGroupName(gName);
     }
@@ -76,7 +76,7 @@ const Commodity = props => {
       returnBeforeSearch();
       return;
     }
-    let products = (await apiIDB.getProduct()).filter(item => item.name.match(name));
+    let products = (await apiIDB.getProduct()).filter(item => item.name.match(name) || item.article_number?.match(name));
     props.setCommodities(products);
   }
 

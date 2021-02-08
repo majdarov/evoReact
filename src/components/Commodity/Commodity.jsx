@@ -18,7 +18,7 @@ const Commodity = props => {
     ['Name'],
     ['Price'],
     ['Quant'],
-    ['Del'],
+    ['Article'],
   ];
 
   if (!props.isInit) {

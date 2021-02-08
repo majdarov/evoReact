@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import schema from './products.json';
 import { viewBarcode } from '../frmUtilites';
 import Tree from '../../../common/Tree/Tree';
@@ -102,7 +102,7 @@ export const ComponentsProducts = {
     },
     Barcodes: props => {
 
-        const [view, setView] = useState(false);
+        const [view, setView] = useState(true);
 
         let barcodes = [];
         if (props.barcodes?.length) {

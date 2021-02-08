@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import s from './Form.module.css';
 import { useState } from "react";
 import Preloader from '../../common/Preloader/Preloader';
@@ -24,13 +24,6 @@ const FormProduct = props => {
     currentBarcode: '',
   });
 
-  useEffect(() => {
-    if (!state.allow_edit) {
-      let esc = document.getElementById(s.esc);
-      esc.focus();
-    }
-  })
-
   useEffect(() => { //cleare URL objects Photo
     return () => {
       if (state.photos?.length) {
@@ -38,6 +31,26 @@ const FormProduct = props => {
       }
     }
   })
+
+  const setViewForm = props.setViewForm;
+  const setFormData = props.setFormData;
+
+  const canselClick = useCallback((ev) => {
+    setViewForm(false);
+    setFormData(null);
+    document.body.style.overflow = 'auto';
+  }, [setFormData, setViewForm])
+
+  useEffect(() => { // EventListener('keyup')
+    const handler = (ev) => {
+      // console.log(ev.key);
+      if (ev.key === 'Escape') {
+        canselClick();
+      }
+    }
+    document.addEventListener('keyup', handler);
+    return () => document.removeEventListener('keyup', handler);
+  }, [canselClick])
 
   if (!state.code) {
     setNewCode().then(code => setState({ ...state, code }))
@@ -218,12 +231,6 @@ const FormProduct = props => {
     document.body.style.overflow = 'auto';
   }
 
-  const canselClick = (ev) => {
-    props.setViewForm(false);
-    props.setFormData(null);
-    document.body.style.overflow = 'auto';
-  }
-
   const pictureClick = ev => {
     let p = ev.target;
     if (p.tagName === 'SPAN') {
@@ -265,12 +272,6 @@ const FormProduct = props => {
     setTreeView(!treeView);
   }
 
-  const chooseKeyDown = ev => {
-    // console.log(ev.keyCode, ev.metaKey)
-    if (ev.keyCode !== 27) return;
-    canselClick();
-  }
-
   const gProps = {
     groups: props.groups, disabled, parent_id: state.parent_id, onClick: clickGroups,
     treeView, classDiv: s['g-tree'], classTree: s.tree, callbackTree
@@ -297,10 +298,9 @@ const FormProduct = props => {
           <FormModalWrapper
             form={<FormImg photo={state.bigImg} />}
           />}
-        <form id={s['form-product']} onSubmit={handleSubmit} onKeyDown={chooseKeyDown}>
+        <form id={s['form-product']} onSubmit={handleSubmit} >
           <div className={s['menu-buttons']}>
             <span style={{ cursor: 'pointer' }} onClick={toggleGroup}>{isGroup ? 'Group' : 'Product'}</span>
-            <input type="text" name="esc" id={s.esc} />
             <i className='fa fa-window-close' onClick={handleSubmit}></i>
           </div>
           <fieldset name='Product'>

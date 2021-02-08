@@ -1,7 +1,7 @@
 #form-product {
   display: inline-block;
   font-family: var(--icon-font);
-  /* width: 50vw; */
+  /* width: 90vw; */
   border: 1px solid lightseagreen;
   background-color: cornsilk;
   vertical-align: middle;
@@ -34,11 +34,6 @@
 [name='img_barcodes'] {
   display: inline-flex;
 }
-
-/* input[type='text'] {
-  width: 30vw;
-  margin-left: 5px;
-} */
 
 input[name='code'] {
   width: 5em;
@@ -76,11 +71,6 @@ input[name='article']
   transition: ease-in-out top 0.5s 0.5s;
 }
 
-.tree > i {
-  text-align: center;
-  font-size: 1.5rem;
-}
-
 .price + span::before {
   content: "\f158";
   font-weight: 900;
@@ -100,8 +90,8 @@ input[name='description'] {
 
 [name='name'] {
   border: 1px solid blue;
-  height: 2rem;
-  width: 45vw;
+  height: 2.5rem;
+  width: 100%
 }
 
 label {
@@ -198,8 +188,7 @@ button
 }
 
 .menu-buttons {
-  padding: 0;
-  margin: 0;
+  display: inline;
   font-size: large;
   opacity: 70%;
 }
@@ -208,6 +197,7 @@ button
 }
 .menu-buttons span {
   float: left;
+  background-color: tomato;
 }
 .menu-buttons i {
   float: right;
@@ -218,20 +208,11 @@ button
 }
 
 .propertyes {
-  display: inline;
+  display: inline-flex;
   /* justify-items: left; */
   border: gray dashed 1px;
 }
 
-.propertyes select>div {
+.propertyes select {
   width: min-content;
-}
-
-#esc {
-  background-color: inherit;
-  border: none;
-}
-
-#esc:focus {
-  border: none;
 }

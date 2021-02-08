@@ -12,12 +12,6 @@
   margin-left: 1rem;
 }
 
-thead {
-  position: sticky;
-  top: 7rem;
-  z-index: 103;
-}
-
 table tr:nth-child(2n) {
   background-color: lightcyan;
 }
@@ -32,12 +26,8 @@ td {
   padding-top: 0.5rem;
 }
 
-/* tr:hover {
-  background-color: lightpink;
-} */
-
 td:hover {
-  border: green 1px solid;
+  border: green 2px solid;
 }
 
 .del::before {

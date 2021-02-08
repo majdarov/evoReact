@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import schema from './products.json';
 import { viewBarcode } from '../frmUtilites';
 import Tree from '../../../common/Tree/Tree';
+import s from '../Form.module.css';
 
 export const ComponentsProducts = {
     MeasureNames: props => {
@@ -101,6 +102,8 @@ export const ComponentsProducts = {
     },
     Barcodes: props => {
 
+        const [view, setView] = useState(false);
+
         let barcodes = [];
         if (props.barcodes?.length) {
             barcodes = [...props.barcodes];
@@ -116,22 +119,28 @@ export const ComponentsProducts = {
             props.deleteFromArray(elem.id, 'barcodes');
         }
 
+        const toggleViewBarcodes = () => {
+            setView(view => !view);
+        }
+
         return (
             <fieldset name='img_barcodes'>
-                <legend>Barcodes</legend>
-                <div className={props.view_barcode}>
-                    <ul>
-                        {barcodes.map(b => {
-                            return (
-                                <li key={b} id={b} onClick={delBcClick}>{viewBarcode(b)}
-                                    <span className={props.delBc}></span>
-                                </li>
-                            )
-                        })}
-                    </ul>
-                    <input name='barcodes' type="text" defaultValue={props.bc}
-                        onChange={props.handleChange} onBlur={props.handleBlur} disabled={props.disabled} />
-                    <span className={props.addBc}></span>
+                <legend onClick={toggleViewBarcodes} style={{ cursor: 'pointer' }}>Barcodes</legend>
+                <div className={view ? '' : s['barcodes-hidden']}>
+                    <div className={props.view_barcode}>
+                        <ul>
+                            {barcodes.map(b => {
+                                return (
+                                    <li key={b} id={b} onClick={delBcClick}>{viewBarcode(b)}
+                                        <span className={props.delBc}></span>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                        <input name='barcodes' type="text" defaultValue={props.bc}
+                            onChange={props.handleChange} onBlur={props.handleBlur} disabled={props.disabled} />
+                        <span className={props.addBc}></span>
+                    </div>
                 </div>
             </fieldset >
         )

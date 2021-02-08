@@ -26,32 +26,34 @@ export default function Table(props) {
   }
 
   return (
-    <table onClick={ev => clickTable(ev, props.callback, props.deleteProduct)}>
+    <div onClick={ev => clickTable(ev, props.callback, props.deleteProduct)}>
       {/* <caption>Commodities</caption> */}
-      <thead>
-        <tr>
-          {
-            headers.map((item, idx) => {
-              if (item === 'uuid' || item === 'id') return null;
-              return <th
-                key={item}
-                onClick={() => requestSort(schema[idx + 1])}
-              >{item}<i className={getClassName(schema[idx + 1])}></i></th>
-            })
-          }
-        </tr>
-      </thead>
-      <tbody>
-        {items.map(product => (
-          <tr key={product.uuid || product.id} id={product.uuid || product.id}>
-           { schema.map(item => {
-             if (item === 'uuid' || item === 'id') return null;
-             return <td key={`${item}_${product.id || product.uuid}`} name={item}>{product[item]}</td>
-            })}
-            <td key={`del_${product.id || product.uuid}`}><span className={s.del}></span></td>
+      <table>
+        <thead>
+          <tr>
+            {
+              headers.map((item, idx) => {
+                if (item === 'uuid' || item === 'id') return null;
+                return <th
+                  key={item}
+                  onClick={() => requestSort(schema[idx + 1])}
+                >{item}<i className={getClassName(schema[idx + 1])}></i></th>
+              })
+            }
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {items.map(product => (
+            <tr key={product.uuid || product.id} id={product.uuid || product.id}>
+              { schema.map(item => {
+                if (item === 'uuid' || item === 'id') return null;
+                return <td key={`${item}_${product.id || product.uuid}`} name={item}>{product[item]}</td>
+              })}
+              <td key={`del_${product.id || product.uuid}`}><span className={s.del}></span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

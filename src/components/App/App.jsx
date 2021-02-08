@@ -6,7 +6,6 @@ import "../../Assets/css/regular.css";
 import "../../Assets/css/brands.css";
 import { Route } from "react-router-dom";
 import Game from "../Game";
-import NavbarContainer from "../Navbar/NavbarContainer";
 import HeaderContainer from "../Header/HeaderContainer";
 import CommodityContainer from "../Commodity";
 import ImpExcel from "../ImpExcel/ImpExcel";
@@ -50,7 +49,6 @@ const App = props => {
   return (
     <div className="app">
       <HeaderContainer />
-      {/* <NavbarContainer /> */}
       <div className="app-content">
         <Route exact path="/" />
         <Route exact path="/settings" component={MainSettings} />

@@ -147,13 +147,15 @@ const Commodity = props => {
           />
           : null}
         <div className={s.container}>
-          <Tree
-            data={props.groups}
-            price="Price"
-            treeLabel="Groups"
-            callback={changePid}
-            pId={props.pid}
-          />
+          <div className={s.list}>
+            <h3>Группы</h3>
+            <Tree
+              data={props.groups}
+              price="Price"
+              callback={changePid}
+              pId={props.pid}
+            />
+          </div>
           <div className={s.list}>
             <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3>
             {!props.comIsLoaded && <ProgressBar limit={20} text={'Processing...'} />}

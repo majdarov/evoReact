@@ -1,10 +1,10 @@
 #form-product {
   display: inline-block;
   font-family: var(--icon-font);
-  /* width: 90vw; */
+  width: 90vw;
   border: 1px solid lightseagreen;
   background-color: cornsilk;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   --color-form-icon: rgba(248, 122, 99, 0.829);
 }
 
@@ -45,8 +45,7 @@ input[name='code'] {
 
 input[name='price'],
 input[name='cost_price'],
-input[name='article']
-{
+input[name='article'] {
   width: 10em;
   text-align: right;
   margin: 2px;
@@ -73,10 +72,10 @@ input[name='article']
 }
 
 .price + span::before {
-  content: "\f158";
+  content: '\f158';
   font-weight: 900;
   margin-right: 0.3rem;
-  font-family: "Font Awesome 5 Free";
+  font-family: 'Font Awesome 5 Free';
 }
 
 .barcodes input {
@@ -92,7 +91,7 @@ input[name='description'] {
 [name='name'] {
   border: 1px solid blue;
   height: 2.5rem;
-  width: 100%
+  width: 100%;
 }
 
 label {
@@ -122,7 +121,7 @@ label:hover {
 }
 
 .select::after {
-  content: "\f00d";
+  content: '\f00d';
   font-weight: bolder;
   margin-right: 0.3rem;
 }
@@ -130,8 +129,7 @@ label:hover {
 input,
 textarea,
 select,
-button
- {
+button {
   color: darkblue;
 }
 
@@ -144,7 +142,7 @@ button
   color: coral;
 }
 
-.big-img + span::before{
+.big-img + span::before {
   content: '\f00d';
   font-weight: 900;
   color: tomato;
@@ -189,13 +187,13 @@ button
 }
 
 .menu-buttons {
-  display: inline;
+  display: block;
   font-size: large;
   /* opacity: 70%; */
 }
 
 .menu-buttons span {
-  float: left;
+  /* float: left; */
   padding: 0.2rem 0.5rem;
   border-radius: 0.5rem;
   background-color: rgba(241, 176, 114, 0.76);

@@ -303,11 +303,11 @@ const FormProduct = props => {
         <form id={s['form-product']} onSubmit={handleSubmit} >
           <div className={s['menu-buttons']}>
             <span style={{ cursor: 'pointer' }} onClick={toggleGroup}>{isGroup ? 'Group' : 'Product'}</span>
-            <i className='fa fa-window-close' onClick={handleSubmit}></i>
+            <i className='fa fa-window-close' id={s.close} onClick={handleSubmit}></i>
             <i className='fa fa-copy' id={s.copy} onClick={copyProduct}></i>
           </div>
           <fieldset name='Product'>
-            <legend>Product Info</legend>
+            <legend>{isGroup ? 'Group' : 'Product'} Info</legend>
             <div>
               <b>ID: </b><input id={s.uuid} value={state.id || ''} disabled={!isNewData} onChange={handleChange} />
               {

@@ -8,12 +8,12 @@ export const apiForIdb = {
     return stores.items;
   },
 
-  async getGroupsEvo() {
+  async fetchGroupsEvo() {
     let request = await createRequest({ type: 'groups_v2' });
     return await fetchEvo(request);
   },
 
-  async getProductsEvo() {
+  async fetchProductsEvo() {
     let request = await createRequest({ type: 'products_v2' });
     return await fetchEvo(request);
   },

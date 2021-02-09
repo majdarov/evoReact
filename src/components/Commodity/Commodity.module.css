@@ -27,7 +27,13 @@
 }
 
 .del {
-  margin-left: 5px;
+  margin-left: 1rem;
+}
+
+.del::before {
+  content: '\f2ed';
+  font-weight: 900;
+  color: tomato;
 }
 
 .head {

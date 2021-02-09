@@ -12,6 +12,7 @@ import { ProgressBar } from "../common/ProgressBar";
 const Commodity = props => {
 
   const [groupIsEmpty, setGroupIsEmpty] = useState(false);
+  const [groupName, setGroupName] = useState('Товары');
 
   const headers = [
     ['Code'],
@@ -28,8 +29,6 @@ const Commodity = props => {
   useEffect(() => {
     isEmptyGroup(props.pid).then(res => setGroupIsEmpty(res));
   }, [props.pid])
-
-  const [groupName, setGroupName] = useState('Товары');
 
   useEffect(() => {
     if (!props.isLoaded && props.isInit) {
@@ -49,7 +48,6 @@ const Commodity = props => {
 
   useEffect(() => {
     if (props.groups.length) {
-      // toggleHidden(props.pid);
       if (props.pid !== '0') {
         const group = props.groups.find(item => item.id === props.pid);
         var gName = group?.label || 'Товары';
@@ -85,7 +83,7 @@ const Commodity = props => {
     if (props.pid !== '0') {
       var gName = props.groups.find(item => item.id === props.pid).label;
     } else {
-      gName = 'Commodities';
+      gName = 'Товары';
     }
     setGroupName(gName);
   }

@@ -69,7 +69,7 @@ const commodityReduser = (state = initialState, action) => {
       action.commodities.forEach((item) => {
         // if (item.g) return;
         let commodity = {
-          uuid: item.id,
+          id: item.id,
           code: item.code,
           label: item.name,
           price: item.price,

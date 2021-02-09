@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Header from './Header';
 import { withRouter } from 'react-router-dom';
 import { useEffect } from 'react';
-import { getTitle, chooseLang, setLastUpdate, setSyncData, clearSyncData } from '../../redux/Actions';
+import { getTitle, chooseLang, setLastUpdate, setGroups } from '../../redux/Actions';
 
 const HeaderContainer = props => {
 
@@ -33,5 +33,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { getTitle, chooseLang, setLastUpdate, setSyncData, clearSyncData }
+    { getTitle, chooseLang, setLastUpdate, setGroups }
 )(withRouter(HeaderContainer));

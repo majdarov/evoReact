@@ -1,6 +1,5 @@
 import { apiForIdb } from './api';
 import { apiIDB } from './apiIDB';
-import { setSyncData, clearSyncData, setGroups } from '../redux/Actions';
 
 export function compose(...fns) {
   return (x) => fns.reduceRight((acc, fn) => fn(acc), x);
@@ -27,7 +26,7 @@ export function testNeedUpdate(date, periodUpdate = 24) {
 export async function fetchGroupsProducts() {
   // Get groups
   try {
-    let res = await apiForIdb.getGroupsEvo();
+    let res = await apiForIdb.fetchGroupsEvo();
     let groups = await res.items;
     await apiIDB.pushItems('groups', groups);
     // Get products
@@ -69,11 +68,11 @@ export async function syncGroupsProducts(callback = null) {
   try {
     // Get groups
     log('Get groups...');
-    let res = await apiForIdb.getGroupsEvo();
+    let res = await apiForIdb.fetchGroupsEvo();
     let groups = await res.items;
     // Get products
     log('Get products...');
-    res = await apiForIdb.getProductsEvo();
+    res = await apiForIdb.fetchProductsEvo();
     let products = await res.items;
     products = products.map((item) => {
       if (!item.parent_id) item.parent_id = '0';
@@ -83,8 +82,6 @@ export async function syncGroupsProducts(callback = null) {
     });
     localStorage.setItem('lastUpdate', Date.now());
     console.log('LS: ' + new Date(+localStorage.lastUpdate));
-    log('Set sync data...');
-    setSyncData({ products, groups });
     log('Clear storage...');
     await apiIDB.clearStore('products');
     await apiIDB.clearStore('groups');
@@ -92,12 +89,7 @@ export async function syncGroupsProducts(callback = null) {
     await apiIDB.pushItems('groups', groups);
     log('Write products in IDB...');
     await apiIDB.pushItems('products', products);
-    log('Set groups...');
-    setGroups(groups);
-    log('Clear sync data...');
-    clearSyncData();
-    return true;
-    // return { groups, products, load: true };
+    return groups;
   } catch (e) {
     console.error(e.message);
     return e;

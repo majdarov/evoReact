@@ -11,7 +11,7 @@ import FormModalWrapper from './FormModalWrapper';
 
 const FormProduct = props => {
 
-  const isNewData = !props.formData.id;
+  const [isNewData, setIsNewData] = useState(!props.formData.id);
   const fileInput = React.createRef();
   const [isGroup, setIsGroup] = useState(false);
   const [state, setState] = useState({
@@ -23,15 +23,9 @@ const FormProduct = props => {
     bigImg: null,
     currentBarcode: '',
   });
+  const [treeView, setTreeView] = useState(false);
 
-  useEffect(() => { //cleare URL objects Photo
-    return () => {
-      if (state.photos?.length) {
-        state.photos.forEach(item => URL.revokeObjectURL(item))
-      }
-    }
-  })
-
+  const disabled = !isNewData && !state.allow_edit;
   const setViewForm = props.setViewForm;
   const setFormData = props.setFormData;
 
@@ -40,6 +34,24 @@ const FormProduct = props => {
     setFormData(null);
     document.body.style.overflow = 'auto';
   }, [setFormData, setViewForm])
+
+  if (!state.code) {
+    setNewCode().then(code => setState({ ...state, code }))
+  }
+
+  if (props.formError) {
+    let err = props.formError;
+    alert(err.message);
+    props.setFormError(null);
+  }
+
+  useEffect(() => { //cleare URL objects Photo
+    return () => {
+      if (state.photos?.length) {
+        state.photos.forEach(item => URL.revokeObjectURL(item))
+      }
+    }
+  })
 
   useEffect(() => { // EventListener('keyup')
     const handler = (ev) => {
@@ -52,23 +64,10 @@ const FormProduct = props => {
     return () => document.removeEventListener('keyup', handler);
   }, [canselClick])
 
-  if (!state.code) {
-    setNewCode().then(code => setState({ ...state, code }))
-  }
-
-  if (props.formError) {
-    let err = props.formError;
-    alert(err.message);
-    props.setFormError(null);
-  }
-
   const toggleGroup = () => {
     if (!isNewData) return;
     setIsGroup(!isGroup);
   }
-
-  const disabled = !isNewData && !state.allow_edit;
-
   const formChanged = () => {
     let changes = [];
     for (let key in props.formData) {
@@ -85,14 +84,13 @@ const FormProduct = props => {
     if (state.parent_id && !props.formData.parent_id) {
       changes.push({ parent_id: state.parent_id })
     }
+    // console.log(changes)
     if (changes.length === 1 && isNewData && changes[0].code) changes = [];
     return changes.length;
   }
-
   const formatPrice = price => {
     return isFinite(price) ? Number(price).toFixed(2) : '0.00';
   }
-
   const handleChange = (ev) => {
 
     let elem = ev.target;
@@ -129,7 +127,6 @@ const FormProduct = props => {
       setState({ ...state, [name]: value });
     }
   }
-
   const handleBlur = ev => {
     let name = ev.target.name || ev.currentTarget.name;
     let value = ev.target.value || ev.currentTarget.value;
@@ -165,7 +162,6 @@ const FormProduct = props => {
     setState({ ...state, [name]: value });
     ev.target.value = formatPrice(value);
   }
-
   const handleSubmit = (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
@@ -230,7 +226,6 @@ const FormProduct = props => {
     }
     document.body.style.overflow = 'auto';
   }
-
   const pictureClick = ev => {
     let p = ev.target;
     if (p.tagName === 'SPAN') {
@@ -245,13 +240,11 @@ const FormProduct = props => {
     })
     setState({ ...state, bigImg: p.src })
   }
-
   const onPicInputClick = ev => {
     ev.preventDefault();
     let picInput = document.getElementById('picInput');
     picInput.click();
   }
-
   const deleteFromArray = (elemId, arrName) => {
     let i = state[arrName].findIndex(item => item === elemId);
     let arr = state[arrName];
@@ -259,7 +252,6 @@ const FormProduct = props => {
     setState({ ...state, [arrName]: arr });
   }
 
-  const [treeView, setTreeView] = useState(false);
 
   const callbackTree = async (id, tagName) => {
     let parent_id = id ? id : 0;
@@ -270,6 +262,16 @@ const FormProduct = props => {
 
   const clickGroups = () => {
     setTreeView(!treeView);
+  }
+
+  const copyProduct = () => {
+    setIsNewData(true);
+    setState({...state, id: null, barcodes: [], allow_edit: true});
+    let formData = {...state};
+    delete formData.allow_edit;
+    delete formData.bigImg;
+    delete formData.currentBarcode;
+    props.setFormData(formData);
   }
 
   const gProps = {
@@ -302,6 +304,7 @@ const FormProduct = props => {
           <div className={s['menu-buttons']}>
             <span style={{ cursor: 'pointer' }} onClick={toggleGroup}>{isGroup ? 'Group' : 'Product'}</span>
             <i className='fa fa-window-close' onClick={handleSubmit}></i>
+            <i className='fa fa-copy' id={s.copy} onClick={copyProduct}></i>
           </div>
           <fieldset name='Product'>
             <legend>Product Info</legend>

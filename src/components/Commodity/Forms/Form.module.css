@@ -5,6 +5,7 @@
   border: 1px solid lightseagreen;
   background-color: cornsilk;
   vertical-align: middle;
+  --color-form-icon: rgba(248, 122, 99, 0.829);
 }
 
 #uuid {
@@ -190,17 +191,22 @@ button
 .menu-buttons {
   display: inline;
   font-size: large;
-  opacity: 70%;
+  /* opacity: 70%; */
 }
-.menu-buttons i::before {
-  color: tomato;
-}
+
 .menu-buttons span {
   float: left;
-  background-color: tomato;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  background-color: rgba(241, 176, 114, 0.76);
 }
 .menu-buttons i {
   float: right;
+  color: var(--color-form-icon);
+}
+
+#copy {
+  float: left;
 }
 
 .required {

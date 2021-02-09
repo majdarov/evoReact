@@ -1,5 +1,4 @@
 nav {
-  /* grid-area: n; */
   background-color: inherit;
 }
 
@@ -11,19 +10,16 @@ nav {
 .item {
   display: inline-block;
   border: 2px solid rgb(80, 80, 247);
-  /* clip-path: polygon(0 0, 90% 0, 100% 50%, 100% 100%, 0 100%); */
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 1rem;
   border-right: 3.5px solid rgb(80, 80, 247);
-  border-bottom: none;
+  border-bottom: transparent;
   padding: 0.2rem 0.7rem;
-  /* background-color: lavender; */
   text-align: center;
 }
 
 .item a {
   color: rgb(59, 57, 185);
-  /* overflow: hidden; */
   text-decoration: none;
   font-weight: bold;
 }
@@ -33,5 +29,5 @@ nav {
 }
 
 .item:hover {
-  background-color: lavender;
+  background-color: rgb(186, 186, 252);
 }

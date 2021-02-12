@@ -49,23 +49,58 @@
   color: var(--icon-color);
 }
 
-#icon-filter {
-  color: var(--icon-color);
-}
-
 .buttons {
   display: inline-block;
   padding: 3px;
 }
 
+#form-search label,input {
+  margin: .2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* #form-search input {
+  flex-grow: 1;
+} */
+
 .search {
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.search input {
-  margin: 0.5rem;
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.form-search {
+.filter {
+  color: var(--icon-color);
+  cursor: pointer;
+  border: 1px solid var(--icon-color);
+  font-family: var(--icon-font);
+  font-weight: bold;
+  border-radius: 0.5rem;
+  padding: .3rem;
+}
+
+.hidden {
+  display: none;
+}
+
+[name='fieldset']:not(.hidden) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   margin: .5rem;
+  justify-content: flex-start;
+}
+
+.form-search-price,
+.form-search-date {
+  display: flex;
+  flex-direction: column;
+  margin: .5rem;
+  justify-content: space-between;
 }

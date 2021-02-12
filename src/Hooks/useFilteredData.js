@@ -102,8 +102,9 @@ function createSearchRequest(formData) {
   return arrSearchReuests;
 }
 
-const useFilteredData = (items) => {
+const useFilteredData = (inItems) => {
   const [search, setSearch] = useState([]); // arrSearchRequests
+  const [items, setItems] = useState(inItems)
 
   function setFilterConfig(formData) {
     let arrSearchReuests = createSearchRequest(formData);
@@ -111,7 +112,11 @@ const useFilteredData = (items) => {
   }
 
   let filteredData = useMemo(() => {
-    if (!items || !search.length) return [];
+    if (!search.length) return [];
+    if (!items?.length) {
+      apiIDB.getProduct('all').then(res => setItems(res));
+      return [];
+    }
     let filteredItems = [...items].filter((item) => filterProd(item, search));
     return filteredItems;
   }, [items, search]);

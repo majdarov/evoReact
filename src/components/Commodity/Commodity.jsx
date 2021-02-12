@@ -11,39 +11,12 @@ import { ProgressBar } from "../common/ProgressBar";
 import FormSearch from "./Forms/FormSearch";
 import useFilteredData from "../../Hooks/useFilteredData";
 
-const wrapper = (fn, args) => {
-  let _this = this;
-  if (fn === String.prototype.match) {
-    _this = args[0];
-    args = args.slice(1);
-  }
-  return fn.call(_this, ...args);
-}
-
-function filterProd(item, search = []) {
-  /* search = [
-    [[criteria1], [value1], [funcEqual]]
-    (, [...criteria2])
-  ] */
-  if (!item) return false;
-  if (!search.length) return true;
-  let filterResult = search.reduce((acc, curr) => {
-    if (!item[curr[0]]) return acc;
-    // return (item[curr[0]] === curr[1]) || acc;
-    // return curr[2].call(item[curr[0]], curr[1]) || acc;
-    return wrapper(curr[2], [item[curr[0]], curr[1]]) || acc;
-  }, false);
-  // console.log(filterResult)
-  return filterResult;
-}
-
 const Commodity = props => {
 
   const [groupIsEmpty, setGroupIsEmpty] = useState(false);
   const [groupName, setGroupName] = useState('Товары');
-  const [hiddenSearch, setHiddenSearch] = useState(true);
   // const [formData, setFormData] = useState(null);
-  // const { items, setFilterConfig, search } = useFilteredData([]);
+  const { items, setFilterConfig, search } = useFilteredData([]);
 
   const headers = [
     ['Code'],
@@ -68,8 +41,6 @@ const Commodity = props => {
     }
     if (!props.comIsLoaded && props.isInit) {
       props.getProducts(props.pid);
-      // setFilterConfig({ parent_id: props.pid })
-      // props.setCommodities(props.commodities.filter(item => item.parent_id === props.pid));
     }
 
     if (props.error) {
@@ -99,18 +70,20 @@ const Commodity = props => {
     props.setPid(eId);
   }
 
-  async function searchProducts(e) {
-    setGroupName('Результаты поиска');
-    let name = new RegExp(e.target.value, 'gi');
-    if (name.source === '(?:)' || name.source.length < 2) {
+  const searchProducts = async (e) => {
+    let name = e.target.value
+    if (name.length < 2) {
       returnBeforeSearch();
       return;
     }
-    let match = String.prototype.match;
-    let search = [['name', name, match], ['article_number', name, match]]
-    let products = (await apiIDB.getProduct()).filter(item => filterProd(item, search));
+    setGroupName('Результаты поиска');
+    setFilterConfig({name});
+
+    // let match = String.prototype.match;
+    // let search = [['name', name, match], ['article_number', name, match]]
+    // let products = (await apiIDB.getProduct()).filter(item => filterProd(item, search));
     // let products = (await apiIDB.getProduct()).filter(item => item.name.match(name) || item.article_number?.match(name));
-    props.setCommodities(products);
+    props.setCommodities(items);
   }
 
   function returnBeforeSearch() {
@@ -141,6 +114,8 @@ const Commodity = props => {
     }
   }
 
+  const formSearchProps = { searchProducts, clearSearch, parent_id: props.pid }
+
   if (props.error) {
     return <div>Ошибка...{props.error.message}</div>;
   } else if (!props.isLoaded) {
@@ -152,18 +127,7 @@ const Commodity = props => {
           <div className={s.buttons}>
             <button onClick={newData}>+Товар</button>
           </div>
-          <div className={s.search} onClick={clearSearch}>
-            <label>
-              Поиск товара
-              <input type="text" onChange={searchProducts} />
-              <i className='fa fa-times'></i>
-            </label>
-            <label>Поиск в текущей группе
-              <input type="checkbox" name={s['current-pid']} id={props.pid} />
-            </label>
-          </div>
-          <i className="fa fa-filter" id={s['icon-filter']} onClick={() => setHiddenSearch(!hiddenSearch)}></i>
-          {!hiddenSearch && <FormSearch />}
+          <FormSearch {...formSearchProps} />
         </div>
         {props.viewForm ?
           // <FormProductFormik />

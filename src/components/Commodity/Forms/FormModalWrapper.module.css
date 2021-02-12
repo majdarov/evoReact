@@ -16,10 +16,9 @@
   position: fixed;
   top: -100%;
   left: 0;
-  display: block;
-  transition: ease-in-out top 0.5s 0.1s;
+  display: flexbox;
+  transition: ease-in-out top 0.2s 0.1s;
   text-align: center;
-  font-family: "Font Awesome 5 Free";
   overflow-y: scroll;
 }
 
@@ -35,4 +34,3 @@
   margin-left: 3px;
   padding: 3px;
 }
-

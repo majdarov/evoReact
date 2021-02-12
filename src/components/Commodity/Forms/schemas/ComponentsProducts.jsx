@@ -43,7 +43,7 @@ export const ComponentsProducts = {
     },
     Taxes: props => {
         return (
-            <label>
+            <label className={s.tax}>
                 Tax
                 <select name="tax"
                     id={props.id}

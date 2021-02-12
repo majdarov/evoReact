@@ -45,12 +45,13 @@ const Tree = props => {
   }, [props.data, props.pId])
 
   return (
-    <div id={tree.id} className={s.tree}>
-      {/* <h3>{tree.label}</h3> */}
-      <CurrentPidContext.Provider value={context}>
+    <CurrentPidContext.Provider value={context}>
+      <div id={tree.id} className={s.tree}>
+        {/* <h3>{tree.label}</h3> */}
         <ul>{createSubTree(nodeRoot)}</ul>
-      </CurrentPidContext.Provider>
-    </div>
+      </div>
+    </CurrentPidContext.Provider>
+
   );
 };
 

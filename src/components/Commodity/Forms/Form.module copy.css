@@ -1,7 +1,7 @@
 #form-product {
   display: inline-block;
   font-family: var(--icon-font);
-  /* width: 90vw; */
+  width: 90vw;
   border: 1px solid lightseagreen;
   background-color: cornsilk;
   /* vertical-align: middle; */
@@ -32,14 +32,39 @@
   flex-direction: column;
 }
 
-/* [name='img_barcodes'] {
+[name='img_barcodes'] {
   display: inline-flex;
-} */
+}
+
+input[name='code'] {
+  width: 5em;
+  text-align: right;
+  border: none;
+  background-color: initial;
+}
+
+input[name='price'],
+input[name='cost_price'],
+input[name='article'] {
+  width: 10em;
+  text-align: right;
+  margin: 2px;
+  /* border: none; */
+  background-color: initial;
+}
+
+.g-tree {
+  border: solid 1px;
+}
+
+.g-tree > input {
+  border: none;
+}
 
 .tree {
-  position: absolute;
+  position: fixed;
   display: block;
-  top: 1rem;
+  top: 0;
   text-align: start;
   border: solid 1px blueviolet;
   background-color: white;
@@ -51,6 +76,10 @@
   font-weight: 900;
   margin-right: 0.3rem;
   font-family: var(--icon-font);
+}
+
+.barcodes input {
+  width: inherit;
 }
 
 input[name='description'] {
@@ -106,6 +135,7 @@ button {
 
 .buttons {
   display: flex;
+  justify-content: right;
 }
 
 *:disabled {
@@ -120,7 +150,7 @@ button {
 
 .view-barcode {
   font-size: 2rem;
-  font-family: var(--barcode-font);
+  font-family: 'Code EAN13';
 }
 .view-barcode ul > li {
   display: inline;
@@ -132,7 +162,7 @@ button {
 }
 .view-barcode li:hover .del-bc::before {
   display: inline-block;
-  font-family: var(--icon-font);
+  font-family: 'Font Awesome 5 Free';
   font-size: 1rem;
   content: '\f2ed';
   font-weight: 900;
@@ -147,7 +177,7 @@ button {
 }
 .view-barcode input:focus + .add-bc::before {
   display: inline-block;
-  font-family: var(--icon-font);
+  font-family: 'Font Awesome 5 Free';
   font-size: 1.5rem;
   content: '\f02a';
   font-weight: 900;
@@ -159,9 +189,11 @@ button {
 .menu-buttons {
   display: block;
   font-size: large;
+  /* opacity: 70%; */
 }
 
 .menu-buttons span {
+  /* float: left; */
   padding: 0.2rem 0.5rem;
   border-radius: 0.5rem;
   background-color: rgba(241, 176, 114, 0.76);
@@ -181,9 +213,10 @@ button {
 
 .propertyes {
   display: flex;
+  /* justify-items: left; */
   border: gray dashed 1px;
 }
 
-.tax {
-  flex: 1;
+.propertyes select {
+  width: min-content;
 }

@@ -266,8 +266,8 @@ const FormProduct = props => {
 
   const copyProduct = () => {
     setIsNewData(true);
-    setState({...state, id: null, barcodes: [], allow_edit: true});
-    let formData = {...state};
+    setState({ ...state, id: null, barcodes: [], allow_edit: true });
+    let formData = { ...state };
     delete formData.allow_edit;
     delete formData.bigImg;
     delete formData.currentBarcode;
@@ -363,7 +363,10 @@ const FormProduct = props => {
             {!isGroup &&
               <div>
                 <label>Description:
-              <input type="text" name="description" value={state.description || ''} onChange={handleChange} disabled={disabled} />
+                  <input type="text" name="description"
+                    value={state.description || ''}
+                    onChange={handleChange} disabled={disabled}
+                  />
                 </label>
                 <div className={s.prices}>
                   <label htmlFor='price'>Price:</label>

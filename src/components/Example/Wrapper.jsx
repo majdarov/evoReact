@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 // import ProgressBar from '../common/ProgressBar/ProgressBar';
 // import ProgressBar2 from '../common/ProgressBar/ProgressBar2';
 import Example from './Example';
-import { commodities } from '../../Tests/products.json';
+// import { commodities } from '../../Tests/products.json';
 import useFilteredData from '../../Hooks/useFilteredData';
 
 const Wrapper = (props) => {
 
-    const products = commodities.products;
-    const { items, setFilterConfig, search } = useFilteredData(products);
+    // const products = commodities.products;
+    const { items, setFilterConfig, search } = useFilteredData([]);
     const [filteredItems, setFilteredItems] = useState([])
 
     const [count, setCount] = useState(0);
@@ -25,7 +25,7 @@ const Wrapper = (props) => {
     }, [filteredItems, items, search])
 
     const clickFilter = () => {
-        setFilterConfig({ name: '65', price: [30, 50] })
+        setFilterConfig({ parent_id: '0'/* , price: [30, 50] */ })
     }
 
     return (

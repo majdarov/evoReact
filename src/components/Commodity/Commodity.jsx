@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import s from "./Commodity.module.css";
 import Tree from "../common/Tree/Tree";
 import Preloader from "../common/Preloader/Preloader";
@@ -15,8 +15,8 @@ const Commodity = props => {
 
   const [groupIsEmpty, setGroupIsEmpty] = useState(false);
   const [groupName, setGroupName] = useState('Товары');
-  // const [formData, setFormData] = useState(null);
-  const { items, setFilterConfig, search } = useFilteredData([]);
+  const { items, setFilterConfig, search } = useFilteredData(props.commodities);
+  const [pid, setPidSearch] = useState(props.pid);
 
   const headers = [
     ['Code'],
@@ -61,6 +61,13 @@ const Commodity = props => {
     }
   }, [props.groups, props.pid]);
 
+  const setCommodities = props.setCommodities;
+
+  useEffect(() => {
+    console.log('setCommodities', items)
+    setCommodities(items);
+  }, [items, setCommodities])
+
   function newData() {
     props.getProductId();
   }
@@ -68,22 +75,14 @@ const Commodity = props => {
   function changePid(eId) {
     if (props.pid === eId) return;
     props.setPid(eId);
+    setPidSearch(eId);
   }
 
-  const searchProducts = async (e) => {
-    let name = e.target.value
-    if (name.length < 2) {
-      returnBeforeSearch();
-      return;
-    }
-    setGroupName('Результаты поиска');
-    setFilterConfig({name});
+  const searchProducts = async (formData) => {
 
-    // let match = String.prototype.match;
-    // let search = [['name', name, match], ['article_number', name, match]]
-    // let products = (await apiIDB.getProduct()).filter(item => filterProd(item, search));
-    // let products = (await apiIDB.getProduct()).filter(item => item.name.match(name) || item.article_number?.match(name));
-    props.setCommodities(items);
+    setGroupName('Результаты поиска');
+    // console.log('searchProducts:', formData)
+    setFilterConfig(formData);
   }
 
   function returnBeforeSearch() {
@@ -94,12 +93,6 @@ const Commodity = props => {
       gName = 'Товары';
     }
     setGroupName(gName);
-  }
-
-  function clearSearch(e) {
-    if (e.target.tagName !== 'I') return;
-    e.target.closest('div').querySelector('input').value = '';
-    returnBeforeSearch();
   }
 
   async function delGroup(ev) {
@@ -114,7 +107,7 @@ const Commodity = props => {
     }
   }
 
-  const formSearchProps = { searchProducts, clearSearch, parent_id: props.pid }
+  const formSearchProps = { searchProducts, returnBeforeSearch, parent_id: pid }
 
   if (props.error) {
     return <div>Ошибка...{props.error.message}</div>;

@@ -308,13 +308,19 @@ const FormProduct = props => {
           </div>
           <fieldset name='Product'>
             <legend>{isGroup ? 'Group' : 'Product'} Info</legend>
-            <div>
-              <b>ID: </b><input id={s.uuid} value={state.id || ''} disabled={!isNewData} onChange={handleChange} />
+            <div className={s['id-barcodes-photos']}>
+              <div className={s['uuid']}>
+                <label>ID:
+                  <input value={state.id || ''} disabled={!isNewData} onChange={handleChange} />
+                </label>
+              </div>
               {
                 isNewData ? null :
                   <label>
                     Allow Edit:
-            <input type='checkbox' id={s['allow-edit']} name={'allow_edit'} checked={state.allow_edit} onChange={handleChange} />
+                    <input type='checkbox' id={s['allow-edit']}
+                      name={'allow_edit'} checked={state.allow_edit}
+                      onChange={handleChange} />
                   </label>
               }
             </div>
@@ -362,12 +368,14 @@ const FormProduct = props => {
             </label>
             {!isGroup &&
               <div>
-                <label>Description:
+                <div className={s.description}>
+                  <label>Description:</label>
                   <input type="text" name="description"
                     value={state.description || ''}
                     onChange={handleChange} disabled={disabled}
                   />
-                </label>
+                </div>
+
                 <div className={s.prices}>
                   <label htmlFor='price'>Price:</label>
                   <input name="price" defaultValue={formatPrice(state.price)} className={s.price}

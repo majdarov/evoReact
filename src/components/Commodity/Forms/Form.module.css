@@ -8,13 +8,6 @@
   --color-form-icon: rgba(248, 122, 99, 0.829);
 }
 
-#uuid {
-  border: none;
-  padding-left: 5px;
-  font-weight: bold;
-  width: 20vw;
-}
-
 .barcodes {
   display: inline-block;
   border: 1px solid lightskyblue;
@@ -27,9 +20,21 @@
   display: none;
 }
 
-[name='Product'] {
+.id-barcodes-photos {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.uuid {
+  display: flex;
+  justify-content: stretch;
+}
+
+.uuid input {
+  border: none;
+  font-weight: bold;
+  padding-left: 5px;
 }
 
 /* [name='img_barcodes'] {
@@ -46,11 +51,25 @@
   transition: ease-in-out top 0.5s 0.5s;
 }
 
+.prices {
+  display: flex;
+  /* flex-direction: column; */
+}
+
+.prices label {
+  flex-grow: 1;
+}
+
 .price + span::before {
   content: '\f158';
   font-weight: 900;
   margin-right: 0.3rem;
   font-family: var(--icon-font);
+}
+
+.description {
+  display: flex;
+  flex-grow: 1;
 }
 
 input[name='description'] {
@@ -59,7 +78,7 @@ input[name='description'] {
   background-color: initial;
 }
 
-[name='name'] {
+#form-product [name='name'] {
   border: 1px solid blue;
   height: 2.5rem;
   width: 100%;

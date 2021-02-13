@@ -78,6 +78,8 @@ export async function syncGroupsProducts(callback = null) {
       if (!item.parent_id) item.parent_id = '0';
       if (!item.barcodes) item.barcodes = [];
       if (!item.photos) item.photos = [];
+      item.created_at = Date.parse(item.created_at);
+      item.updated_at = Date.parse(item.updated_at);
       return item;
     });
     localStorage.setItem('lastUpdate', Date.now());

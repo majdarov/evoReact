@@ -57,22 +57,17 @@
 #form-search label,input {
   margin: .2rem;
   display: flex;
-  justify-content: space-between;
 }
-
-/* #form-search input {
-  flex-grow: 1;
-} */
 
 .search {
   display: flex;
-  flex-wrap: wrap;
 }
 
-.filter-container {
+.filter-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: .2rem;
 }
 
 .filter {
@@ -89,7 +84,7 @@
   display: none;
 }
 
-[name='fieldset']:not(.hidden) {
+#form-search fieldset:not(.hidden) {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

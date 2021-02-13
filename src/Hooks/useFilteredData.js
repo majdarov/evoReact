@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { apiIDB } from '../api/apiIDB';
 
 /* const searchRequest = {
@@ -46,9 +46,10 @@ function filterProd(item, search = []) {
 } */
 function createSearchRequest(formData) {
   let arrSearchReuests = [];
+  console.log('createSearchRequest:', formData);
   Object.keys(formData).forEach((key) => {
-    let value = formData[key];
     let keys = [key];
+    let value = formData[key];
     let callback = (a, b) => a === b;
     let searchRequest;
     let target;
@@ -68,9 +69,15 @@ function createSearchRequest(formData) {
       case 'number':
         if (key === 'barcodes') {
           callback = Array.prototype.includes;
-          target = [value];
+        } else if (key.match(/_at/gi)) {
+          callback = (a, b) => {
+            let bNew = b + 24 * 3600 * 1000;
+            return a >= b && a <= bNew;
+          };
         }
+        target = [value];
         searchRequest = { keys, target, callback };
+        console.log('createSearchRequest', searchRequest);
         break;
 
       case 'object':
@@ -104,24 +111,25 @@ function createSearchRequest(formData) {
 
 const useFilteredData = (inItems) => {
   const [search, setSearch] = useState([]); // arrSearchRequests
-  const [items, setItems] = useState(inItems)
+  const [items, setItems] = useState(inItems);
+  // const [filteredItems, setFilteredItems] = useState(items);
 
   function setFilterConfig(formData) {
+    console.log('setFilterConfig:', formData);
     let arrSearchReuests = createSearchRequest(formData);
     setSearch(arrSearchReuests);
   }
 
-  let filteredData = useMemo(() => {
-    if (!search.length) return [];
-    if (!items?.length) {
-      apiIDB.getProduct('all').then(res => setItems(res));
-      return [];
+  useEffect(() => {
+    if (search.length) {
+      apiIDB.getProduct('all').then((res) => {
+        let filteredItems = [...res].filter((item) => filterProd(item, search));
+        setItems(filteredItems);
+      });
     }
-    let filteredItems = [...items].filter((item) => filterProd(item, search));
-    return filteredItems;
-  }, [items, search]);
+  }, [search]);
 
-  return { items: filteredData, setFilterConfig, search };
+  return { items, setFilterConfig, search };
 };
 
 export default useFilteredData;

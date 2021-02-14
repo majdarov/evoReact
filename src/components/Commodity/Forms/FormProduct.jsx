@@ -29,7 +29,7 @@ const FormProduct = props => {
   const setViewForm = props.setViewForm;
   const setFormData = props.setFormData;
 
-  const canselClick = useCallback((ev) => {
+  const cancelClick = useCallback((ev) => {
     setViewForm(false);
     setFormData(null);
     document.body.style.overflow = 'auto';
@@ -57,12 +57,12 @@ const FormProduct = props => {
     const handler = (ev) => {
       // console.log(ev.key);
       if (ev.key === 'Escape') {
-        canselClick();
+        cancelClick();
       }
     }
     document.addEventListener('keyup', handler);
     return () => document.removeEventListener('keyup', handler);
-  }, [canselClick])
+  }, [cancelClick])
 
   const toggleGroup = () => {
     if (!isNewData) return;
@@ -275,8 +275,8 @@ const FormProduct = props => {
   }
 
   const gProps = {
-    groups: props.groups, disabled, parent_id: state.parent_id, onClick: clickGroups,
-    treeView, classDiv: s['g-tree'], classTree: s.tree, callbackTree
+    groups: props.groups, disabled, parent_id: state.parent_id,
+    onClick: clickGroups, treeView, callbackTree
   };
 
   const mnProps = { disabled, handleChange, id: s.measure_name, measure_name: state.measure_name };
@@ -284,9 +284,9 @@ const FormProduct = props => {
   const taxProps = { disabled, handleChange, id: s.tax, tax: state.tax };
 
   const bProps = {
-    barcodes: state.barcodes, bc: state.currentBarcode, addBc: s['add-bc'], delBc: s['del-bc'],
-    handleChange, handleBlur, deleteFromArray, allow_edit: state.allow_edit, disabled,
-    view_barcode: s['view-barcode']
+    barcodes: state.barcodes, bc: state.currentBarcode,
+    handleChange, handleBlur, deleteFromArray,
+    allow_edit: state.allow_edit, disabled,
   };
 
   const pProps = { id: s.picture, className: s['picture-small'], divPicture: s['div-picture'], pictureClick };
@@ -302,39 +302,36 @@ const FormProduct = props => {
           />}
         <form id={s['form-product']} onSubmit={handleSubmit} >
           <div className={s['menu-buttons']}>
+            <i className='fa fa-clone' id={s.copy} onClick={copyProduct}></i>
             <span style={{ cursor: 'pointer' }} onClick={toggleGroup}>{isGroup ? 'Group' : 'Product'}</span>
-            <i className='fa fa-window-close' id={s.close} onClick={handleSubmit}></i>
-            <i className='fa fa-copy' id={s.copy} onClick={copyProduct}></i>
+            <i className='fa fa-sign-out-alt' id={s.close} onClick={handleSubmit}></i>
           </div>
-          <fieldset name='Product'>
+          <fieldset className={s['product-info']}>
             <legend>{isGroup ? 'Group' : 'Product'} Info</legend>
             <div className={s['id-barcodes-photos']}>
               <div className={s['uuid']}>
-                <label>ID:
-                  <input value={state.id || ''} disabled={!isNewData} onChange={handleChange} />
-                </label>
+                <label htmlFor='uuid'>ID:</label>
+                <input name='uuid' value={state.id || ''} disabled={!isNewData} onChange={handleChange} />
               </div>
               {
                 isNewData ? null :
-                  <label>
-                    Allow Edit:
-                    <input type='checkbox' id={s['allow-edit']}
-                      name={'allow_edit'} checked={state.allow_edit}
+                  <div className={s['allow-edit']}>
+                    <label htmlFor='allow-edit'>Allow Edit:</label>
+                    <input type='checkbox' id={s['allow-edit']} name='allow_edit'
+                      checked={state.allow_edit}
                       onChange={handleChange} />
-                  </label>
+                  </div>
               }
             </div>
-            <div>
-              {
-                !state.photos?.length ?
-                  // <ComponentsProducts.Picture {...pProps} photo='image3D.png' /> :
-                  // <div><img src={noPhoto} alt="NoPhotos" className={s['picture-small']} /></div> :
-                  null :
-                  state.photos.map(ph => {
+            {
+              !state.photos?.length ?
+                null :
+                <div className={s['form-photo']}>
+                  {state.photos.map(ph => {
                     return <ComponentsProducts.Picture {...pProps} photo={ph} key={ph.name} />
-                  })
-              }
-            </div>
+                  })}
+                </div>
+            }
             {
               state.photo || !state.allow_edit ? null :
                 <>
@@ -346,11 +343,15 @@ const FormProduct = props => {
             {!isGroup && <ComponentsProducts.Barcodes {...bProps} />}
             {!isGroup &&
               <div className={s.code_article}>
-                <label>Code:</label>
-                <input type="text" name="code" value={state.code || ''} onChange={handleChange} disabled={disabled} />
-                <label>Aticle:</label>
-                <input type="text" name='article_number' value={state.article_number || ''}
-                  onChange={handleChange} disabled={disabled} />
+                <div className={s.code}>
+                  <label htmlFor='code'>Code:</label>
+                  <input type="text" name="code" value={state.code || ''} onChange={handleChange} disabled={disabled} />
+                </div>
+                <div className={s['article-number']}>
+                  <label htmlFor='article_number'>Aticle:</label>
+                  <input type="text" name='article_number' value={state.article_number || ''}
+                    onChange={handleChange} disabled={disabled} />
+                </div>
               </div>
             }
             {!isGroup &&
@@ -361,40 +362,52 @@ const FormProduct = props => {
               </div>
             }
             <ComponentsProducts.GroupsTree {...gProps} />
-            <label>
-              Name:
-              <TextArea name="name" value={state.name} placeholder='Input name ...'
+            <div className={s.name}>
+              <label htmlFor='name'>Name:</label>
+              <input name="name" value={state.name} placeholder='Input name ...'
                 onChange={handleChange} disabled={disabled} />
-            </label>
+            </div>
+            {!isGroup &&
+              <div className={s.description}>
+                <label>Description:</label>
+                <input type="text" name="description"
+                  value={state.description || ''}
+                  onChange={handleChange} disabled={disabled}
+                />
+              </div>}
             {!isGroup &&
               <div>
-                <div className={s.description}>
-                  <label>Description:</label>
-                  <input type="text" name="description"
-                    value={state.description || ''}
-                    onChange={handleChange} disabled={disabled}
-                  />
-                </div>
-
                 <div className={s.prices}>
-                  <label htmlFor='price'>Price:</label>
-                  <input name="price" defaultValue={formatPrice(state.price)} className={s.price}
-                    onBlur={handleBlur} onChange={handleChange} disabled={disabled} /><span></span>
-                  <label htmlFor='cost_price'>Cost Price:</label>
-                  <input name="cost_price" defaultValue={formatPrice(state.cost_price)} className={s.price}
-                    onBlur={handleBlur} disabled={disabled} /><span></span>
-                  <label>Allow to sell:
+                  <div className={s.price}>
+                    <label htmlFor='price'>Price:</label>
+                    <input name="price" defaultValue={formatPrice(state.price)}
+                      onBlur={handleBlur} onChange={handleChange} disabled={disabled} />
+                    <span></span>
+                  </div>
+                  <div className={s.price}>
+                    <label htmlFor='cost_price'>Cost Price:</label>
+                    <input name="cost_price" defaultValue={formatPrice(state.cost_price)}
+                      onBlur={handleBlur} disabled={disabled} />
+                    <span></span>
+                  </div>
+                </div>
+                <div className={s['allow-to-sell']}>
+                  <label htmlFor='allow_to_sell'>Allow to sell:</label>
                   <input type="checkbox" name="allow_to_sell" id="allow_to_sell"
-                      defaultChecked={state.allow_to_sell} disabled={disabled}
-                      onChange={handleChange} />
-                  </label>
+                    defaultChecked={state.allow_to_sell} disabled={disabled}
+                    onChange={handleChange} />
                 </div>
               </div>
             }
           </fieldset>
           <div className={s.buttons}>
-            <input type="submit" value="Ready" />
-            <button id={s.cansel} onClick={canselClick}>Cansel</button>
+            <div className={s['button-submit']} onClick={handleSubmit}>
+              <input type="submit" value="Ready" />
+              <span>Submit</span>
+            </div>
+            <div className={s['button-cancel']}>
+              <span id={s.cancel} onClick={cancelClick}>Cancel</span>
+            </div>
           </div>
         </form>
       </>

@@ -8,8 +8,8 @@ const FormImg = ({photo}) => {
       <img className={s['big-img']}
         src={photo}
         alt="no" tabIndex='-1'
-        style={{display: 'inline-block', height: '60vh',
-               position: 'fixed', top: '10vh', left: '30vw',
+        style={{display: 'inline-block', width: '100vh',
+               position: 'fixed', top: '10vh', left: 'calc((100vw - 100vh)/2)',
                verticalAlign: 'middle'}}
       /><span></span>
     </>

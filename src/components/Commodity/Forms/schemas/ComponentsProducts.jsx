@@ -85,21 +85,24 @@ export const ComponentsProducts = {
         let onDivClick = props.disabled ? null : props.onClick;
 
         return (
-            <>
+            <div className={s['tree-container']}>
                 {props.treeView &&
-                    <div className={props.classTree} >
+                    <div className={s.tree} >
                         <Tree data={groups} price="Price" treeLabel="Groups" callback={props.callbackTree} />
                     </div>
                 }
-                <div className={props.classDiv} onClick={onDivClick} tabIndex={-1} /* onBlur={props.onBlurGroup} */>
+                <div className={s['g-tree']} onClick={onDivClick}>
                     <div name='parent_id'>
                         {gLabel}
-                        <i className='fa fa-angle-down'></i>
+                        <i className='fa fa-share-alt'></i>
                     </div>
                 </div >
-            </>
+                <div className={s.space}></div>
+            </div>
         )
     },
+
+    classDiv: s['g-tree'], classTree: s.tree,
     Barcodes: props => {
 
         const [view, setView] = useState(true);
@@ -126,21 +129,22 @@ export const ComponentsProducts = {
         return (
             <fieldset name='img_barcodes'>
                 <legend onClick={toggleViewBarcodes} style={{ cursor: 'pointer' }}>Barcodes</legend>
-                <div className={view ? '' : s['barcodes-hidden']}>
-                    <div className={props.view_barcode}>
+                <div className={view ? s['barcodes'] : `${s['barcodes']} ${s['barcodes-hidden']}`}>
+                    <div className={s['view-barcode']}>
                         <ul>
                             {barcodes.map(b => {
                                 return (
                                     <li key={b} id={b} onClick={delBcClick}>{viewBarcode(b)}
-                                        <span className={props.delBc}></span>
+                                        <span className={s['del-bc']}></span>
                                     </li>
                                 )
                             })}
                         </ul>
-                        <input name='barcodes' type="text" defaultValue={props.bc}
-                            onChange={props.handleChange} onBlur={props.handleBlur} disabled={props.disabled} />
-                        <span className={props.addBc}></span>
                     </div>
+                    <input name='barcodes' type="text" defaultValue={props.bc}
+                        onChange={props.handleChange} onBlur={props.handleBlur}
+                        disabled={props.disabled} />
+                    <span className={s['add-bc']}></span>
                 </div>
             </fieldset >
         )

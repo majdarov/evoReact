@@ -5,7 +5,7 @@ const FormModalWrapper = props => {
 
   const showForm = () => {
     document.body.style.overflow = 'hidden';
-    setTimeout(() => document.getElementById(s['container']).style.top = 0, 0);
+    setTimeout(() => document.getElementById(s['container']).style.top = '1rem', 0);
   }
 
   useLayoutEffect(showForm, []);

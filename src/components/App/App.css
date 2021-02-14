@@ -12,6 +12,7 @@ body {
   --icon2-color: rgb(247, 124, 10);
   --icon-font: "Font Awesome 5 Free";
   --barcode-font: "Code EAN13";
+  --app-background-color: lightblue;
 }
 
 .app {
@@ -22,7 +23,7 @@ body {
     "h h h h h h"
     "c c c c c c";
   grid-gap: 0.5rem;
-  background-color: lightblue;
+  background-color: var(--app-background-color);
 }
 
 .app-content {

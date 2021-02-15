@@ -1,0 +1,98 @@
+.form-container {
+  border: 1px solid var(--icon-color);
+  padding: 0.5rem;
+}
+
+.form-container > span {
+  /* background-color: var(--forms-background-color); */
+  /* text-align: center; */
+  padding: .2rem 0 .2rem .5rem;
+}
+
+#form-search {
+  display: flex;
+  flex-direction: column;
+}
+
+.search {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.search * {
+  margin-right: .5rem;
+}
+
+.form-search-row {
+  display: flex;
+}
+
+.filter-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0.2rem;
+}
+
+.filter-button i {
+  margin-left: .5rem;
+}
+
+.filter {
+  color: var(--icon-color);
+  cursor: pointer;
+  border: 1px solid var(--icon-color);
+  font-family: var(--icon-font);
+  font-weight: bold;
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+}
+
+.hidden {
+  display: none;
+}
+
+#form-search fieldset:not(.hidden) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0.2rem;
+  justify-content: flex-start;
+}
+
+#form-search fieldset * {
+  margin-right: .5rem;
+}
+
+.form-search-price,
+.form-search-date {
+  display: flex;
+  /* flex-direction: column; */
+  margin: 0.5rem;
+  justify-content: space-between;
+}
+
+.price-row,
+.date-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-row > div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.date-row > span {
+  background-color: var(--forms-background-color);
+  text-align: center;
+  padding: .2rem 0 .2rem 0;
+}
+
+.input-row {
+  margin-top: .2rem;
+}
+
+.input-row input {
+  flex: 1;
+}

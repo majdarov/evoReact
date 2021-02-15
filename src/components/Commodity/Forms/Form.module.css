@@ -157,6 +157,7 @@ label {
   border-top: darkgoldenrod 1px solid;
   border-left: darkgoldenrod 1px solid;
   box-shadow: darkgoldenrod .2rem .2rem;
+  border-radius: .5rem;
 }
 
 .space {
@@ -261,4 +262,22 @@ label {
 
 .required {
   border: red 1px solid;
+}
+
+.product-dates {
+  display: flex;
+  justify-content: space-around;
+  border:  1px solid gray;
+}
+
+.created_at,
+.updated_at {
+  display: flex;
+  /* flex-direction: column; */
+  background-color: rgba(248, 223, 142, 0.637);
+}
+.created_at *,
+.updated_at * {
+  margin: 0;
+  padding: 0 .5rem 0 .5rem;
 }

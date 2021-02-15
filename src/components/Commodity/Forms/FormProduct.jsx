@@ -3,8 +3,7 @@ import s from './Form.module.css';
 import { useState } from "react";
 import Preloader from '../../common/Preloader/Preloader';
 import { ComponentsProducts } from './schemas/ComponentsProducts';
-import TextArea from '../../common/TextArea/TextArea';
-import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequiredData } from './frmUtilites';
+import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequiredData, dateToLocaleString } from './frmUtilites';
 import FormImg from './FormImg';
 import FormModalWrapper from './FormModalWrapper';
 // import noPhoto from '../../../Assets/img/terminal-5.png';
@@ -22,9 +21,10 @@ const FormProduct = props => {
     barcodes: [...props.formData.barcodes] || [],
     bigImg: null,
     currentBarcode: '',
+    created_at: props.formData.created_at ? new Date(props.formData.created_at) : new Date(),
+    updated_at: props.formData.updated_at ? new Date(props.formData.updated_at) : new Date(),
   });
   const [treeView, setTreeView] = useState(false);
-
   const disabled = !isNewData && !state.allow_edit;
   const setViewForm = props.setViewForm;
   const setFormData = props.setFormData;
@@ -271,6 +271,8 @@ const FormProduct = props => {
     delete formData.allow_edit;
     delete formData.bigImg;
     delete formData.currentBarcode;
+    delete formData.created_at;
+    delete formData.updated_at;
     props.setFormData(formData);
   }
 
@@ -399,6 +401,16 @@ const FormProduct = props => {
                 </div>
               </div>
             }
+            <div className={s['product-dates']}>
+              <div className={s.created_at}>
+                <h4>Создан:</h4>
+                <span>{dateToLocaleString(state.created_at)}</span>
+              </div>
+              <div className={s.updated_at}>
+                <h4>Обновлен:</h4>
+                <span>{dateToLocaleString(state.updated_at)}</span>
+              </div>
+            </div>
           </fieldset>
           <div className={s.buttons}>
             <div className={s['button-submit']} onClick={handleSubmit}>

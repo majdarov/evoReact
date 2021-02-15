@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from "./Commodity.module.css";
 import Tree from "../common/Tree/Tree";
 import Preloader from "../common/Preloader/Preloader";
@@ -15,7 +15,7 @@ const Commodity = props => {
 
   const [groupIsEmpty, setGroupIsEmpty] = useState(false);
   const [groupName, setGroupName] = useState('Товары');
-  const { items, setFilterConfig, search } = useFilteredData(props.commodities);
+  const { items, setFilterConfig } = useFilteredData(props.commodities);
   const [pid, setPidSearch] = useState(props.pid);
 
   const headers = [
@@ -64,7 +64,6 @@ const Commodity = props => {
   const setCommodities = props.setCommodities;
 
   useEffect(() => {
-    console.log('setCommodities', items)
     setCommodities(items);
   }, [items, setCommodities])
 
@@ -117,9 +116,12 @@ const Commodity = props => {
     return (
       <>
         <div className={s.head}>
-          <div className={s.buttons}>
-            <button onClick={newData}>+Товар</button>
-          </div>
+        <div className={s.buttons}>
+          <span className={`${s['button-add']} fa`} onClick={newData}>
+            +Товар
+            <i className='fa fa-file'></i>
+          </span>
+        </div>
           <FormSearch {...formSearchProps} />
         </div>
         {props.viewForm ?

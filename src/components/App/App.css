@@ -13,6 +13,7 @@ body {
   --icon-font: "Font Awesome 5 Free";
   --barcode-font: "Code EAN13";
   --app-background-color: lightblue;
+  --forms-background-color: rgb(137, 135, 243, 0.6)
 }
 
 .app {
@@ -40,4 +41,9 @@ body {
 #Tree {
   position: sticky;
   top: 9rem;
+}
+
+input {
+  border-radius: .5rem;
+  padding: .2rem;
 }

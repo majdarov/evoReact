@@ -150,3 +150,9 @@ export function arrCompare(arr1 = [], arr2 = []) {
   });
   return { resArrPlus, resArrMinus };
 }
+
+export function dateToLocaleString(date = new Date()) {
+  let days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пят', 'Суб'];
+  let day = date.getDay();
+  return `${days[day]} ${date.toLocaleString()}`;
+}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { apiIDB } from '../api/apiIDB';
 
 /* const searchRequest = {
@@ -46,7 +46,7 @@ function filterProd(item, search = []) {
 } */
 function createSearchRequest(formData) {
   let arrSearchReuests = [];
-  console.log('createSearchRequest:', formData);
+  // console.log('createSearchRequest:', formData);
   Object.keys(formData).forEach((key) => {
     let keys = [key];
     let value = formData[key];
@@ -77,23 +77,32 @@ function createSearchRequest(formData) {
         }
         target = [value];
         searchRequest = { keys, target, callback };
-        console.log('createSearchRequest', searchRequest);
+        // console.log('createSearchRequest', searchRequest);
         break;
 
       case 'object':
         if (Array.isArray(value)) {
           target = [...value];
           if (value.length > 1) {
-            if (!value[0]) {
+            if (value[0] === null || !value[0]) {
               callback = (a, b) => a <= b;
               target = [value[1]];
-            } else if (!value[1]) {
+            } else if (value[1] === null || !value[1]) {
               callback = (a, b) => a >= b;
               target = [value[0]];
             } else {
               callback = (a, b, c) => {
                 return b <= c ? a >= b && a <= c : a >= c && a <= b;
               };
+            }
+          } else {
+            if (key.match(/_at/gi)) {
+              let dateStart = value[0];
+              let dateEnd = value[0] + (24*3600*1000);
+              callback = (a, b, c) => {
+                return b <= c ? a >= b && a <= c : a >= c && a <= b;
+              };
+              target = [dateStart, dateEnd];
             }
           }
         }
@@ -104,6 +113,7 @@ function createSearchRequest(formData) {
         searchRequest = { keys, target: [value], callback };
         break;
     }
+    // console.log('createSearchRequest', searchRequest);
     arrSearchReuests.push(searchRequest);
   });
   return arrSearchReuests;
@@ -115,7 +125,7 @@ const useFilteredData = (inItems) => {
   // const [filteredItems, setFilteredItems] = useState(items);
 
   function setFilterConfig(formData) {
-    console.log('setFilterConfig:', formData);
+    // console.log('setFilterConfig:', formData);
     let arrSearchReuests = createSearchRequest(formData);
     setSearch(arrSearchReuests);
   }

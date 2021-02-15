@@ -105,7 +105,7 @@ export const ComponentsProducts = {
     classDiv: s['g-tree'], classTree: s.tree,
     Barcodes: props => {
 
-        const [view, setView] = useState(true);
+        const [view, setView] = useState(false);
 
         let barcodes = [];
         if (props.barcodes?.length) {

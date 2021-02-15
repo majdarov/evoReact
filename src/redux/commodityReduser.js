@@ -67,7 +67,6 @@ const commodityReduser = (state = initialState, action) => {
     case SET_COMMODITIES:
       let commodities = [];
       action.commodities.forEach((item) => {
-        // if (item.g) return;
         let commodity = {
           id: item.id,
           code: item.code,

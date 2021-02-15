@@ -41,7 +41,7 @@ const Header = (props) => {
                 setIsInit(false)
                 let date = new Date(+props.lastUpdate);
                 setLastUpdate(date.toString());
-            }, 2000);
+            }, 500);
         }
     }, [props.isInit, props.lastUpdate])
 

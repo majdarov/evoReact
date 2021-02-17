@@ -1,6 +1,24 @@
 import { useEffect, useState } from 'react';
 import { apiIDB } from '../api/apiIDB';
 
+
+function testBarcodes(barcode) {
+  if (![7, 8, 12, 13].includes(barcode.length)) {
+    return false;
+  }
+  let res = 0;
+  barcode.split('').forEach((item, i) => {
+    if (i % 2 !== 0) {
+      res += Number(item) * 3;
+      res = res % 10;
+    } else {
+      res += Number(item);
+      res = res % 10;
+    }
+  });
+
+  return !res;
+}
 /* const searchRequest = {
     keys: ['name', 'article_number', 'description'],
     target: [value1, value2],
@@ -57,6 +75,11 @@ function createSearchRequest(formData) {
     switch (typeof value) {
       case 'string':
         if (key === 'name') {
+          if (testBarcodes(value)) {
+            target = [value];
+            keys = ['barcodes'];
+            callback = Array.prototype.includes;
+          }
           target = [new RegExp(value, 'gi')];
           keys = [...keys, 'article_number', 'description'];
           callback = String.prototype.match;
@@ -126,8 +149,8 @@ const useFilteredData = (inItems) => {
 
   function setFilterConfig(formData) {
     // console.log('setFilterConfig:', formData);
-    let arrSearchReuests = createSearchRequest(formData);
-    setSearch(arrSearchReuests);
+    // let arrSearchReuests = createSearchRequest(formData);
+    setSearch(/* arrSearchReuests */createSearchRequest(formData));
   }
 
   useEffect(() => {

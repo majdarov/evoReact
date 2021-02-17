@@ -87,7 +87,6 @@ export async function syncGroupsProducts(callback = null) {
     log('Clear storage...');
     await apiIDB.clearStore('products');
     await apiIDB.clearStore('groups');
-    debugger
     log('Write groups in IDB...');
     await apiIDB.pushItems('groups', groups);
     log('Write products in IDB...');

@@ -1,12 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ComponentsSearch from './schemas/ComponentsSearch';
 import s from './FormSearch.module.css';
+
+// const log = console.log;
 
 const initialPeriod = {
   created_at: false,
   updated_at: false,
   price: false,
   cost_price: false,
+}
+
+function createRequestObj(formData, name, period, callback) {
+  let chk = document.forms['form-search']['current-pid'];
+  let obj = { ...formData };
+
+  if (!chk.checked) {
+    delete obj.parent_id;
+  }
+
+  Object.keys(obj).forEach(key => {
+    if (!obj[key] || !obj[key].length) delete obj[key];
+    if (period[key] && obj[key].length === 1) obj[key][1] = null;
+  })
+
+  if (name.length) obj.name = name;
+  callback(obj);
 }
 
 const FormSearch = (props) => {
@@ -16,7 +35,13 @@ const FormSearch = (props) => {
   const [pid, setPid] = useState(props.parent_id);
   const [period, setPeriod] = useState(initialPeriod);
   const [name, setName] = useState('');
-  const refName = React.createRef();
+
+  const propsSearchProducts = props.searchProducts;
+  const searchProducts = useCallback((obj) => {
+    propsSearchProducts(obj)
+  }, [propsSearchProducts])
+
+
 
   useEffect(() => setPid(props.parent_id), [props.parent_id])
 
@@ -52,45 +77,24 @@ const FormSearch = (props) => {
     setFormData({ ...formData, [name]: value });
   }
 
-  function changeName(ev) {
-    let value = refName.current.value;
-    setName(value);
-    if (value.length > 3) {
-      createRequestObj();
+  useEffect(() => {
+    if (name.length > 3) {
+      createRequestObj(formData, name, period, searchProducts);
     }
-  }
+  }, [formData, name, period])
 
   function selectParentID(ev) {
     let chk = ev.target.checked;
     if (chk) {
       setFormData({ ...formData, parent_id: pid || '0' });
     }
-    createRequestObj();
-  }
-
-  function createRequestObj() {
-    let chk = document.forms['form-search']['current-pid'];
-    let obj = { ...formData };
-
-    if (!chk.checked) {
-      delete obj.parent_id;
-    }
-
-    Object.keys(obj).forEach(key => {
-      if (!obj[key] || !obj[key].length) delete obj[key];
-      if (period[key] && obj[key].length === 1) obj[key][1] = null;
-      // console.log(key, obj[key][0] < obj[key][1])
-    })
-
-    if (name.length) obj.name = name;
-    // console.log('obj', obj)
-    props.searchProducts(obj);
+    createRequestObj(formData, name, period, searchProducts);
   }
 
   function handleSubmit(ev) {
     ev.preventDefault();
     ev.stopPropagation();
-    createRequestObj();
+    createRequestObj(formData, name, period, searchProducts);
   };
 
   function clearSearch(ev) {
@@ -110,6 +114,7 @@ const FormSearch = (props) => {
     setFormData({});
     setName('');
     setPeriod(initialPeriod);
+    setView(false);
     props.returnBeforeSearch();
   }
 
@@ -136,8 +141,8 @@ const FormSearch = (props) => {
               callback={clearSearch}
             />
             <div className={s['search-name']}>
-              <label htmlFor='name'>Наименование</label>
-              <input type="text" name='name' value={name} ref={refName} onChange={changeName} />
+              <label htmlFor='name'>Поиск</label>
+              <input type="text" name='name' value={name} onChange={(ev) => setName(ev.target.value)} />
             </div>
             <label>В текущей группе</label>
             <input type="checkbox" name='current-pid' onChange={selectParentID}

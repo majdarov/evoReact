@@ -1,6 +1,7 @@
 * {
   --color-form-background: cornsilk;
   --color-form-icon: gold;
+  --color-form-icon-warn: tomato;
   --color-form-font: darkblue;
 }
 
@@ -72,13 +73,25 @@ label {
 .div-picture:hover > span::before {
   content: '\f2ed';
   font-weight: 900;
-  color: tomato;
+  color: var(--color-form-icon-warn);
 }
 
 .barcodes {
   display: flex;
   flex-direction: column;
   background-color: initial;
+}
+
+.barcode {
+  display: flex;
+  flex-direction: column;
+  font-size: 3rem;
+}
+
+.barcode > span {
+  font-family: var(--icon-font);
+  font-size: medium;
+  background-color: rgba(248, 223, 142, 0.637);
 }
 
 .barcodes input:focus + .add-bc::before {
@@ -98,24 +111,24 @@ label {
 
 .view-barcode {
   display: flex;
-  font-size: 3rem;
+  flex-direction: row;
+  justify-content: space-between;
   font-family: var(--barcode-font);
 }
 .view-barcode ul > li {
-  display: inline;
+  display: inline-flex;
 }
 .view-barcode li .del-bc::before {
   content: '\f2ed';
-  font-size: 1.5rem;
+  font-size: 3rem;
   opacity: 0;
 }
 .view-barcode li:hover .del-bc::before {
-  display: inline-block;
+  /* display: flex; */
   font-family: var(--icon-font);
-  font-size: 1rem;
   content: '\f2ed';
-  font-weight: 900;
-  color: var(--color-form-icon);
+  font-size: 2rem;
+  color: var(--color-form-icon-warn);
   opacity: 70%;
   transition: ease-in-out 0.5s 0.5s;
 }

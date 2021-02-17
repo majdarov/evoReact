@@ -134,8 +134,12 @@ export const ComponentsProducts = {
                         <ul>
                             {barcodes.map(b => {
                                 return (
-                                    <li key={b} id={b} onClick={delBcClick}>{viewBarcode(b)}
-                                        <span className={s['del-bc']}></span>
+                                    <li key={b} id={b} onClick={delBcClick}>
+                                        <div className={s['barcode']}>
+                                            {viewBarcode(b)}
+                                            <span>{b}</span>
+                                        </div>
+                                        {props.allow_edit && <span className={s['del-bc']}></span>}
                                     </li>
                                 )
                             })}

@@ -1,6 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: 2fr 4fr;
+  /* grid-template-rows: calc(100vh - 15rem); */
   font-family: var(--icon-font);
   font-size: 1rem;
 }
@@ -37,10 +38,10 @@
 }
 
 .head {
-  display: block;
+  /* display: block; */
   background-color: lightblue;
   position: sticky;
-  top: 8rem;
+  top: 6rem;
   z-index: 101;
 }
 
@@ -51,10 +52,15 @@
 .button-add {
   border: 1px solid var(--icon-color);
   padding: .5rem;
+  margin-bottom: .2rem;
   color: var(--icon-color);
   border-radius: .5rem;
   cursor: pointer;
   /* background-color: var(--forms-background-color); */
+}
+
+.button-add:hover {
+  background-color: lavender;
 }
 
 .button-add i {

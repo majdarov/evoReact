@@ -18,19 +18,26 @@ body {
 
 .app {
   display: grid;
-  grid-template-rows: 8rem 10fr;
+  grid-template-rows: 5.5rem 1fr;
   grid-template-columns: repeat(6, 2fr);
   grid-template-areas:
     "h h h h h h"
-    "c c c c c c";
+    "c c c c c c"
+    /* "f f f f f f" */;
   grid-gap: 0.5rem;
   background-color: var(--app-background-color);
+  border-radius: .5rem;
 }
 
 .app-content {
   grid-area: c;
   padding: 0.5rem;
+  border-radius: .5rem;
 }
+
+/* .footer {
+  grid-area: f;
+} */
 
 #root {
   max-width: initial;

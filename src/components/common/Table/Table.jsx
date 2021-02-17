@@ -17,9 +17,9 @@ export default function Table(props) {
     let className = sortConfig.key === name ? sortConfig.direction : null;
     switch (className) {
       case 'asc':
-        return s.asc;
+        return 'fa fa-sort-amount-up';
       case 'desc':
-        return s.desc;
+        return 'fa fa-sort-amount-down';
       default:
         break;
     }

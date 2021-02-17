@@ -131,7 +131,6 @@ const FormSearch = (props) => {
 
   return (
     <div className={s['form-container']}>
-      <span className='fa'>Поиск</span>
       <form name='form-search' id={s['form-search']} onSubmit={handleSubmit}>
         <div className={s.search}>
           <div className={s['form-search-row']}>

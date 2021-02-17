@@ -59,7 +59,9 @@ const App = props => {
         <Route path="/test" component={IdbTest} />
         <Route path="/documents" component={Documents} />
       </div>
-
+      {/* <div className={'footer'}>
+        <h5>FOOTER</h5>
+      </div> */}
     </div>
   );
 }

@@ -34,6 +34,10 @@
   margin: 0.2rem;
 }
 
+.filter:hover {
+  background-color: lavender;
+}
+
 .filter-button i {
   margin-left: .5rem;
 }

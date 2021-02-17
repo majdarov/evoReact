@@ -116,16 +116,15 @@ const Commodity = props => {
     return (
       <>
         <div className={s.head}>
-        <div className={s.buttons}>
-          <span className={`${s['button-add']} fa`} onClick={newData}>
-            +Товар
+          <div className={s.buttons}>
+            <span className={`${s['button-add']} fa`} onClick={newData}>
+              +Товар
             <i className='fa fa-file'></i>
-          </span>
-        </div>
+            </span>
+          </div>
           <FormSearch {...formSearchProps} />
         </div>
-        {props.viewForm ?
-          // <FormProductFormik />
+        {props.viewForm &&
           <FormModalWrapper
             form={
               <FormProduct
@@ -141,8 +140,7 @@ const Commodity = props => {
                 pid={props.pid}
               />
             }
-          />
-          : null}
+          />}
         <div className={s.container}>
           <div className={s.list}>
             <h3>Группы</h3>
@@ -157,14 +155,13 @@ const Commodity = props => {
             <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3>
             {!props.comIsLoaded && <ProgressBar limit={20} text={'Processing...'} />}
             {props.comIsLoaded &&
-              <Table
-                products={props.commodities}
-                headers={headers}
-                callback={props.getProductId}
-                deleteProduct={props.deleteProduct}
-              />}
+                <Table
+                  products={props.commodities}
+                  headers={headers}
+                  callback={props.getProductId}
+                  deleteProduct={props.deleteProduct}
+                />}
           </div>
-
         </div>
       </>
     );

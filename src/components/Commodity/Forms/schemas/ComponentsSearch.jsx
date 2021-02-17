@@ -3,12 +3,14 @@ import s from '../FormSearch.module.css';
 
 const ComponentsSearch = {
     SearchPeriod({ head, name, type, viewPeriod, changeFormElement, changePeriod }) {
+        const lblFrom = name.match('price', 'gi') ? 'От' : 'Начало';
+        const lblTo = name === 'price' ? 'До' : 'Конец';
         return (
             <>
-                <div className={s['date-row']}>
+                <div className={s[`${name}-row`]}>
                     <span className='fa'>{head}</span>
                     <div className={s['input-row']}>
-                        <label htmlFor={`${name}-from`}>Начало</label>
+                        <label htmlFor={`${name}-from`}>{lblFrom}</label>
                         <input type={type} name={`${name}-from`} onChange={changeFormElement} />
                     </div>
                     <div>
@@ -17,7 +19,7 @@ const ComponentsSearch = {
                     </div>
                     {viewPeriod &&
                         <div className={s['input-row']}>
-                            <label htmlFor={`${name}-to`}>Конец</label>
+                            <label htmlFor={`${name}-to`}>{lblTo}</label>
                             <input type={type} name={`${name}-to`} onChange={changeFormElement} />
                         </div>}
                 </div>

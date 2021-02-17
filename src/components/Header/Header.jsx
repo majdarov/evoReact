@@ -53,20 +53,32 @@ const Header = (props) => {
 
     return (
         <header>
-            { !props.isInit && <h4>Initializing App...</h4>}
-            { isInit && <h4>App Is Init!</h4>}
-            {updated && <ProgressBar limit={20} delay={500} text={text} />}
-            {!isInit && !updated &&
-                <div style={{ cursor: 'pointer' }} onClick={clickDateUpdate}>
-                    <h5 style={styleH5}>{lastUpdate && 'Синхронизировано - '}{lastUpdate}</h5>
-                </div>}
-            <img src={logo} alt='Logo'></img>
-            <h2>{props.title}</h2>
-            <div className={s.lng} onClick={clickLang}>
-                <input name="lng" type="radio" value='ru' checked={!props.currentLang} onChange={(ev) => ev.target.checked = !props.currentLang} />RU
-                <input name="lng" type="radio" value='en' checked={props.currentLang} onChange={(ev) => ev.target.checked = props.currentLang} />EN
+            <div className={s['column-1']}>
+                <div className={s['info']}>
+                    {!props.isInit && <h4>Initializing App...</h4>}
+                    {isInit && <h4>App Is Init!</h4>}
+                    {updated && <ProgressBar limit={20} delay={500} text={text} />}
+                    {!isInit && !updated &&
+                        <div style={{ cursor: 'pointer' }} onClick={clickDateUpdate}>
+                            <h5 style={styleH5}>{lastUpdate && 'Синхронизировано - '}{lastUpdate}</h5>
+                        </div>}
+                </div>
+                <div className={s['navbar']}>
+                    <NavbarContainer />
+                </div>
             </div>
-            <NavbarContainer />
+            <div className={s['column-2']}>
+                <div className={s['title']}>
+                    <h2>{props.title}</h2>
+                    <img src={logo} alt='Logo'></img>
+                </div>
+                <div className={s.lng} onClick={clickLang}>
+                    <input name="lng" type="radio" value='ru' checked={!props.currentLang}
+                        onChange={(ev) => ev.target.checked = !props.currentLang} />RU
+                    <input name="lng" type="radio" value='en' checked={props.currentLang}
+                        onChange={(ev) => ev.target.checked = props.currentLang} />EN
+                </div>
+            </div>
         </header>
     );
 }

@@ -305,34 +305,40 @@ const FormProduct = props => {
         <form id={s['form-product']} onSubmit={handleSubmit} >
           <div className={s['menu-buttons']}>
             <i className='fa fa-clone' id={s.copy} onClick={copyProduct}></i>
-            <span style={{ cursor: 'pointer' }} onClick={toggleGroup}>{isGroup ? 'Group' : 'Product'}</span>
-            <i className='fa fa-sign-out-alt' id={s.close} onClick={handleSubmit}></i>
+            <span className={s['menu-buttons-groups']} onClick={toggleGroup}>{isGroup ? 'Group' : 'Product'}</span>
+            <i className='fa fa-times' id={s.close} onClick={handleSubmit}></i>
+            {/* fa-sign-out-alt */}
           </div>
           <fieldset className={s['product-info']}>
             <legend>{isGroup ? 'Group' : 'Product'} Info</legend>
             <div className={s['id-barcodes-photos']}>
+              <div className={s['allow-to-sell']}>
+                <label htmlFor='allow_to_sell'>Allow to sell:</label>
+                <input type="checkbox" name="allow_to_sell" id="allow_to_sell"
+                  defaultChecked={state.allow_to_sell} disabled={disabled}
+                  onChange={handleChange} />
+              </div>
               <div className={s['uuid']}>
                 <label htmlFor='uuid'>ID:</label>
                 <input name='uuid' value={state.id || ''} disabled={!isNewData} onChange={handleChange} />
               </div>
               {
-                isNewData ? null :
-                  <div className={s['allow-edit']}>
-                    <label htmlFor='allow-edit'>Allow Edit:</label>
-                    <input type='checkbox' id={s['allow-edit']} name='allow_edit'
-                      checked={state.allow_edit}
-                      onChange={handleChange} />
-                  </div>
+                !isNewData &&
+                <div className={s['allow-edit']}>
+                  <label htmlFor='allow-edit'>Allow Edit:</label>
+                  <input type='checkbox' id={s['allow-edit']} name='allow_edit'
+                    checked={state.allow_edit}
+                    onChange={handleChange} />
+                </div>
               }
             </div>
             {
-              !state.photos?.length ?
-                null :
-                <div className={s['form-photo']}>
-                  {state.photos.map(ph => {
-                    return <ComponentsProducts.Picture {...pProps} photo={ph} key={ph.name} />
-                  })}
-                </div>
+              !!state.photos?.length &&
+              <div className={s['form-photo']}>
+                {state.photos.map(ph => {
+                  return <ComponentsProducts.Picture {...pProps} photo={ph} key={ph.name} />
+                })}
+              </div>
             }
             {
               state.photo || !state.allow_edit ? null :
@@ -384,20 +390,15 @@ const FormProduct = props => {
                     <label htmlFor='price'>Price:</label>
                     <input name="price" defaultValue={formatPrice(state.price)}
                       onBlur={handleBlur} onChange={handleChange} disabled={disabled} />
-                    <span></span>
+                    <i className='fa fa-ruble-sign'></i>
                   </div>
                   <div className={s.price}>
                     <label htmlFor='cost_price'>Cost Price:</label>
                     <input name="cost_price" defaultValue={formatPrice(state.cost_price)}
                       onBlur={handleBlur} disabled={disabled} />
-                    <span></span>
+                    <i className='fa fa-ruble-sign'></i>
                   </div>
-                </div>
-                <div className={s['allow-to-sell']}>
-                  <label htmlFor='allow_to_sell'>Allow to sell:</label>
-                  <input type="checkbox" name="allow_to_sell" id="allow_to_sell"
-                    defaultChecked={state.allow_to_sell} disabled={disabled}
-                    onChange={handleChange} />
+
                 </div>
               </div>
             }

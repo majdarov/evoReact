@@ -103,6 +103,7 @@ export const ComponentsProducts = {
     },
 
     classDiv: s['g-tree'], classTree: s.tree,
+
     Barcodes: props => {
 
         const [view, setView] = useState(false);
@@ -115,7 +116,7 @@ export const ComponentsProducts = {
         const delBcClick = ev => {
             if (!props.allow_edit) return;
             let elem;
-            if (ev.target.tagName === 'SPAN') {
+            if (ev.target.className === s['del-bc']) {
                 elem = ev.target.closest('li');
             }
             if (!elem) return;
@@ -136,7 +137,13 @@ export const ComponentsProducts = {
                                 return (
                                     <li key={b} id={b} onClick={delBcClick}>
                                         <div className={s['barcode']}>
-                                            {viewBarcode(b)}
+                                            {
+                                                viewBarcode(b).str ||
+                                                <div className={s['barcode-err']}>
+                                                    {viewBarcode(b).err} <br />
+                                                    <b>'Ошибочный штрихкод!!!'</b>
+                                                </div>
+                                            }
                                             <span>{b}</span>
                                         </div>
                                         {props.allow_edit && <span className={s['del-bc']}></span>}

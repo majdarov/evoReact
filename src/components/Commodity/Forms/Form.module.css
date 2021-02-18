@@ -123,6 +123,12 @@ label {
   display: none;
 }
 
+.barcode-err {
+  font-family: var(--icon-font);
+  color: var(--color-form-icon-warn);
+  font-size: .8rem;
+}
+
 .view-barcode {
   display: flex;
   flex-direction: row;

@@ -3,8 +3,8 @@ import s from '../FormSearch.module.css';
 
 const ComponentsSearch = {
     SearchPeriod({ head, name, type, viewPeriod, changeFormElement, changePeriod }) {
-        const lblFrom = name.match('price', 'gi') ? 'От' : 'Начало';
-        const lblTo = name === 'price' ? 'До' : 'Конец';
+        const lblFrom = name.match('price', 'gi') ? (viewPeriod ? 'От' : 'Значение') : (viewPeriod ? 'Начало' : 'Дата');
+        const lblTo = name.match('price', 'gi') ? 'До' : 'Конец';
         return (
             <>
                 <div className={s[`${name}-row`]}>

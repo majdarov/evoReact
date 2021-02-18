@@ -3,6 +3,7 @@ import { apiIDB } from '../api/apiIDB';
 
 
 function testBarcodes(barcode) {
+  if (isNaN(Number(barcode))) return false;
   if (![7, 8, 12, 13].includes(barcode.length)) {
     return false;
   }

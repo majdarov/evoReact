@@ -44,35 +44,46 @@ export function viewBarcode(barcode) {
     [f1, f2, f2, f1, f2, f1],
   ];
 
-  let bcStr = barcode.split('')[0];
-  let n = Number(bcStr);
+  try {
+    let bcStr = barcode.split('')[0];
+    let n = Number(bcStr);
 
-  for (let i = 1; i <= 6; i++) {
-    bcStr += String.fromCharCode(Number(barcode.substr(i, 1)) + s[n][i - 1]);
-  }
-  bcStr += String.fromCharCode(42);
-  for (let i = 7; i <= 12; i++) {
-    bcStr += String.fromCharCode(Number(barcode.substr(i, 1)) + 97);
-  }
+    for (let i = 1; i <= 6; i++) {
+      bcStr += String.fromCharCode(Number(barcode.substr(i, 1)) + s[n][i - 1]);
+    }
+    bcStr += String.fromCharCode(42);
+    for (let i = 7; i <= 12; i++) {
+      bcStr += String.fromCharCode(Number(barcode.substr(i, 1)) + 97);
+    }
 
-  bcStr += String.fromCharCode(43);
-  return bcStr;
+    bcStr += String.fromCharCode(43);
+    return { str: bcStr, err: null };
+  } catch (err) {
+    return { str: null, err: err.message };
+  }
 }
 
 export function validateBarcode(barcode) {
-  if (![7, 8, 12, 13].includes(barcode.length)) {
-    return `Not valid Length barcode: ${barcode.length}`;
-  }
-  let res = 0;
-  barcode.split('').forEach((item, i) => {
-    if (i % 2 !== 0) {
-      res += Number(item) * 3;
-      res = res % 10;
-    } else {
-      res += Number(item);
-      res = res % 10;
+  function testBarcode() {
+    if (isNaN(Number(barcode))) return false;
+    if (![7, 8, 12, 13].includes(barcode.length)) {
+      return false;//`Not valid Length barcode: ${barcode.length}`;
     }
-  });
+    let res = 0;
+    barcode.split('').forEach((item, i) => {
+      if (i % 2 !== 0) {
+        res += Number(item) * 3;
+        res = res % 10;
+      } else {
+        res += Number(item);
+        res = res % 10;
+      }
+    });
+    return res;
+  }
+
+  let res = testBarcode(barcode);
+
   if (res !== 0) {
     let message = '';
     if (barcode.length === 13 || barcode.length === 8) {

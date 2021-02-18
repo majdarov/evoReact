@@ -15,8 +15,9 @@ const Commodity = props => {
 
   const [groupIsEmpty, setGroupIsEmpty] = useState(false);
   const [groupName, setGroupName] = useState('Товары');
-  const { items, setFilterConfig } = useFilteredData(props.commodities);
+  const { items, setFilterConfig } = useFilteredData(/* props.commodities */);
   const [pid, setPidSearch] = useState(props.pid);
+  const setCommodities = props.setCommodities;
 
   const headers = [
     ['Code'],
@@ -61,8 +62,6 @@ const Commodity = props => {
     }
   }, [props.groups, props.pid]);
 
-  const setCommodities = props.setCommodities;
-
   useEffect(() => {
     setCommodities(items);
   }, [items, setCommodities])
@@ -77,10 +76,8 @@ const Commodity = props => {
     setPidSearch(eId);
   }
 
-  const searchProducts = async (formData) => {
-
+  const searchProducts = (formData) => {
     setGroupName('Результаты поиска');
-    // console.log('searchProducts:', formData)
     setFilterConfig(formData);
   }
 
@@ -155,12 +152,12 @@ const Commodity = props => {
             <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3>
             {!props.comIsLoaded && <ProgressBar limit={20} text={'Processing...'} />}
             {props.comIsLoaded &&
-                <Table
-                  products={props.commodities}
-                  headers={headers}
-                  callback={props.getProductId}
-                  deleteProduct={props.deleteProduct}
-                />}
+              <Table
+                products={props.commodities}
+                headers={headers}
+                callback={props.getProductId}
+                deleteProduct={props.deleteProduct}
+              />}
           </div>
         </div>
       </>

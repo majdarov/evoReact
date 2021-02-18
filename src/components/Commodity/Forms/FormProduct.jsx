@@ -6,7 +6,6 @@ import { ComponentsProducts } from './schemas/ComponentsProducts';
 import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequiredData, dateToLocaleString } from './frmUtilites';
 import FormImg from './FormImg';
 import FormModalWrapper from './FormModalWrapper';
-// import noPhoto from '../../../Assets/img/terminal-5.png';
 
 const FormProduct = props => {
 

@@ -50,7 +50,8 @@ body {
   top: 9rem;
 }
 
-input {
+input,
+fieldset {
   border-radius: .5rem;
   padding: .2rem;
 }

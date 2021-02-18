@@ -11,22 +11,7 @@ const initialPeriod = {
   cost_price: false,
 }
 
-function createRequestObj(formData, name, period, callback) {
-  let chk = document.forms['form-search']['current-pid'];
-  let obj = { ...formData };
 
-  if (!chk.checked) {
-    delete obj.parent_id;
-  }
-
-  Object.keys(obj).forEach(key => {
-    if (!obj[key] || !obj[key].length) delete obj[key];
-    if (period[key] && obj[key].length === 1) obj[key][1] = null;
-  })
-
-  if (name.length) obj.name = name;
-  callback(obj);
-}
 
 const FormSearch = (props) => {
 
@@ -39,9 +24,24 @@ const FormSearch = (props) => {
   const propsSearchProducts = props.searchProducts;
   const searchProducts = useCallback((obj) => {
     propsSearchProducts(obj)
-  }, [propsSearchProducts])
+  }, [])
 
+  const getObj = useCallback(() => {
+    let chk = document.forms['form-search']['current-pid'];
+    let obj = { ...formData };
 
+    if (!chk.checked) {
+      delete obj.parent_id;
+    }
+
+    Object.keys(obj).forEach(key => {
+      if (!obj[key] || !obj[key].length) delete obj[key];
+      if (period[key] && obj[key].length === 1) obj[key][1] = null;
+    })
+
+    if (name.length) obj.name = name;
+    return obj;
+  }, [formData, name, period])
 
   useEffect(() => setPid(props.parent_id), [props.parent_id])
 
@@ -78,23 +78,23 @@ const FormSearch = (props) => {
   }
 
   useEffect(() => {
-    if (name.length > 3) {
-      createRequestObj(formData, name, period, searchProducts);
+    if (name.length > 2) {
+      searchProducts(getObj());
     }
-  }, [formData, name, period])
+  }, [getObj, name, searchProducts])
 
   function selectParentID(ev) {
     let chk = ev.target.checked;
     if (chk) {
       setFormData({ ...formData, parent_id: pid || '0' });
     }
-    createRequestObj(formData, name, period, searchProducts);
+    searchProducts(getObj());
   }
 
   function handleSubmit(ev) {
     ev.preventDefault();
     ev.stopPropagation();
-    createRequestObj(formData, name, period, searchProducts);
+    searchProducts(getObj());
   };
 
   function clearSearch(ev) {
@@ -141,7 +141,7 @@ const FormSearch = (props) => {
             />
             <div className={s['search-name']}>
               <label htmlFor='name'>Поиск</label>
-              <input type="text" name='name' value={name} onChange={(ev) => setName(ev.target.value)} />
+              <input type="text" name='name' value={name} onChange={ev => setName(ev.target.value)} />
             </div>
             <label>В текущей группе</label>
             <input type="checkbox" name='current-pid' onChange={selectParentID}

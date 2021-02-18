@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { apiIDB } from '../api/apiIDB';
 
 
@@ -143,18 +143,16 @@ function createSearchRequest(formData) {
   return arrSearchReuests;
 }
 
-const useFilteredData = (inItems) => {
+const useFilteredData = (/* inItems */) => {
   const [search, setSearch] = useState([]); // arrSearchRequests
-  const [items, setItems] = useState(inItems);
-  // const [filteredItems, setFilteredItems] = useState(items);
+  const [items, setItems] = useState([]);
 
-  function setFilterConfig(formData) {
-    // console.log('setFilterConfig:', formData);
-    // let arrSearchReuests = createSearchRequest(formData);
-    setSearch(/* arrSearchReuests */createSearchRequest(formData));
+  const setFilterConfig = (formData) => {
+    setSearch(createSearchRequest(formData));
   }
 
   useEffect(() => {
+    // console.log('Render from useFilteredData!')
     if (search.length) {
       apiIDB.getProduct('all').then((res) => {
         let filteredItems = [...res].filter((item) => filterProd(item, search));

@@ -9,6 +9,8 @@
   display: inline-block;
   font-family: var(--icon-font);
   background-color: var(--color-form-background);
+  border-radius: .5rem;
+  box-shadow: 0 0 1rem;
 }
 
 label {
@@ -32,7 +34,7 @@ label {
   padding: 0.2rem 0.5rem;
   border-radius: 0.5rem;
   color: var(--color-form-font);
-  box-shadow: gray .2rem .2rem;
+  box-shadow: gray 0 0 .5rem;
   /* border: gold 1px solid; */
   /* background-color: var(--color-form-icon); */
 }
@@ -187,9 +189,7 @@ label {
 
 .g-tree {
   flex: 1;
-  border-top: gray 1px solid;
-  border-left: gray 1px solid;
-  box-shadow: gray .2rem .2rem;
+  box-shadow: gray 0 0 .5rem;
   border-radius: .5rem;
 }
 
@@ -256,7 +256,7 @@ label {
 .button-submit,
 .button-cancel {
   border-radius: .5rem;
-  box-shadow: gray .2rem .2rem;
+  box-shadow: gray 0 0 .5rem;
   font-size: large;
 }
 

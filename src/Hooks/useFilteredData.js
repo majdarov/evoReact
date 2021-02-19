@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { apiIDB } from '../api/apiIDB';
 
+// const log = console.log;
 
 function testBarcodes(barcode) {
   if (isNaN(Number(barcode))) return false;
@@ -28,11 +29,24 @@ function testBarcodes(barcode) {
 
 /* const search = [searchRequest, serachRequest2, searchRequest3] */
 
+function createRegexp(str = '') {
+  let val;
+  if (str.slice(0, 3) === 'rgx') {
+    val = str.replace(/rgx\(|\)/g, '')//.replace(/\)/, '');
+    return new RegExp(val, 'gi');
+  }
+  val = str.replace(/[-[.+$*()^\]]/g, '\\$&');
+  return new RegExp(val, 'gi');
+}
+
 const wrapper = (fn, args) => {
   let _this = this;
   if (fn === String.prototype.match || fn === Array.prototype.includes) {
     _this = args[0];
     args = args.slice(1);
+  } else if (fn === RegExp.prototype.test) {
+    _this = args[1];
+    args = args.slice(0, 1);
   }
   return fn.call(_this, ...args);
 };
@@ -81,9 +95,12 @@ function createSearchRequest(formData) {
             keys = ['barcodes'];
             callback = Array.prototype.includes;
           }
-          target = [new RegExp(value, 'gi')];
+          let regex = createRegexp(value)
+          target = [regex];
+          // target = [new RegExp(regex, 'gi')];
           keys = [...keys, 'article_number', 'description'];
-          callback = String.prototype.match;
+          // callback = String.prototype.match;
+          callback = RegExp.prototype.test;
         } else {
           target = [value];
         }

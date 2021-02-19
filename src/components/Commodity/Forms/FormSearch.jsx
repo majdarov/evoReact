@@ -77,8 +77,14 @@ const FormSearch = (props) => {
     setFormData({ ...formData, [name]: value });
   }
 
+  function changeName(ev) {
+    let value = ev.target.value;
+    // if (value.length && value[value.length - 1].codePointAt() === 92 ) return;
+    setName(value)
+  }
+
   useEffect(() => {
-    if (name.length > 2) {
+    if (name.length > 2 && name.slice(0, 3) !== 'rgx') {
       searchProducts(getObj());
     }
   }, [getObj, name, searchProducts])
@@ -141,7 +147,7 @@ const FormSearch = (props) => {
             />
             <div className={s['search-name']}>
               <label htmlFor='name'>Поиск</label>
-              <input type="text" name='name' value={name} onChange={ev => setName(ev.target.value)} />
+              <input type="text" name='name' value={name} onChange={changeName} />
             </div>
             <label>В текущей группе</label>
             <input type="checkbox" name='current-pid' onChange={selectParentID}

@@ -149,9 +149,11 @@ const FormSearch = (props) => {
               <label htmlFor='name'>Поиск</label>
               <input type="text" name='name' value={name} onChange={changeName} />
             </div>
-            <label>В текущей группе</label>
-            <input type="checkbox" name='current-pid' onChange={selectParentID}
-              className={s['current-pid']} id={props.pid} />
+            <div>
+              <label>В текущей группе</label>
+              <input type="checkbox" name='current-pid' onChange={selectParentID}
+                className={s['current-pid']} id={props.pid} />
+            </div>
           </div>
           <ComponentsSearch.Button
             label='Расширенный фильтр'

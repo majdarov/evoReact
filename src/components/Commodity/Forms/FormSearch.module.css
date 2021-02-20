@@ -19,12 +19,20 @@
   justify-content: flex-start;
 }
 
+.search-name input {
+  flex: 1;
+  width: 20rem;
+  font-family: monospace;
+}
+
 .search * {
   margin-right: .5rem;
 }
 
 .form-search-row {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .filter-button {

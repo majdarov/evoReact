@@ -32,10 +32,15 @@ function testBarcodes(barcode) {
 function createRegexp(str = '') {
   let val;
   if (str.slice(0, 3) === 'rgx') {
-    val = str.replace(/rgx\(|\)/g, '')//.replace(/\)/, '');
-    return new RegExp(val, 'gi');
+    // val = str.replace(/(^rgx.?[/(])|(^rgx.+?\/)|\)$|\/$/gs, '')
+    val = str.replace(/(^rgx.?[/(])|\)$|\/$/gs, '')//.replace(/\)/, '');
+    console.log('return', val)
+    let regexp = new RegExp(val, 'gi');
+    console.log(regexp);
+    return regexp;
   }
-  val = str.replace(/[-[.+$*()^\]]/g, '\\$&');
+  val = str.replace(/[-[.+$*()^\]\\]/g, '\\$&');
+  console.log(val)
   return new RegExp(val, 'gi');
 }
 

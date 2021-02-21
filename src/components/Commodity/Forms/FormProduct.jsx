@@ -251,8 +251,7 @@ const FormProduct = props => {
     setState({ ...state, [arrName]: arr });
   }
 
-
-  const callbackTree = async (id, tagName) => {
+  const callbackTree = (id, tagName) => {
     let parent_id = id ? id : 0;
     if (tagName !== 'SPAN') return;
     setState({ ...state, parent_id });

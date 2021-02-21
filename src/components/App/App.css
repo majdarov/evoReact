@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Code EAN13';
+  src: url('../../Assets/fonts/ean13.ttf');
+}
+
 html,
 body {
   padding: 0;
@@ -13,7 +18,8 @@ body {
   --icon-font: "Font Awesome 5 Free";
   --barcode-font: "Code EAN13";
   --app-background-color: lightblue;
-  --forms-background-color: rgb(137, 135, 243, 0.6)
+  --forms-background-color: rgb(137, 135, 243, 0.6);
+  --forms-button-hover: rgb(230, 230, 250);
 }
 
 .app {
@@ -24,7 +30,7 @@ body {
     "h h h h h h"
     "c c c c c c"
     /* "f f f f f f" */;
-  grid-gap: 0.5rem;
+  /* grid-gap: 0.5rem; */
   background-color: var(--app-background-color);
   border-radius: .5rem;
 }

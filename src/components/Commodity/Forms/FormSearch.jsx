@@ -11,8 +11,6 @@ const initialPeriod = {
   cost_price: false,
 }
 
-
-
 const FormSearch = (props) => {
 
   const [view, setView] = useState(false);
@@ -79,7 +77,6 @@ const FormSearch = (props) => {
 
   function changeName(ev) {
     let value = ev.target.value;
-    // if (value.length && value[value.length - 1].codePointAt() === 92 ) return;
     setName(value)
   }
 

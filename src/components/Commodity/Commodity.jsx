@@ -1,39 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import s from "./Commodity.module.css";
-import Tree from "../common/Tree/Tree";
 import Preloader from "../common/Preloader/Preloader";
 import FormModalWrapper from "./Forms/FormModalWrapper";
 import FormProduct from "./Forms/FormProduct";
-import { apiIDB } from "../../api/apiIDB";
-import { isEmptyGroup } from "../../api/apiUtils";
 import Table from "../common/Table";
 import { ProgressBar } from "../common/ProgressBar";
 import FormSearch from "./Forms/FormSearch";
 import useFilteredData from "../../Hooks/useFilteredData";
+import GroupsTree from "../common/GroupsTree";
 
 const Commodity = props => {
 
-  const [groupIsEmpty, setGroupIsEmpty] = useState(false);
-  const [groupName, setGroupName] = useState('Товары');
   const { items, setFilterConfig } = useFilteredData(/* props.commodities */);
   const [pid, setPidSearch] = useState(props.pid);
   const setCommodities = props.setCommodities;
-
-  const headers = [
-    ['Code'],
-    ['Name'],
-    ['Price'],
-    ['Quant'],
-    ['Article'],
-  ];
+  const schema = useMemo(() => {
+    let sch = props.schema;
+    let schema = [];
+    Object.keys(sch).forEach((key) => {
+      let lbl;
+      if (sch[key][1]) {
+        lbl = sch[key][0] ? sch[key][0] : key;
+        schema.push([key, lbl]);
+      }
+    });
+    console.log(schema);
+    return schema;
+  }, [props.schema]);
+  const [showTreeView, setShowTreeView] = useState(false);
 
   if (!props.isInit) {
     props.history.push('/settings');
   }
-
-  useEffect(() => { //check isEmptyGroup
-    isEmptyGroup(props.pid).then(res => setGroupIsEmpty(res));
-  }, [props.pid])
 
   useEffect(() => { //get groups & products
     if (!props.isLoaded && props.isInit) {
@@ -50,24 +48,23 @@ const Commodity = props => {
     }
   }, [props])
 
-  useEffect(() => { //set label group
-    if (props.groups.length) {
-      if (props.pid !== '0') {
-        const group = props.groups.find(item => item.id === props.pid);
-        var gName = group?.label || 'Товары';
-      } else {
-        gName = 'Товары';
-      }
-      setGroupName(gName);
-    }
-  }, [props.groups, props.pid]);
-
   useEffect(() => {
     setCommodities(items);
   }, [items, setCommodities])
 
   function newData() {
     props.getProductId();
+  }
+
+  function clickGroups() {
+    setShowTreeView(!showTreeView);
+  }
+
+  const callbackTree = (id, tagName) => {
+    let parent_id = id ? id : 0;
+    if (tagName !== 'SPAN') return;
+    changePid(parent_id);
+    setShowTreeView(false);
   }
 
   function changePid(eId) {
@@ -77,31 +74,24 @@ const Commodity = props => {
   }
 
   const searchProducts = (formData) => {
-    setGroupName('Результаты поиска');
     setFilterConfig(formData);
   }
 
   function returnBeforeSearch() {
     props.getProducts(props.pid);
-    if (props.pid !== '0') {
-      var gName = props.groups.find(item => item.id === props.pid).label;
-    } else {
-      gName = 'Товары';
-    }
-    setGroupName(gName);
   }
 
-  async function delGroup(ev) {
-    if (ev.target.tagName !== 'SPAN') return;
-    let confirmDel = window.confirm(`Вы действительно хотите удалить группу\n\r${groupName}\n\rid: ${props.pid}?`)
-    if (confirmDel) {
-      let parentGroup = (await apiIDB.getGroup(props.pid)).parent_id;
-      if (!parentGroup) parentGroup = '0';
-      await props.deleteProduct(props.pid, parentGroup, 'group')
-    } else {
-      alert('DELETED CANCEL');
-    }
-  }
+  // async function delGroup(ev) {
+  //   if (ev.target.tagName !== 'SPAN') return;
+  //   let confirmDel = window.confirm(`Вы действительно хотите удалить группу\n\r${groupName}\n\rid: ${props.pid}?`)
+  //   if (confirmDel) {
+  //     let parentGroup = (await apiIDB.getGroup(props.pid)).parent_id;
+  //     if (!parentGroup) parentGroup = '0';
+  //     await props.deleteProduct(props.pid, parentGroup, 'group')
+  //   } else {
+  //     alert('DELETED CANCEL');
+  //   }
+  // }
 
   const formSearchProps = { searchProducts, returnBeforeSearch, parent_id: pid }
 
@@ -137,26 +127,26 @@ const Commodity = props => {
                 pid={props.pid}
               />
             }
-          />}
+          />
+        }
         <div className={s.container}>
+          <GroupsTree
+            groups={props.groups}
+            treeView={showTreeView}
+            onClick={clickGroups}
+            callbackTree={callbackTree}
+            parent_id={props.pid}
+          />
           <div className={s.list}>
-            <h3>Группы</h3>
-            <Tree
-              data={props.groups}
-              price="Price"
-              callback={changePid}
-              pId={props.pid}
-            />
-          </div>
-          <div className={s.list}>
-            <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3>
+            {/* <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3> */}
             {!props.comIsLoaded && <ProgressBar limit={20} text={'Processing...'} />}
             {props.comIsLoaded &&
               <Table
                 products={props.commodities}
-                headers={headers}
+                // headers={headers}
                 callback={props.getProductId}
                 deleteProduct={props.deleteProduct}
+                schema={schema}
               />}
           </div>
         </div>

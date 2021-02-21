@@ -1,7 +1,6 @@
 .container {
-  display: grid;
-  grid-template-columns: 2fr 4fr;
-  /* grid-template-rows: calc(100vh - 15rem); */
+  display: flex;
+  flex-direction: column;
   font-family: var(--icon-font);
   font-size: 1rem;
 }
@@ -41,7 +40,7 @@
   /* display: block; */
   background-color: lightblue;
   position: sticky;
-  top: 6rem;
+  top: 5.5rem;
   z-index: 101;
 }
 

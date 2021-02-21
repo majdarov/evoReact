@@ -33,7 +33,7 @@ function createRegexp(str = '') {
   let val;
   if (str.slice(0, 3) === 'rgx') {
     // val = str.replace(/(^rgx.?[/(])|(^rgx.+?\/)|\)$|\/$/gs, '')
-    val = str.replace(/(^rgx.?[/(])|\)$|\/$/gs, '')//.replace(/\)/, '');
+    val = str.replace(/(^rgx\s*[/(])|(^rgx\s*)|\)$|\/$/g, '')//.replace(/\)/, '');
     console.log('return', val)
     let regexp = new RegExp(val, 'gi');
     console.log(regexp);

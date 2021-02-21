@@ -65,19 +65,19 @@ const commodityReduser = (state = initialState, action) => {
       return { ...state, pid: action.pid, comIsLoaded: false }
 
     case SET_COMMODITIES:
-      let commodities = [];
-      action.commodities.forEach((item) => {
-        let commodity = {
-          id: item.id,
-          code: item.code,
-          label: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          article: item.article_number,
-        };
-        commodities.push(commodity);
-      });
-      return {...state, commodities, comIsLoaded: true }
+      // let commodities = [];
+      // action.commodities.forEach((item) => {
+      //   let commodity = {
+      //     id: item.id,
+      //     code: item.code,
+      //     label: item.name,
+      //     price: item.price,
+      //     quantity: item.quantity,
+      //     article: item.article_number,
+      //   };
+      //   commodities.push(commodity);
+      // });
+      return {...state, commodities: action.commodities, comIsLoaded: true }
 
     case SET_ERROR:
       return {...state, error: action.error }

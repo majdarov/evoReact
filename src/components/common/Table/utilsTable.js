@@ -12,13 +12,13 @@ export function clickCell(ev) {
   }
 }
 
-export async function clickTable(ev, callback, delRow) {
+export async function clickTable(ev, callback, delRowCallback) {
   let elem = ev.target;
   let result = clickCell(ev);
   if (!result) return;
   if (elem.tagName === 'SPAN') {
     let testDel =
-      delRow &&
+      delRowCallback &&
       elem.className === s.del &&
       window.confirm(
         `${elem.innerText}\n\rYou'r realy wanted delete this product?`,
@@ -26,7 +26,7 @@ export async function clickTable(ev, callback, delRow) {
 
     if (testDel) {
       let id = result.row;
-      let res = await delRow(id, null, 'product');
+      let res = await delRowCallback(id, null, 'product');
       alert(`Product id: ${res}\n\rDELETED!`);
     } else {
       alert('CANCEL DELETED!');

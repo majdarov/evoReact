@@ -94,15 +94,14 @@ export const ComponentsProducts = {
                 <div className={s['g-tree']} onClick={onDivClick}>
                     <div name='parent_id'>
                         {gLabel}
-                        <i className='fa fa-share-alt'></i>
+                        <i className='fa fa-share-alt fa-1x'></i>
                     </div>
                 </div >
-                <div className={s.space}></div>
             </div>
         )
     },
 
-    classDiv: s['g-tree'], classTree: s.tree,
+    // classDiv: s['g-tree'], classTree: s.tree,
 
     Barcodes: props => {
 

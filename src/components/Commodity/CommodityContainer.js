@@ -1,18 +1,29 @@
-import Commodity from "./Commodity";
+import Commodity from './Commodity';
 import {
-  setPid, getGroups, getProducts,
-  setViewForm, getProductId, deleteProduct, setFormData,
-  toggleFormPost, postFormData, setFormError, setError, setCommodities
-} from "../../redux/Actions";
-import { connect } from "react-redux";
+  setPid,
+  getGroups,
+  getProducts,
+  setViewForm,
+  getProductId,
+  deleteProduct,
+  setFormData,
+  toggleFormPost,
+  postFormData,
+  setFormError,
+  setError,
+  setCommodities,
+} from '../../redux/Actions';
+import { connect } from 'react-redux';
 
-const mapState = state => {
+const mapState = (state) => {
   const isInit = state.app.isInit;
+  let sch = state.settings.products.table.schema;
+
   state = state.commodityPage;
   return {
     isLoaded: state.isLoaded,
     groups: state.groups,
-    price: "Price",
+    price: 'Price',
     pid: state.pid,
     commodities: state.commodities,
     comIsLoaded: state.comIsLoaded,
@@ -21,7 +32,8 @@ const mapState = state => {
     formData: state.form.formData,
     formPost: state.form.formPost,
     formError: state.form.formError,
-    isInit
+    isInit,
+    schema: sch,
   };
 };
 
@@ -37,5 +49,5 @@ export default connect(mapState, {
   postFormData,
   setFormError,
   setError,
-  setCommodities
+  setCommodities,
 })(Commodity);

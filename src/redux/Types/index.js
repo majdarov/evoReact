@@ -22,3 +22,5 @@ export {
   SET_FORM_ERROR,
   SET_FORM_PHOTOS,
 } from './commodityTypes';
+
+export { SET_SCHEMA } from './settingsTypes';

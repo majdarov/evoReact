@@ -1,0 +1,34 @@
+.tree-container {
+  display: flex;
+  z-index: 200;
+  position: sticky;
+  top: 11rem;
+  background-color: var(--app-background-color);
+}
+
+.g-tree {
+  flex: 1;
+  border: 1px solid var(--icon-color);
+  box-shadow: gray 0 0 .5rem;
+  border-radius: .5rem;
+  padding: 0.2rem;
+  margin: 0.2rem;
+  color: var(--icon-color);
+  text-align: center;
+  font-weight: bold;
+}
+
+.g-tree:hover {
+  background-color: lavender;
+  cursor: pointer;
+}
+
+.tree {
+  position: absolute;
+  display: block;
+  top: -10rem;
+  text-align: start;
+  border: solid 1px blueviolet;
+  background-color: white;
+  transition: ease-in-out top 0.5s 0.5s;
+}

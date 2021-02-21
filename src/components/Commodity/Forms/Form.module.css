@@ -40,7 +40,7 @@ label {
 }
 
 .menu-buttons-groups:hover {
-  background-color: var(--color-form-icon);
+  background-color: var(--forms-button-hover);
 }
 
 .menu-buttons i {
@@ -48,7 +48,7 @@ label {
 }
 
 .menu-buttons i:hover {
-  color: var(--color-form-icon);
+  color: var(--forms-button-hover);
 }
 
 .product-info {
@@ -191,14 +191,12 @@ label {
   flex: 1;
   box-shadow: gray 0 0 .5rem;
   border-radius: .5rem;
-}
-
-.space {
-  width: .5rem;
+  padding: 0;
+  margin: 0;
 }
 
 .g-tree:hover {
-  background-color: var(--color-form-icon);
+  background-color: var(--forms-button-hover);
   cursor: pointer;
 }
 
@@ -237,17 +235,6 @@ label {
   flex: 1;
 }
 
-/* .price > input + span::before {
-  content: '\f158';
-  font-weight: 900;
-  margin-right: 0.3rem;
-  font-family: var(--icon-font);
-} */
-
-/* .allow-to-sell {
-  display: flex;
-} */
-
 .buttons {
   display: flex;
   justify-content: space-between;
@@ -265,7 +252,7 @@ label {
 }
 
 .button-submit:hover {
-  background-color: var(--color-form-icon);
+  background-color: var(--forms-button-hover);
   cursor: pointer;
 }
 .button-cancel:hover {
@@ -298,17 +285,16 @@ label {
 .product-dates {
   display: flex;
   justify-content: space-around;
-  border:  1px solid gray;
+  border-radius: .5rem;
+  background-color: rgba(248, 223, 142, 0.637);
 }
 
 .created_at,
 .updated_at {
   display: flex;
-  /* flex-direction: column; */
-  background-color: rgba(248, 223, 142, 0.637);
 }
 .created_at *,
 .updated_at * {
   margin: 0;
-  padding: 0 .5rem 0 .5rem;
+  padding: 0 .2rem 0 .2rem;
 }

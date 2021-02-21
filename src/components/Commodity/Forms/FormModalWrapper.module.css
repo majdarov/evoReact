@@ -30,7 +30,7 @@
 }
 
 .container * {
-  margin-bottom: 3px;
-  margin-left: 3px;
-  padding: 3px;
+  margin-bottom: 0.2rem;
+  margin-left: 0.2rem;
+  padding: 0.2rem;
 }

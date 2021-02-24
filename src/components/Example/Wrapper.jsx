@@ -4,12 +4,19 @@ import React, { useEffect, useState } from 'react';
 import Example from './Example';
 // import { commodities } from '../../Tests/products.json';
 import useFilteredData from '../../Hooks/useFilteredData';
+import Tree from '../common/Tree2/Tree';
+import { connect } from 'react-redux';
+import { apiIDB } from '../../api/apiIDB';
 
 const Wrapper = (props) => {
 
-    // const products = commodities.products;
     const { items, setFilterConfig, search } = useFilteredData([]);
     const [filteredItems, setFilteredItems] = useState([])
+    const [groups, setGroups] = useState([]);
+
+    useEffect(() => {
+        apiIDB.getGroup().then(items => setGroups(items));
+    })
 
     const [count, setCount] = useState(0);
     const clickButton = () => {
@@ -36,8 +43,14 @@ const Wrapper = (props) => {
             {count < 5 && <Example count={-1} />}
             {/* { (count < 3) && <ProgressBar limit={10} text='test' delay={500} /> } */}
             {/* <ProgressBar2 limit={20} text='test' delay={500} /> */}
+            <Tree data={groups} /* callback={id => alert(id)} *//>
         </>
     );
 }
 
-export default Wrapper;
+const mapState = state => {
+    console.log('groups - ', state.commodityPage.groups)
+    return { groups: state.commodityPage.groups }
+}
+
+export default connect(mapState)(Wrapper);

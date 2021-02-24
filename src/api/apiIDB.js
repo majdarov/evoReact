@@ -32,7 +32,7 @@ export const apiIDB = {
   async getGroup(id) {
     const db = await initDb();
     let group;
-    if (id === 'all') {
+    if (id === 'all' || !id) {
       group = await db.getAll('groups');
     } else {
       group = await db.get('groups', id);

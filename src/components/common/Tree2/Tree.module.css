@@ -1,0 +1,69 @@
+.tree {
+  padding: 0.5rem;
+  background-color: cornsilk;
+  cursor: default;
+  font-family: var(--icon-font);
+}
+
+.tree i {
+  margin-right: 5px;
+}
+
+.tree span:hover {
+  background-color: lavender;
+}
+
+.tree li {
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--tree-color);
+}
+
+.tree li[class~='children']::before {
+  content: '\f105'; /* arrow-right */
+  font-weight: 900;
+  margin-right: 0.3rem;
+}
+.tree li:not([class~='children']):before {
+  content: '\f105';
+  font-weight: 900;
+  margin-right: 0.3rem;
+  color: transparent;
+}
+
+.tree li[class='open children']::before {
+  content: '\f107'; /* arrow-down */
+  font-weight: 900;
+}
+
+.tree li[class~='open'] > ul:hover {
+  border-left: solid 1px rgb(160, 158, 158);
+}
+
+.tree span:active {
+  background-color: lavender;
+}
+
+ul {
+  padding-left: 1rem;
+  list-style: none;
+  position: sticky;
+  top: 10rem;
+}
+
+.tree h3 {
+  text-align: center;
+  border-bottom: grey solid 2px;
+}
+
+.selected {
+  background-color: lavender;
+}
+
+.children-length {
+  background-color: lightgrey;
+  color: rgb(59, 57, 185);
+  margin-left: 0.2rem;
+  padding: 3px;
+  border-radius: 20%;
+}

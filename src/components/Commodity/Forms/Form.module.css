@@ -1,8 +1,9 @@
 * {
-  --color-form-background: cornsilk;
+  --color-form-background: whitesmoke;
   --color-form-icon: var(--icon-color);
-  --color-form-icon-warn: tomato;
-  --color-form-font: darkblue;
+  --color-form-icon-warn: rgb(248, 180, 168);
+  /* --color-form-font: rgb(2, 2, 173); */
+  --color-form-font: darkgray;
 }
 
 #form-product {

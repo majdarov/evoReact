@@ -25,8 +25,6 @@
     }
 */
 
-export { default as createTree2 } from './treeFunctions2';
-
 function createNode(item) {
   let node = { ...item };
   node.childs = [];

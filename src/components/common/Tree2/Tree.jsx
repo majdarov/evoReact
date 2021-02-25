@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./Tree.module.css";
-import createTree from "./treeFunctions2";
+import createTree from "./treeFunctions";
 import Node from "./Node";
 
 

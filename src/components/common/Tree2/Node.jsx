@@ -8,32 +8,21 @@ const Node = props => {
 
   const hasChildren = !!props.children.length;
 
-  const [hidden, setHidden] = useState(props.hidden);
-
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
-    if (hidden) {
+    if (props.hidden) {
       setIcon("far fa-folder");
       setIsOpen(hasChildren ? "closed children" : "closed");
     } else {
       setIcon("far fa-folder-open");
       setIsOpen(hasChildren ? "open children" : "open");
     }
-  }, [hidden, hasChildren])
-
-  const clickGroup = (ev) => {
-    ev.stopPropagation();
-    if (props.id !== '0' && props.id !== 'root') setHidden(hidden => !hidden);
-    if (props.callback) {
-      let tagName = ev.target.tagName;
-      props.callback(props.id.toString(), tagName);
-    }
-  }
+  }, [props.hidden, hasChildren])
 
   return (
     <>
-      <li id={props.id} className={isOpen} onClick={clickGroup}>
+      <li id={props.id} className={isOpen}>
         <i className={icon}></i>
         <span className={(selected && props.classSelected) || ''}>
           {props.label}
@@ -42,7 +31,7 @@ const Node = props => {
           <span className={props.className}>
             {props.children.length}
           </span>}
-        {hasChildren && <ul hidden={hidden}>{props.children}</ul>}
+        {hasChildren && <ul hidden={props.hidden}>{props.children}</ul>}
       </li>
     </>
   );

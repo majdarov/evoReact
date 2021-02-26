@@ -264,7 +264,7 @@ const FormProduct = props => {
 
   const copyProduct = () => {
     setIsNewData(true);
-    setState({ ...state, id: null, barcodes: [], allow_edit: true });
+    setState({ ...state, id: null, code: null, barcodes: [], allow_edit: true });
     let formData = { ...state };
     delete formData.allow_edit;
     delete formData.bigImg;

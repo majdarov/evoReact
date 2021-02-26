@@ -51,11 +51,6 @@ body {
   margin-right: auto;
 }
 
-#Tree {
-  position: sticky;
-  top: 9rem;
-}
-
 input,
 fieldset {
   border-radius: .5rem;

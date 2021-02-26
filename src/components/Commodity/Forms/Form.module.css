@@ -267,8 +267,6 @@ label {
   margin-right: 0.3rem;
 }
 
-
-
 *:disabled {
   color: coral;
 }
@@ -287,7 +285,7 @@ label {
   display: flex;
   justify-content: space-around;
   border-radius: .5rem;
-  background-color: rgba(248, 223, 142, 0.637);
+  /* background-color: rgba(248, 223, 142, .7); */
 }
 
 .created_at,

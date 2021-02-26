@@ -36,11 +36,11 @@ function createRegexp(str = '') {
     val = str.replace(/(^rgx\s*[/(])|(^rgx\s*)|\)$|\/$/g, '')//.replace(/\)/, '');
     console.log('return', val)
     let regexp = new RegExp(val, 'gi');
-    console.log(regexp);
+    // console.log(regexp);
     return regexp;
   }
   val = str.replace(/[-[.+$*()^\]\\]/g, '\\$&');
-  console.log(val)
+  // console.log(val)
   return new RegExp(val, 'gi');
 }
 

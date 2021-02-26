@@ -9,8 +9,8 @@
 .g-tree {
   flex: 1;
   border: 1px solid var(--icon-color);
-  box-shadow: gray 0 0 .5rem;
-  border-radius: .5rem;
+  box-shadow: gray 0 0 0.5rem;
+  border-radius: 0.5rem;
   padding: 0.2rem;
   margin: 0.2rem;
   color: var(--icon-color);
@@ -23,12 +23,20 @@
   cursor: pointer;
 }
 
+.g-tree i {
+  margin-left: .5rem;
+}
+
 .tree {
-  position: absolute;
-  display: block;
-  top: -10rem;
-  text-align: start;
+  overflow: hidden;
+  overflow-y: auto;
+  flex: 1;
+  height: calc(50vh);
   border: solid 1px blueviolet;
   background-color: white;
   transition: ease-in-out top 0.5s 0.5s;
+}
+
+.tree > [class*='tree'] {
+  background-color: whitesmoke;
 }

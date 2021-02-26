@@ -16,12 +16,12 @@ const GroupsTree = props => {
                   <Tree data={groups} price="Price" treeLabel="Groups" callback={props.callbackTree} />
               </div>
           }
-          <div className={s['g-tree']} onClick={onDivClick}>
+          {!props.treeView && <div className={s['g-tree']} onClick={onDivClick}>
               <div name='parent_id'>
                   {gLabel}
                   <i className='fa fa-share-alt fa-1x'></i>
               </div>
-          </div >
+          </div >}
       </div>
   )
 }

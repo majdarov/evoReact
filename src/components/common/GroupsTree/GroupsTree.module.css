@@ -1,5 +1,6 @@
 .tree-container {
   display: flex;
+  justify-content: baseline;
   z-index: 200;
   position: sticky;
   top: 11rem;
@@ -7,6 +8,8 @@
 }
 
 .g-tree {
+  display: flex;
+  justify-content: center;
   flex: 1;
   border: 1px solid var(--icon-color);
   box-shadow: gray 0 0 .5rem;
@@ -14,13 +17,16 @@
   padding: 0.2rem;
   margin: 0.2rem;
   color: var(--icon-color);
-  text-align: center;
   font-weight: bold;
 }
 
 .g-tree:hover {
   background-color: lavender;
   cursor: pointer;
+}
+
+.g-tree i {
+  margin-left: .5rem;;
 }
 
 .tree {
@@ -31,4 +37,9 @@
   border: solid 1px blueviolet;
   background-color: white;
   transition: ease-in-out top 0.5s 0.5s;
+}
+
+[class*='trash-alt'] {
+  color: var(--color-form-icon-warn);
+  /* justify-content: flex-end; */
 }

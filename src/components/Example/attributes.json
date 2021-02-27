@@ -1,0 +1,46 @@
+{
+  "id": "",
+  "parent_id": "1ddea16b-971b-dee5-3798-1b29a7aa2e27",
+  "name": "Группа модификаций туфель",
+  "barcodes": [
+    "2000000000060"
+  ],
+  "attributes":[
+     {
+        "id":"be30db90-514f-11e9-91c7-4b1dd1e1bcf8",
+        "name":"Цвет",
+        "choices":[
+           {
+              "id":"be30db91-514f-11e9-91c7-4b1dd1e1bcf8",
+              "name":"Красный"
+           },
+           {
+              "id":"be30db92-514f-11e9-91c7-4b1dd1e1bcf8",
+              "name":"Зеленый"
+           },
+           {
+              "id":"be30db93-514f-11e9-91c7-4b1dd1e1bcf8",
+              "name":"Синий"
+           }
+        ]
+     },
+     {
+        "id":"be30db94-514f-11e9-91c7-4b1dd1e1bcf8",
+        "name":"Размер",
+        "choices":[
+           {
+              "id":"be3102a0-514f-11e9-91c7-4b1dd1e1bcf8",
+              "name":"S"
+           },
+           {
+              "id":"be3102a1-514f-11e9-91c7-4b1dd1e1bcf8",
+              "name":"M"
+           },
+           {
+              "id":"be3102a2-514f-11e9-91c7-4b1dd1e1bcf8",
+              "name":"L"
+           }
+        ]
+     }
+  ]
+}

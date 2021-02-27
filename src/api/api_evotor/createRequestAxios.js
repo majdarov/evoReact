@@ -28,6 +28,17 @@ function selectOption(action) {
       }
       return { ...api_v2, method: 'GET', url };
 
+    /* Схемы товаров */
+    case 'get_schemes':
+      method = 'GET';
+      url = `/api/v1/inventories/stores/${action.storeUuid}/products/schemes`;
+      return { ...api_v2, method, url };
+
+    case 'post_schemes':
+      method = 'POST';
+      url = `/api/v1/inventories/stores/${action.storeUuid}/products/schemes`;
+      return { ...api_v2, method, url, body: JSON.stringify(action.body) };
+
     /* Получить товар по ID или все товары */
     case 'products_v2':
       method = 'GET';
@@ -76,7 +87,7 @@ function selectOption(action) {
             url += `?since=${dateStart}${until}`;
           } else {
             let date = new Date();
-            date.setMonth(date.getMonth() - 1);
+            date.setDate(date.getDate() - 1);
             url += `?since=${date.getTime()}`;
           }
           url += `&type=${action.docType}`;

@@ -13,6 +13,7 @@ const Commodity = props => {
 
   const { items, setFilterConfig } = useFilteredData(/* props.commodities */);
   const [pid, setPidSearch] = useState(props.pid);
+  const [isEmpty, setIsEmpty] = useState(false);
   const setCommodities = props.setCommodities;
   const schema = useMemo(() => {
     let sch = props.schema;
@@ -52,6 +53,11 @@ const Commodity = props => {
     setCommodities(items);
   }, [items, setCommodities])
 
+  useEffect(() => {
+    if (!props.commodities.length) setIsEmpty(true);
+    return () => setIsEmpty(false);
+  }, [props.commodities]);
+
   function newData() {
     props.getProductId();
   }
@@ -80,18 +86,6 @@ const Commodity = props => {
   function returnBeforeSearch() {
     props.getProducts(props.pid);
   }
-
-  // async function delGroup(ev) {
-  //   if (ev.target.tagName !== 'SPAN') return;
-  //   let confirmDel = window.confirm(`Вы действительно хотите удалить группу\n\r${groupName}\n\rid: ${props.pid}?`)
-  //   if (confirmDel) {
-  //     let parentGroup = (await apiIDB.getGroup(props.pid)).parent_id;
-  //     if (!parentGroup) parentGroup = '0';
-  //     await props.deleteProduct(props.pid, parentGroup, 'group')
-  //   } else {
-  //     alert('DELETED CANCEL');
-  //   }
-  // }
 
   const formSearchProps = { searchProducts, returnBeforeSearch, parent_id: pid }
 
@@ -136,6 +130,8 @@ const Commodity = props => {
             onClick={clickGroups}
             callbackTree={callbackTree}
             parent_id={props.pid}
+            isEmpty={isEmpty}
+            deleteProduct={props.deleteProduct}
           />
           <div className={s.list}>
             {/* <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3> */}

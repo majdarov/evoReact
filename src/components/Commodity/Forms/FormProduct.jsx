@@ -346,7 +346,7 @@ const FormProduct = props => {
                   <label htmlFor="picture" onClick={onPicInputClick}>Input Image</label>
                 </>
             }
-            {!isGroup && <ComponentsProducts.Barcodes {...bProps} />}
+            <ComponentsProducts.Barcodes {...bProps} />
             {!isGroup &&
               <div className={s.code_article}>
                 <div className={s.code}>

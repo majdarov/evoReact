@@ -8,6 +8,18 @@ export const apiForIdb = {
     return stores.items;
   },
 
+  async getSchemes() {
+    let request = await createRequest({ type: 'get_schemes' });
+    let schemes = await fetchEvo(request);
+    return schemes;
+  },
+
+  async postSchemes(body) {
+    let request = await createRequest({ type: 'post_schemes', body });
+    let schemes = await fetchEvo(request);
+    return schemes;
+  },
+
   async fetchGroupsEvo() {
     let request = await createRequest({ type: 'groups_v2' });
     return await fetchEvo(request);

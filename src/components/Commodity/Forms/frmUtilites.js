@@ -167,3 +167,23 @@ export function dateToLocaleString(date = new Date()) {
   let day = date.getDay();
   return `${days[day]} ${date.toLocaleString()}`;
 }
+
+export function getUUID4() {
+  function randomMax(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+  let arr = [];
+  while (arr.length < 16) {
+    let byte = randomMax(16).toString(16);
+    arr.push(byte.concat(randomMax(16).toString(16)));
+  }
+  arr[6] = ((parseInt('0x' + arr[6], 16) & 0x0f) | 0x40).toString(16);
+  arr[8] = ((parseInt('0x' + arr[8], 16) & 0x3f) | 0x80).toString(16);
+  let newStr = arr.join('');
+  let strUuid = newStr.slice(0, 8);
+  strUuid += '-' + newStr.slice(8, 12);
+  strUuid += '-' + newStr.slice(12, 16);
+  strUuid += '-' + newStr.slice(16, 20);
+  strUuid += '-' + newStr.slice(20);
+  return strUuid;
+}

@@ -1,0 +1,33 @@
+[
+  {
+      "uuid": "",
+      "appId": "",
+      "items": [
+          {
+              "title": "TestSchemaString",
+              "editable": true,
+              "uuid": "",
+              "type": "TEXT_FIELD",
+              "data": {"test": "TestString"},
+              "regexp": "\\\\w+"
+          },
+          {
+              "title": "TestSchemaDictionary",
+              "editable": false,
+              "uuid": "",
+              "type": "DICTIONARY_FIELD",
+              "multiple": false,
+              "items": [
+                  {
+                      "title": "Элемент 1",
+                      "value": ""
+                  },
+                  {
+                      "title": "Элемент 1",
+                      "value": ""
+                  }
+              ]
+          }
+      ]
+  }
+]

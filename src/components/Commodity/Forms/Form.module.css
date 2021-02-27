@@ -298,3 +298,8 @@ label {
   margin: 0;
   padding: 0 .2rem 0 .2rem;
 }
+
+.attr {
+  display: flex;
+  justify-content: space-around;
+}

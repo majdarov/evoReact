@@ -1,3 +1,5 @@
+import { apiIDB } from "../api/apiIDB";
+
 let log = console.log;
 // let arr8 = new Uint8Array([65, 202, 195, 195, 131, 107, 135, 88, 51, 135, 64, 173, 70, 27, 182, 71]);
 
@@ -76,4 +78,4 @@ function benchmark(numberOfCall, ...fns) {
   })
 }
 
-benchmark(100000, getUuid, getUuid2);
+// benchmark(100000, getUuid, getUuid2);

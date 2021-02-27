@@ -6,6 +6,7 @@ import Example from './Example';
 import useFilteredData from '../../Hooks/useFilteredData';
 import { apiForIdb } from '../../api/api';
 import schemes from './schemes.json';
+import { apiIDB } from '../../api/apiIDB';
 
 const Wrapper = (props) => {
 
@@ -43,6 +44,8 @@ const Wrapper = (props) => {
         let resSchemes = await apiForIdb.postSchemes(body);
         console.log(resSchemes);
     }
+    apiIDB.getGroup('0').then(g => console.log(g))
+
 
     return (
         <>

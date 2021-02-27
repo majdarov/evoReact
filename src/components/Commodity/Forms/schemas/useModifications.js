@@ -1,18 +1,7 @@
-import React, { useState } from 'react';
-import { apiForIdb } from '../../../../api/api';
+import { useEffect, useState } from 'react';
 import { apiIDB } from '../../../../api/apiIDB';
 
-export const useModifications = ({ isGroup, groupId, parentId }) => {
-  const [attributes, setAttributes] = useState(null);
-
-  if (!isGroup) {
-    apiIDB.getGroup(parentId).then(g => setAttributes(g.attributes || null));
-  }
-
-  return attributes;
-};
-
-const attributes = [
+const attr = [
   {
     id: 'be30db90-514f-11e9-91c7-4b1dd1e1bcf8',
     name: 'Цвет',
@@ -31,4 +20,39 @@ const attributes = [
       },
     ],
   },
+  {
+    id: 'be30db94-514f-11e9-91c7-4b1dd1e1bcf8',
+    name: 'Размер',
+    choices: [
+      {
+        id: 'be3102a0-514f-11e9-91c7-4b1dd1e1bcf8',
+        name: 'S',
+      },
+      {
+        id: 'be3102a1-514f-11e9-91c7-4b1dd1e1bcf8',
+        name: 'M',
+      },
+      {
+        id: 'be3102a2-514f-11e9-91c7-4b1dd1e1bcf8',
+        name: 'L',
+      },
+    ],
+  },
 ];
+
+export const useModifications = (parentId) => {
+  const [attributes, setAttributes] = useState(null);
+  // console.log('render: ', attributes?.length || null, parentId);
+
+  function getAttributes({ parentId }) {
+    if (parentId === '0' || !parentId) return;
+    apiIDB.getGroup(parentId).then((g) => setAttributes(g.attributes || attr));
+  }
+
+  useEffect(() => {
+    getAttributes({ parentId });
+    return () => setAttributes(null);
+  }, [parentId]);
+
+  return {attributes, getAttributes};
+};

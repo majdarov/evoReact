@@ -2,6 +2,7 @@ import React from 'react';
 import { apiIDB } from '../../../api/apiIDB';
 import Tree from '../Tree/Tree';
 import s from './GroupsTree.module.css';
+import svg from '../../../Assets/icons_svg/folder.svg'
 
 const GroupsTree = props => {
 
@@ -31,10 +32,15 @@ const GroupsTree = props => {
             <div className={s['g-tree']} onClick={onDivClick}>
                 <div name='parent_id'>
                     {gLabel}
-                    <i className='fa fa-share-alt fa-1x'></i>
+                    {/* <i className='fa fa-share-alt fa-1x'></i> */}
+                    <i className='fa fa-bars fa-1x'></i>
                 </div>
             </div >
-            {props.isEmpty && <i onClick={delGroup} className='fa fa-trash-alt'></i>}
+            {props.isEmpty &&
+                <div onClick={delGroup} className={s.del}>
+                    <i className='fa fa-trash-alt'></i>
+                </div>
+            }
         </div>
     )
 }

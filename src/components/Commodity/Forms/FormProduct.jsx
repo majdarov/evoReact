@@ -6,6 +6,7 @@ import { ComponentsProducts } from './schemas/ComponentsProducts';
 import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequiredData, dateToLocaleString } from './frmUtilites';
 import FormImg from './FormImg';
 import FormModalWrapper from './FormModalWrapper';
+import { useModifications } from './schemas/useModifications';
 
 const FormProduct = props => {
 
@@ -24,6 +25,7 @@ const FormProduct = props => {
     updated_at: props.formData.updated_at ? new Date(props.formData.updated_at) : new Date(),
   });
   const [treeView, setTreeView] = useState(false);
+  const [mod, setMod] = useState(false);
   const disabled = !isNewData && !state.allow_edit;
   const setViewForm = props.setViewForm;
   const setFormData = props.setFormData;
@@ -34,15 +36,22 @@ const FormProduct = props => {
     document.body.style.overflow = 'auto';
   }, [setFormData, setViewForm])
 
-  if (!state.code) {
-    setNewCode().then(code => setState({ ...state, code }))
-  }
+  useEffect(() => {
+    if (!state.code) {
+      setNewCode().then(code => setState({ ...state, code }))
+    }
 
-  if (props.formError) {
-    let err = props.formError;
-    alert(err.message);
-    props.setFormError(null);
-  }
+    if (props.formError) {
+      let err = props.formError;
+      alert(err.message);
+      props.setFormError(null);
+    }
+  }, [props, state])
+
+  const { attributes, getAttributes } = useModifications(state.parent_id);
+  useEffect(() => {
+    getAttributes({ parentId: state.parent_id })
+  }, [getAttributes, state.parent_id])
 
   useEffect(() => { //cleare URL objects Photo
     return () => {
@@ -373,6 +382,18 @@ const FormProduct = props => {
               <input name="name" value={state.name} placeholder='Input name ...'
                 onChange={handleChange} disabled={disabled} />
             </div>
+            {isGroup &&
+              <div className={s['add-mod']}>
+                <label htmlFor="add_mod">Модификация</label>
+                <input type="checkbox" name="add_mod" onChange={() => setMod(!mod)} />
+              </div>
+            }
+            {mod &&
+              <div>
+                  Модификации
+              </div>
+            }
+            {attributes?.length && <ComponentsProducts.Attributes attributes={attributes} />}
             {!isGroup &&
               <div className={s.description}>
                 <label>Description:</label>

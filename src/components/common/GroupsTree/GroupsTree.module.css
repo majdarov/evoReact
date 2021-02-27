@@ -1,6 +1,6 @@
 .tree-container {
   display: flex;
-  justify-content: baseline;
+  /* justify-content: last baseline; */
   z-index: 200;
   position: sticky;
   top: 11rem;
@@ -39,7 +39,6 @@
   transition: ease-in-out top 0.5s 0.5s;
 }
 
-[class*='trash-alt'] {
+.del i {
   color: var(--color-form-icon-warn);
-  /* justify-content: flex-end; */
 }

@@ -179,9 +179,9 @@ export const ComponentsProducts = {
                     {attributes?.length &&
                         attributes.map(attr => {
                             return (
-                                <div className={s['attr-select']}>
+                                <div className={s['attr-select']} key={attr.id}>
                                     <label htmlFor={attr.name}>{attr.name}</label>
-                                    <select name={attr.name} id={attr.id} key={attr.id}>
+                                    <select name={attr.name} id={attr.id} >
                                         {attr.choices.map(item => {
                                             return <option value={item.id} key={item.id}>{item.name}</option>
                                         })}

@@ -12,13 +12,13 @@ const FormProduct = props => {
 
   const [isNewData, setIsNewData] = useState(!props.formData.id);
   const fileInput = React.createRef();
-  const [isGroup, setIsGroup] = useState(false);
+  const [isGroup, setIsGroup] = useState(props.isGroup);
   const [state, setState] = useState({
     ...props.formData,
     allow_edit: isNewData,
     parent_id: isNewData ? props.pid : props.formData.parent_id || 0, //parentId,
     photos: (props.formData.photos?.length && [...props.formData.photos]) || [],
-    barcodes: [...props.formData.barcodes] || [],
+    barcodes: (props.formData.barcodes?.length && [...props.formData.barcodes]) || [],
     bigImg: null,
     currentBarcode: '',
     created_at: props.formData.created_at ? new Date(props.formData.created_at) : new Date(),
@@ -393,7 +393,7 @@ const FormProduct = props => {
                   Модификации
               </div>
             }
-            {attributes?.length && <ComponentsProducts.Attributes attributes={attributes} />}
+            {attributes?.length && !isGroup && <ComponentsProducts.Attributes attributes={attributes} />}
             {!isGroup &&
               <div className={s.description}>
                 <label>Description:</label>

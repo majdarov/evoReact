@@ -31,8 +31,8 @@ const setFormErrorAC = (error) => {
 const viewFormAC = (view) => {
   return { type: VIEW_FORM, viewForm: view };
 };
-const setFormDataAC = (formData) => {
-  return { type: SET_FORM_DATA, formData };
+const setFormDataAC = (formData, isGroup = false) => {
+  return { type: SET_FORM_DATA, formData, isGroup };
 };
 const toggleFormPostAC = (formPost) => {
   return { type: TOGGLE_FORM_POST, formPost };
@@ -50,14 +50,19 @@ export const getProducts = (pId) => {
   };
 };
 
-export const getProductId = (id) => {
+export const getProductId = (id, isGroup = false) => {
   if (!id) return (dispatch) => dispatch(viewFormAC(true));
   return (dispatch) => {
-    apiIDB
-      .getProduct(id)
+    let getData;
+    if (isGroup) {
+      getData = apiIDB.getGroup;
+    } else {
+      getData = apiIDB.getProduct;
+    }
+    getData(id)
       .then((res) => {
         // console.log(res)
-        dispatch(setFormDataAC(res));
+        dispatch(setFormDataAC(res, isGroup));
         return true;
       })
       .then((result) => {
@@ -74,9 +79,9 @@ export const getGroups = () => {
   };
 };
 
-export const setGroups = groups => dispatch => {
+export const setGroups = (groups) => (dispatch) => {
   dispatch(setGroupsAC(groups));
-}
+};
 
 export const setViewForm = (view) => (dispatch) => {
   dispatch(viewFormAC(view));
@@ -159,7 +164,7 @@ export const deleteProduct = (id, pid, path = 'product') => async (
     } else {
       await apiIDB.deleteData(`${path}s`, id);
       if (path === 'group') {
-        let groups = await apiIDB.getGroup('all')
+        let groups = await apiIDB.getGroup('all');
         dispatch(setGroupsAC(groups));
         pid = '0';
       }

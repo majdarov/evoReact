@@ -66,10 +66,15 @@ const Commodity = props => {
     setShowTreeView(!showTreeView);
   }
 
-  const callbackTree = (id, tagName) => {
+  const callbackTree = (id, tagName, className) => {
     let parent_id = id ? id : 0;
-    if (tagName !== 'SPAN') return;
-    changePid(parent_id);
+    // console.log('className', className)
+    if (tagName !== 'SPAN' && className !== 'fa fa-edit') return;
+    if (className !== 'fa fa-edit') {
+      changePid(parent_id);
+    } else {
+      props.getProductId(id, true);
+    }
     setShowTreeView(false);
   }
 
@@ -119,6 +124,7 @@ const Commodity = props => {
                 postFormData={props.postFormData}
                 setFormError={props.setFormError}
                 pid={props.pid}
+                isGroup={props.isGroup}
               />
             }
           />

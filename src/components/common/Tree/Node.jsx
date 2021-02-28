@@ -40,7 +40,8 @@ const Node = props => {
     if (props.id !== '0') setHidden(hidden => !hidden);
     if (props.callback) {
       let tagName = ev.target.tagName;
-      props.callback(props.id.toString(), tagName);
+      let className = ev.target.className;
+      props.callback(props.id.toString(), tagName, className);
     }
   }
 
@@ -55,6 +56,7 @@ const Node = props => {
           <span className={props.className}>
             {props.children.length}
           </span>}
+          {props.id !== '0' && <i className='fa fa-edit'></i>}
         {hasChildren && <ul hidden={hidden}>{props.children}</ul>}
       </li>
     </>

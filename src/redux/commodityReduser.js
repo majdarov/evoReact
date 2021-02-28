@@ -41,6 +41,7 @@ let initialState = {
     formPost: false,
     resMessage: null,
     formError: null,
+    isGroup: false,
     photos: [],
   },
 };
@@ -94,7 +95,8 @@ const commodityReduser = (state = initialState, action) => {
     case SET_FORM_DATA:
       const formData =
         action.formData === null ? initialState.form.formData : action.formData;
-      return { ...state, form: { ...state.form, formData } };
+      const isGroup = true && action.isGroup;
+      return { ...state, form: { ...state.form, formData, isGroup } };
 
     case SET_FORM_PHOTOS:
       return { ...state, form: action.photos };

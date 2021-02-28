@@ -40,6 +40,18 @@
   border-left: solid 1px rgb(160, 158, 158);
 }
 
+.tree li > [class~='fa-edit'] {
+  opacity: 0;
+}
+
+.tree li:hover > [class~='fa-edit'] {
+  display: inline-block;
+  color: var(--color-form-icon);
+  margin-left: .5rem;
+  opacity: 100%;
+  transition: ease-in-out .5s .5s;
+}
+
 .tree span:active {
   background-color: lavender;
 }

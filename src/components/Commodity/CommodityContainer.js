@@ -30,6 +30,7 @@ const mapState = (state) => {
     error: state.error,
     viewForm: state.viewForm,
     formData: state.form.formData,
+    isGroup: state.form.isGroup,
     formPost: state.form.formPost,
     formError: state.form.formError,
     isInit,

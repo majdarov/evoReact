@@ -1,0 +1,14 @@
+.attributes-ul,
+.choices-ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.attribut {
+  border: 1px solid green;
+}
+
+.choice > label {
+  background-color: var(--forms-background-color);
+}

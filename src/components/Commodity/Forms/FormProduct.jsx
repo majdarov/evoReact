@@ -7,6 +7,7 @@ import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequ
 import FormImg from './FormImg';
 import FormModalWrapper from './FormModalWrapper';
 import { useModifications } from './schemas/useModifications';
+import { BlockMod } from '../../common/BlockMod/BlockMod';
 
 const FormProduct = props => {
 
@@ -182,6 +183,7 @@ const FormProduct = props => {
           id: state.id,
           parent_id: state.parent_id,
           name: state.name,
+          attributes: (true && state.attributes) || null,
           isNewData
         }
       } else {
@@ -213,7 +215,7 @@ const FormProduct = props => {
         return;
       }
 
-      validateZeroData(body, props.formData);
+      validateZeroData(body/* , props.formData */);
       if (!isNewData) body.id = state.id;
 
       // alert(JSON.stringify(body, null, 2));
@@ -389,9 +391,7 @@ const FormProduct = props => {
               </div>
             }
             {mod &&
-              <div>
-                  Модификации
-              </div>
+              <BlockMod />
             }
             {attributes?.length && !isGroup && <ComponentsProducts.Attributes attributes={attributes} />}
             {!isGroup &&

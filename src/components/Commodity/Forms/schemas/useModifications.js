@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { apiIDB } from '../../../../api/apiIDB';
 
-const attr = [
+/* const attr = [
   {
     id: 'be30db90-514f-11e9-91c7-4b1dd1e1bcf8',
     name: 'Цвет',
@@ -38,15 +38,15 @@ const attr = [
       },
     ],
   },
-];
+]; */
 
 export const useModifications = (parentId) => {
-  const [attributes, setAttributes] = useState(null);
+  const [attributesP, setAttributes] = useState(null);
   // console.log('render: ', attributes?.length || null, parentId);
 
   function getAttributes({ parentId }) {
     if (parentId === '0' || !parentId) return;
-    apiIDB.getGroup(parentId).then((g) => setAttributes(g.attributes || attr));
+    apiIDB.getGroup(parentId).then((g) => setAttributes(g.attributes || null));
   }
 
   useEffect(() => {
@@ -54,5 +54,5 @@ export const useModifications = (parentId) => {
     return () => setAttributes(null);
   }, [parentId]);
 
-  return {attributes, getAttributes};
+  return { attributesP, getAttributes };
 };

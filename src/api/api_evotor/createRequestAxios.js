@@ -112,6 +112,7 @@ function selectOption(action) {
       method = 'PUT';
       url = 'stores/' + action.storeUuid + '/products/' + action.body.id;
       body = JSON.stringify(action.body);
+      // console.log(body);
       return { ...api_v2, method, url, body };
 
     case 'post_product_v2':

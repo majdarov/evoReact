@@ -1,29 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { getUUID4 } from '../utillites';
 import s from './BlockMod.module.css';
-import { deleteFromArray } from './utilites';
+import { addAttrChoices } from './utilites';
 
-export function BlockMod(props) {
+export function BlockMod({ attributes, setAttributes }) {
 
-  const [attributes, setAttributes] = useState(props.attributes || []);
   const [attrName, setAttrName] = useState('');
 
   function addAttr(ev) {
-    if (ev.target.parentNode.id === 'add_attr') {
-      let elem = ev.target.parentNode;
-      elem.previousSibling.hidden = false;
-      elem.hidden = true;
-      return;
-    }
-    if (ev.target.tagName !== 'I') return;
-    if (attrName) {
-      let id = getUUID4();
-      setAttributes([...attributes, { id, name: attrName, choices: [] }]);
+    let attr = addAttrChoices(ev, attrName);
+    if (attr) {
+      attr.choices = [];
+      setAttributes([...attributes, attr]);
       setAttrName('');
     }
-    ev.target.parentNode.hidden = true;
-    ev.target.parentNode.nextSibling.hidden = false;
   }
+
 
   return (
     <div className={s['attributes']}>
@@ -52,40 +43,16 @@ export function BlockMod(props) {
 }
 
 function Attr({ attr, setAttributes, attributes }) {
-  const [newAttr, setNewAttr] = useState({ ...attr });
-  const [choices, setChoices] = useState(attr.choices);
   const [choiceName, setChoiceName] = useState('');
 
   function addChoice(ev) {
-    if (ev.target.parentNode.id === 'add_choice') {
-      let elem = ev.target.parentNode;
-      elem.previousSibling.hidden = false;
-      elem.hidden = true;
-      return;
-    }
-    if (ev.target.tagName !== 'I') return;
-    if (choiceName) {
-      let id = getUUID4();
-      setChoices([...choices, { id, name: choiceName }]);
-      deleteFromArray(newAttr.id, attributes);
+    let choice = addAttrChoices(ev, choiceName)
+    if (choice) {
+      attr.choices.push(choice);
+      setAttributes([...attributes]);
       setChoiceName('');
     }
-    ev.target.parentNode.hidden = true;
-    ev.target.parentNode.nextSibling.hidden = false;
   }
-
-  useEffect(() => {
-    setNewAttr({ ...attr, choices });
-  }, [attr, choices])
-
-  const choicesJsx = !!choices.length &&
-    choices.map(choice => {
-      return (
-        <li id={choice.id} key={choice.id} className={s['choice']}>
-          <label>{choice.name}</label>
-        </li>
-      )
-    })
 
   return (
     <>
@@ -93,7 +60,16 @@ function Attr({ attr, setAttributes, attributes }) {
         <label>{attr.name}</label>
         <ul>
           <div className={s['choices-ul']}>
-            {choicesJsx}
+            {
+              !!attr.choices.length &&
+              attr.choices.map(choice => {
+                return (
+                  <li id={choice.id} key={choice.id} className={s['choice']}>
+                    <label>{choice.name}</label>
+                  </li>
+                )
+              })
+            }
           </div>
           <li key='choiceIn' onClick={addChoice} hidden>
             <label htmlFor="Choice">Значение</label>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect } from 'react';
 import s from './Form.module.css';
 import { useState } from "react";
 import Preloader from '../../common/Preloader/Preloader';
@@ -27,6 +27,9 @@ const FormProduct = props => {
   });
   const [treeView, setTreeView] = useState(false);
   const [mod, setMod] = useState(false);
+  const [attributes, setAttributes] = useState((!!props.formData.attributes && [...props.formData.attributes]) || []);
+  const [attrChoices, setAttrChoices] =
+    useState((!!props.formData.attributes_choices && { ...props.formData.attributes_choices }) || null);
   const disabled = !isNewData && !state.allow_edit;
   const setViewForm = props.setViewForm;
   const setFormData = props.setFormData;
@@ -49,7 +52,7 @@ const FormProduct = props => {
     }
   }, [props, state])
 
-  const { attributes, getAttributes } = useModifications(state.parent_id);
+  const { attributesP, getAttributes } = useModifications(state.parent_id);
   useEffect(() => {
     getAttributes({ parentId: state.parent_id })
   }, [getAttributes, state.parent_id])
@@ -64,7 +67,6 @@ const FormProduct = props => {
 
   useEffect(() => { // EventListener('keyup')
     const handler = (ev) => {
-      // console.log(ev.key);
       if (ev.key === 'Escape') {
         cancelClick();
       }
@@ -100,6 +102,7 @@ const FormProduct = props => {
   const formatPrice = price => {
     return isFinite(price) ? Number(price).toFixed(2) : '0.00';
   }
+
   const handleChange = (ev) => {
 
     let elem = ev.target;
@@ -136,6 +139,34 @@ const FormProduct = props => {
       setState({ ...state, [name]: value });
     }
   }
+
+  function toggleAttrSelected() {
+    if (!!attrChoices && Object.keys(attrChoices)?.length) {
+      Object.keys(attrChoices).forEach(key => {
+        let elem = document.getElementById(attrChoices[key]);
+        if (elem) {
+          elem.classList.add(s['selected'])
+        }
+      })
+    }
+  }
+
+  const clickChoice = (ev) => {
+    if (ev.target.tagName !== 'SPAN') return;
+    let elem = ev.target;
+    let attrId = elem.parentNode.id;
+    elem.parentNode.querySelectorAll('span').forEach(el => {
+      el.classList.remove(s['selected']);
+    });
+    elem.classList.toggle(s['selected']);
+    setAttrChoices({ ...attrChoices, [attrId]: elem.id })
+    // console.log('attrId', attrId, elem.id)
+  }
+
+  useEffect(() => {
+    toggleAttrSelected();
+  })
+
   const handleBlur = ev => {
     let name = ev.target.name || ev.currentTarget.name;
     let value = ev.target.value || ev.currentTarget.value;
@@ -174,7 +205,6 @@ const FormProduct = props => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
-    // console.log(state);
     if (state.allow_edit && formChanged() && window.confirm('Save changes')) {
       // if (state.photos.length) setFormPhotos([...state.photos]);
       let body;
@@ -183,11 +213,14 @@ const FormProduct = props => {
           id: state.id,
           parent_id: state.parent_id,
           name: state.name,
-          attributes: (true && state.attributes) || null,
+          attributes: (!!attributes.length && attributes) || null,
           isNewData
         }
       } else {
-        body = { ...state };
+        body = {
+          ...state,
+          attributes_choices: (!!Object.keys(attrChoices).length && attrChoices) || null,
+        };
         delete body.createdAt;
         delete body.updatedAt;
         delete body.allow_edit;
@@ -218,7 +251,7 @@ const FormProduct = props => {
       validateZeroData(body/* , props.formData */);
       if (!isNewData) body.id = state.id;
 
-      // alert(JSON.stringify(body, null, 2));
+      alert(JSON.stringify(body, null, 2));
 
       let i = 0;
       Object.keys(body).forEach(item => i++);
@@ -277,6 +310,7 @@ const FormProduct = props => {
     setIsNewData(true);
     setState({ ...state, id: null, barcodes: [], allow_edit: true });
     let formData = { ...state };
+    delete formData.code;
     delete formData.allow_edit;
     delete formData.bigImg;
     delete formData.currentBarcode;
@@ -384,16 +418,19 @@ const FormProduct = props => {
               <input name="name" value={state.name} placeholder='Input name ...'
                 onChange={handleChange} disabled={disabled} />
             </div>
-            {isGroup &&
+            {isGroup && !attributes.length &&
               <div className={s['add-mod']}>
                 <label htmlFor="add_mod">Модификация</label>
                 <input type="checkbox" name="add_mod" onChange={() => setMod(!mod)} />
               </div>
             }
-            {mod &&
-              <BlockMod />
+            {(mod || !!attributes.length) &&
+              <BlockMod attributes={attributes} setAttributes={setAttributes} />
             }
-            {attributes?.length && !isGroup && <ComponentsProducts.Attributes attributes={attributes} />}
+            {
+              !!attributesP?.length && !isGroup &&
+              <ComponentsProducts.Attributes attributes={attributesP} clickChoice={clickChoice} />
+            }
             {!isGroup &&
               <div className={s.description}>
                 <label>Description:</label>

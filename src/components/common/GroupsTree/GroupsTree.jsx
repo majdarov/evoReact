@@ -2,7 +2,6 @@ import React from 'react';
 import { apiIDB } from '../../../api/apiIDB';
 import Tree from '../Tree/Tree';
 import s from './GroupsTree.module.css';
-import svg from '../../../Assets/icons_svg/folder.svg'
 
 const GroupsTree = props => {
 

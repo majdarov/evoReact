@@ -299,7 +299,44 @@ label {
   padding: 0 .2rem 0 .2rem;
 }
 
+.attr-container {
+  border: 1px solid green;
+  border-radius: .5rem;
+}
+
+.attr-container h4 {
+  margin-top: .5rem;
+}
+
 .attr {
   display: flex;
   justify-content: space-around;
+}
+
+.attr-select {
+  border: 1px solid green;
+  border-radius: .5rem;
+}
+
+.attr-choices {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: .5rem;
+  cursor: default;
+}
+
+.choice {
+  padding: .2rem .5rem;
+  background-color: var(--color-form-icon);
+  border-radius: .5rem;
+  box-shadow: gray 0 0 .5rem;
+}
+
+.choice:hover {
+  background-color: lavender;
+}
+
+.choice.selected {
+  background-color: lawngreen;
 }

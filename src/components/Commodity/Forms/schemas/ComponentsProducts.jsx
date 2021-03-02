@@ -170,22 +170,23 @@ export const ComponentsProducts = {
             </div>
         )
     },
-    Attributes: props => {
-        const attributes = props.attributes;
+    Attributes: ({ attributes, clickChoice }) => {
         return (
             <div className={s['attr-container']}>
                 <label>Аттрибуты</label>
                 <div className={s.attr}>
-                    {attributes?.length &&
+                    {!!attributes?.length &&
                         attributes.map(attr => {
                             return (
                                 <div className={s['attr-select']} key={attr.id}>
-                                    <label htmlFor={attr.name}>{attr.name}</label>
-                                    <select name={attr.name} id={attr.id} >
-                                        {attr.choices.map(item => {
-                                            return <option value={item.id} key={item.id}>{item.name}</option>
-                                        })}
-                                    </select>
+                                    <h4>{attr.name}</h4>
+                                    <div id={attr.id} className={s['attr-choices']} onClick={clickChoice}>
+                                        {
+                                            attr.choices.map(item => {
+                                                return <span id={item.id} key={item.id} className={s['choice']}>{item.name}</span>
+                                            })
+                                        }
+                                    </div>
                                 </div>
                             )
                         })}

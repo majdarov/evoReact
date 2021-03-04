@@ -42,3 +42,8 @@
 .del i {
   color: var(--color-form-icon-warn);
 }
+
+.edit i {
+  color: var(--color-form-icon);
+  cursor: pointer;
+}

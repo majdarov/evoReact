@@ -138,6 +138,7 @@ const Commodity = props => {
             parent_id={props.pid}
             isEmpty={isEmpty}
             deleteProduct={props.deleteProduct}
+            getProductId={props.getProductId}
           />
           <div className={s.list}>
             {/* <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3> */}

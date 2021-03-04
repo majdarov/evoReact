@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import s from './Form.module.css';
 import { useState } from "react";
 import Preloader from '../../common/Preloader/Preloader';
@@ -214,6 +214,7 @@ const FormProduct = props => {
           parent_id: state.parent_id,
           name: state.name,
           attributes: (!!attributes.length && attributes) || null,
+          barcodes: state.barcodes,
           isNewData
         }
       } else {

@@ -41,14 +41,16 @@
 }
 
 .tree li > [class~='fa-edit'] {
-  opacity: 0;
+  /* opacity: 0; */
+  visibility: hidden;
 }
 
 .tree li:hover > [class~='fa-edit'] {
   display: inline-block;
   color: var(--color-form-icon);
   margin-left: .5rem;
-  opacity: 100%;
+  /* opacity: 100%; */
+  visibility: visible;
   transition: ease-in-out .5s .5s;
 }
 

@@ -220,7 +220,7 @@ const FormProduct = props => {
       } else {
         body = {
           ...state,
-          attributes_choices: (!!Object.keys(attrChoices).length && attrChoices) || null,
+          attributes_choices: (attrChoices && !!Object.keys(attrChoices).length && attrChoices) || null,
         };
         delete body.createdAt;
         delete body.updatedAt;
@@ -252,7 +252,7 @@ const FormProduct = props => {
       validateZeroData(body/* , props.formData */);
       if (!isNewData) body.id = state.id;
 
-      alert(JSON.stringify(body, null, 2));
+      // alert(JSON.stringify(body, null, 2));
 
       let i = 0;
       Object.keys(body).forEach(item => i++);

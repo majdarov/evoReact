@@ -14,6 +14,7 @@ const Commodity = props => {
   const { items, setFilterConfig } = useFilteredData(/* props.commodities */);
   const [pid, setPidSearch] = useState(props.pid);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [labelGroup, setLabelGroup] = useState('');
   const setCommodities = props.setCommodities;
   const schema = useMemo(() => {
     let sch = props.schema;
@@ -25,7 +26,7 @@ const Commodity = props => {
         schema.push([key, lbl]);
       }
     });
-    console.log(schema);
+    // console.log(schema);
     return schema;
   }, [props.schema]);
   const [showTreeView, setShowTreeView] = useState(false);
@@ -51,6 +52,7 @@ const Commodity = props => {
 
   useEffect(() => {
     setCommodities(items);
+    setLabelGroup(`Результаты поиска - ${items.length} позиций.`);
   }, [items, setCommodities])
 
   useEffect(() => {
@@ -68,7 +70,6 @@ const Commodity = props => {
 
   const callbackTree = (id, tagName, className) => {
     let parent_id = id ? id : 0;
-    // console.log('className', className)
     if (tagName !== 'SPAN' && className !== 'fa fa-edit') return;
     if (className !== 'fa fa-edit') {
       changePid(parent_id);
@@ -90,6 +91,7 @@ const Commodity = props => {
 
   function returnBeforeSearch() {
     props.getProducts(props.pid);
+    setLabelGroup('');
   }
 
   const formSearchProps = { searchProducts, returnBeforeSearch, parent_id: pid }
@@ -139,6 +141,7 @@ const Commodity = props => {
             isEmpty={isEmpty}
             deleteProduct={props.deleteProduct}
             getProductId={props.getProductId}
+            label={labelGroup}
           />
           <div className={s.list}>
             {/* <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3> */}

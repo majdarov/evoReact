@@ -35,7 +35,7 @@ const GroupsTree = props => {
             }
             <div className={s['g-tree']} onClick={onDivClick}>
                 <div name='parent_id'>
-                    {gLabel}
+                    {props.label || gLabel}
                     {/* <i className='fa fa-share-alt fa-1x'></i> */}
                     <i className='fa fa-bars fa-1x'></i>
                 </div>

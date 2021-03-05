@@ -41,7 +41,7 @@
 }
 
 .tree li > [class~='fa-edit'] {
-  /* opacity: 0; */
+  color: var(--color-form-icon);
   visibility: hidden;
 }
 
@@ -49,7 +49,6 @@
   display: inline-block;
   color: var(--color-form-icon);
   margin-left: .5rem;
-  /* opacity: 100%; */
   visibility: visible;
   transition: ease-in-out .5s .5s;
 }

@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/evoReact/static/css/main.66f0bd3a.chunk.css",
-    "main.js": "/evoReact/static/js/main.e78ab8dd.chunk.js",
-    "main.js.map": "/evoReact/static/js/main.e78ab8dd.chunk.js.map",
+    "main.css": "/evoReact/static/css/main.f29422d3.chunk.css",
+    "main.js": "/evoReact/static/js/main.f6c735fb.chunk.js",
+    "main.js.map": "/evoReact/static/js/main.f6c735fb.chunk.js.map",
     "runtime-main.js": "/evoReact/static/js/runtime-main.5d83a025.js",
     "runtime-main.js.map": "/evoReact/static/js/runtime-main.5d83a025.js.map",
     "static/js/2.f6424288.chunk.js": "/evoReact/static/js/2.f6424288.chunk.js",
     "static/js/2.f6424288.chunk.js.map": "/evoReact/static/js/2.f6424288.chunk.js.map",
     "index.html": "/evoReact/index.html",
-    "static/css/main.66f0bd3a.chunk.css.map": "/evoReact/static/css/main.66f0bd3a.chunk.css.map",
+    "static/css/main.f29422d3.chunk.css.map": "/evoReact/static/css/main.f29422d3.chunk.css.map",
     "static/js/2.f6424288.chunk.js.LICENSE.txt": "/evoReact/static/js/2.f6424288.chunk.js.LICENSE.txt",
     "static/media/App.css": "/evoReact/static/media/ean13.95f4b3ac.ttf",
     "static/media/brands.css": "/evoReact/static/media/fa-brands-400.e1c1a88e.woff",
@@ -20,7 +20,7 @@
   "entrypoints": [
     "static/js/runtime-main.5d83a025.js",
     "static/js/2.f6424288.chunk.js",
-    "static/css/main.66f0bd3a.chunk.css",
-    "static/js/main.e78ab8dd.chunk.js"
+    "static/css/main.f29422d3.chunk.css",
+    "static/js/main.f6c735fb.chunk.js"
   ]
 }

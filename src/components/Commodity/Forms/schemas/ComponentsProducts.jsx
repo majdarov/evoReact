@@ -170,7 +170,7 @@ export const ComponentsProducts = {
             </div>
         )
     },
-    Attributes: ({ attributes, clickChoice }) => {
+    Attributes: ({ attributes, clickChoice, disabled, attributes_choices }) => {
         return (
             <div className={s['attr-container']}>
                 <label>Аттрибуты</label>
@@ -183,7 +183,11 @@ export const ComponentsProducts = {
                                     <div id={attr.id} className={s['attr-choices']} onClick={clickChoice}>
                                         {
                                             attr.choices.map(item => {
-                                                return <span id={item.id} key={item.id} className={s['choice']}>{item.name}</span>
+                                                return (
+                                                    <span id={item.id} key={item.id} className={s['choice']}>
+                                                        {item.name}
+                                                    </span>
+                                                )
                                             })
                                         }
                                     </div>

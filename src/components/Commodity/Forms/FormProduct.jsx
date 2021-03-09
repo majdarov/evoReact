@@ -53,6 +53,7 @@ const FormProduct = props => {
   }, [props, state])
 
   const { attributesP, getAttributes } = useModifications(state.parent_id);
+
   useEffect(() => {
     getAttributes({ parentId: state.parent_id })
   }, [getAttributes, state.parent_id])
@@ -426,11 +427,16 @@ const FormProduct = props => {
               </div>
             }
             {(mod || !!attributes.length) &&
-              <BlockMod attributes={attributes} setAttributes={setAttributes} />
+              <BlockMod attributes={attributes} setAttributes={setAttributes} disabled={disabled} />
             }
             {
               !!attributesP?.length && !isGroup &&
-              <ComponentsProducts.Attributes attributes={attributesP} clickChoice={clickChoice} />
+              <ComponentsProducts.Attributes
+                attributes={attributesP}
+                clickChoice={clickChoice}
+                disabled={disabled}
+                attributes_choices={attrChoices}
+              />
             }
             {!isGroup &&
               <div className={s.description}>

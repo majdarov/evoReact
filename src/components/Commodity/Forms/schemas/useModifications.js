@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { apiIDB } from '../../../../api/apiIDB';
 
 /* const attr = [
@@ -42,17 +42,13 @@ import { apiIDB } from '../../../../api/apiIDB';
 
 export const useModifications = (parentId) => {
   const [attributesP, setAttributes] = useState(null);
-  // console.log('render: ', attributes?.length || null, parentId);
+  // console.log('render: ', attributesP?.length || null, parentId);
 
-  function getAttributes({ parentId }) {
+  const getAttributes = useCallback(({ parentId }) =>  {
     if (parentId === '0' || !parentId) return;
     apiIDB.getGroup(parentId).then((g) => setAttributes(g.attributes || null));
-  }
-
-  useEffect(() => {
-    getAttributes({ parentId });
-    return () => setAttributes(null);
-  }, [parentId]);
+  }, [])
+  getAttributes({ parentId });
 
   return { attributesP, getAttributes };
 };

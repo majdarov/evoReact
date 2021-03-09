@@ -56,7 +56,7 @@ const Node = props => {
           <span className={props.className}>
             {props.children.length}
           </span>}
-          {props.id !== '0' && <i className='fa fa-edit'></i>}
+          {props.viewEdit && props.id !== '0' && <i className='fa fa-edit'></i>}
         {hasChildren && <ul hidden={hidden}>{props.children}</ul>}
       </li>
     </>

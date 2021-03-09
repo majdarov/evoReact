@@ -25,12 +25,18 @@ const GroupsTree = props => {
         <div className={s['tree-container']}>
             {props.treeView &&
                 <div className={s.tree} >
-                    <Tree data={groups} price="Price" treeLabel="Groups" callback={props.callbackTree} />
+                    <Tree
+                        data={groups}
+                        price="Price"
+                        treeLabel="Groups"
+                        callback={props.callbackTree}
+                        viewEdit={props.viewEdit}
+                    />
                 </div>
             }
             {props.parent_id !== '0' &&
                 <div onClick={() => props.getProductId(props.parent_id, true)} className={s.edit}>
-                    <i className='fa fa-edit'></i>
+                    <i className='fa fa-edit fa-1x'></i>
                 </div>
             }
             <div className={s['g-tree']} onClick={onDivClick}>

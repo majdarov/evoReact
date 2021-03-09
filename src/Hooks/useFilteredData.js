@@ -32,15 +32,21 @@ function testBarcodes(barcode) {
 function createRegexp(str = '') {
   let val;
   if (str.slice(0, 3) === 'rgx') {
-    // val = str.replace(/(^rgx.?[/(])|(^rgx.+?\/)|\)$|\/$/gs, '')
-    val = str.replace(/(^rgx\s*[/(])|(^rgx\s*)|\)$|\/$/g, '')//.replace(/\)/, '');
-    console.log('return', val)
-    let regexp = new RegExp(val, 'gi');
-    console.log(regexp);
-    return regexp;
+    // val = str.replace(/(^rgx\s*[/(])|(^rgx\s*)|\)$|\/$/g, ''); //.replace(/\)/, '');
+    val = str.replace(/rgx\s*/, '').replace(/^[(/](.*)[)/]$/, '$1')
+    // console.log('return', val);
+    try {
+      let regexp = new RegExp(val, 'gi');
+      // console.log(regexp);
+      return regexp;
+    } catch (err) {
+      console.log(err.message);
+      alert(err.message);
+      return err;
+    }
   }
   val = str.replace(/[-[.+$*()^\]\\]/g, '\\$&');
-  console.log(val)
+  console.log(val);
   return new RegExp(val, 'gi');
 }
 
@@ -100,7 +106,7 @@ function createSearchRequest(formData) {
             keys = ['barcodes'];
             callback = Array.prototype.includes;
           }
-          let regex = createRegexp(value)
+          let regex = createRegexp(value);
           target = [regex];
           // target = [new RegExp(regex, 'gi')];
           keys = [...keys, 'article_number', 'description'];
@@ -144,7 +150,7 @@ function createSearchRequest(formData) {
           } else {
             if (key.match(/_at/gi)) {
               let dateStart = value[0];
-              let dateEnd = value[0] + (24*3600*1000);
+              let dateEnd = value[0] + 24 * 3600 * 1000;
               callback = (a, b, c) => {
                 return b <= c ? a >= b && a <= c : a >= c && a <= b;
               };
@@ -171,7 +177,7 @@ const useFilteredData = (/* inItems */) => {
 
   const setFilterConfig = (formData) => {
     setSearch(createSearchRequest(formData));
-  }
+  };
 
   useEffect(() => {
     // console.log('Render from useFilteredData!')
@@ -181,6 +187,7 @@ const useFilteredData = (/* inItems */) => {
         setItems(filteredItems);
       });
     }
+    return () => setItems([]);
   }, [search]);
 
   return { items, setFilterConfig, search };

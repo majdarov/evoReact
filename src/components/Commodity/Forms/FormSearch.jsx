@@ -20,6 +20,7 @@ const FormSearch = (props) => {
   const [name, setName] = useState('');
 
   const propsSearchProducts = props.searchProducts;
+  const setIsSearching = props.setIsSearching;
   const searchProducts = useCallback((obj) => {
     propsSearchProducts(obj)
   }, [])
@@ -42,6 +43,13 @@ const FormSearch = (props) => {
   }, [formData, name, period])
 
   useEffect(() => setPid(props.parent_id), [props.parent_id])
+  useEffect(() => {
+    if (Object.keys(formData).length) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
+  }, [formData, setIsSearching])
 
   function changeFormElement(ev) {
     let elem = ev.target;
@@ -83,8 +91,9 @@ const FormSearch = (props) => {
   useEffect(() => {
     if (name.length > 2 && name.slice(0, 3) !== 'rgx') {
       searchProducts(getObj());
+      setIsSearching(true);
     }
-  }, [getObj, name, searchProducts])
+  }, [getObj, name, setIsSearching, searchProducts])
 
   function selectParentID(ev) {
     let chk = ev.target.checked;
@@ -98,6 +107,7 @@ const FormSearch = (props) => {
     ev.preventDefault();
     ev.stopPropagation();
     searchProducts(getObj());
+    setIsSearching(true);
   };
 
   function clearSearch(ev) {

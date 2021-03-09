@@ -35,6 +35,7 @@ const Tree = props => {
         className={s['children-length']}
         classSelected={s.selected}
         callback={true && props.callback}
+        viewEdit={props.viewEdit}
       />
     );
   }

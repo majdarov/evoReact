@@ -15,6 +15,7 @@ const Commodity = props => {
   const [pid, setPidSearch] = useState(props.pid);
   const [isEmpty, setIsEmpty] = useState(false);
   const [labelGroup, setLabelGroup] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
   const setCommodities = props.setCommodities;
   const schema = useMemo(() => {
     let sch = props.schema;
@@ -52,8 +53,10 @@ const Commodity = props => {
 
   useEffect(() => {
     setCommodities(items);
-    setLabelGroup(`Результаты поиска - ${items.length} позиций.`);
-  }, [items, setCommodities])
+    if (isSearching) {
+      setLabelGroup(`Результаты поиска - ${items.length} позиций.`);
+    }
+  }, [items, setCommodities, isSearching])
 
   useEffect(() => {
     if (!props.commodities.length) setIsEmpty(true);
@@ -91,10 +94,11 @@ const Commodity = props => {
 
   function returnBeforeSearch() {
     props.getProducts(props.pid);
+    setIsSearching(false);
     setLabelGroup('');
   }
 
-  const formSearchProps = { searchProducts, returnBeforeSearch, parent_id: pid }
+  const formSearchProps = { searchProducts, returnBeforeSearch, setIsSearching,parent_id: pid }
 
   if (props.error) {
     return <div>Ошибка...{props.error.message}</div>;
@@ -142,6 +146,7 @@ const Commodity = props => {
             deleteProduct={props.deleteProduct}
             getProductId={props.getProductId}
             label={labelGroup}
+            viewEdit={true}
           />
           <div className={s.list}>
             {/* <h3>{groupName}  {groupIsEmpty && <span className={s.del} onClick={delGroup}></span>}</h3> */}

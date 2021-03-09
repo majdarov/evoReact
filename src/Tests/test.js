@@ -1,35 +1,24 @@
-const wrapper = (fn, args) => {
-    let _this = this;
-    if (/* typeof args[0] === 'string' */ fn === match) {
-        _this = args[0];
-        args = args.slice(1);
-    }
-    return fn.call(_this, ...args);
+const log = console.log;
+
+let t = (Date.now() + 16 * 3600 * 1000).toString(2);
+let tLow = t.slice(t.length - 32);
+let tMid = t.slice(0, t.length - 32);
+
+let arr1 = [];
+for (let i = 1; i <= 4; i++) {
+    let str = parseInt(tLow.slice((i - 1) * 8, (i - 1) * 8 + 8), 2).toString(16);
+    if (str.length < 2) str += '0'.repeat(2 - str.length);
+    arr1.push(str);
+}
+let arr2 = [];
+for (let i = 1; i <= 2; i++) {
+    let str = parseInt(tMid.slice((i - 1) * 8, (i - 1) * 8 + 8), 2).toString(16);
+    if (str.length < 2) str += '0'.repeat(2 - str.length);
+    arr2.push(str);
 }
 
-const match = String.prototype.match;
-const equal = (a, b) => a === b;
-
-let wrapMatch = wrapper(match, ['Tree', /tr/gi]);
-let wrapEqual55 = wrapper(equal, [5, 5]);
-let wrapEqual53 = wrapper(equal, [5, 3]);
-
-console.log('match', wrapMatch);
-console.log('equal55', wrapEqual55);
-console.log('equal53', wrapEqual53);
-
-const AND = 'AND';
-const OR = 'OR';
-
-const logic = {
-    [['MATCH']]: String.prototype.match,
-    [AND]: (a, b) => a && b,
-    [OR]: (a, b) => a || b
-}
-
-console.log('true && false', logic[['AND']](true, false));
-console.log('true && 1', logic[AND](1, 1));
-console.log('true || !!0', logic[OR](1, !0));
-console.log(logic[['MATCH']].call('Tree label', /lab/gi));
-
-console.log(logic[['MATCH']] === match);
+log(tLow.toString(2), `length: ${tLow.toString(2).length}`);
+log(tMid.toString(2), `length: ${tMid.toString(2).length}`);
+// log(str, `length: ${str.length}`);
+log(arr1)
+log(arr2)

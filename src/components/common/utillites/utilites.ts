@@ -1,5 +1,5 @@
-export function getUUID4() {
-  function randomMax(max) {
+export function getUUID4(): string {
+  function randomMax(max: number): number {
     return Math.floor(Math.random() * Math.floor(max));
   }
   let arr = [];

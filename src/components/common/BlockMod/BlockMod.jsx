@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import s from './BlockMod.module.css';
-import { addAttrChoices } from './utilites';
+import { addAttrChoices } from './utilites.ts';
 
-export function BlockMod({ attributes, setAttributes }) {
+export function BlockMod({ attributes, setAttributes, disabled }) {
 
   const [attrName, setAttrName] = useState('');
 
@@ -23,7 +23,7 @@ export function BlockMod({ attributes, setAttributes }) {
           {
             !!attributes.length &&
             attributes.map((attr, idx) => {
-              return <Attr key={idx} attr={attr} setAttributes={setAttributes} attributes={attributes} />
+              return <Attr key={idx} attr={attr} setAttributes={setAttributes} attributes={attributes} disabled={disabled}/>
             })
           }
         </div>
@@ -32,7 +32,7 @@ export function BlockMod({ attributes, setAttributes }) {
           <input type="text" name={'Attr'} value={attrName} onChange={(ev) => setAttrName(ev.target.value)} />
           <i className='fa fa-plus'></i>
         </li>
-        <div key='add_attr' id='add_attr' onClick={addAttr} style={{ cursor: 'pointer' }}>
+        <div key='add_attr' id='add_attr' onClick={addAttr} style={{ cursor: 'pointer' }} hidden={disabled}>
           <strong>
             + Attribut
           </strong>
@@ -42,7 +42,7 @@ export function BlockMod({ attributes, setAttributes }) {
   )
 }
 
-function Attr({ attr, setAttributes, attributes }) {
+function Attr({ attr, setAttributes, attributes, disabled }) {
   const [choiceName, setChoiceName] = useState('');
 
   function addChoice(ev) {
@@ -76,7 +76,7 @@ function Attr({ attr, setAttributes, attributes }) {
             <input type="text" name={'Choice'} value={choiceName} onChange={(ev) => setChoiceName(ev.target.value)} />
             <i className='fa fa-plus'></i>
           </li>
-          <li key='add_choice' id='add_choice' onClick={addChoice} style={{ cursor: 'pointer' }}>
+          <li key='add_choice' id='add_choice' onClick={addChoice} style={{ cursor: 'pointer' }} hidden={disabled}>
             <strong>
               + choice
             </strong>

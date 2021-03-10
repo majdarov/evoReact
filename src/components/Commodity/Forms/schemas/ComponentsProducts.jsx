@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import schema from './products.json';
 import { viewBarcode } from '../frmUtilites';
 import Tree from '../../../common/Tree/Tree';
@@ -170,26 +170,54 @@ export const ComponentsProducts = {
             </div>
         )
     },
-    Attributes: ({ attributes, clickChoice }) => {
+    Attributes: ({ attributes, clickChoice, disabled, attributes_choices }) => {
+
+        const toggleAttrSelected = useCallback(() => {
+            if (!!attributes_choices && Object.keys(attributes_choices)?.length) {
+                Object.keys(attributes_choices).forEach(key => {
+                    let elem = document.getElementById(attributes_choices[key]);
+                    if (elem) {
+                        elem.classList.add(s['selected'])
+                    }
+                })
+            }
+        }, [attributes_choices])
+        useEffect(() => {
+            toggleAttrSelected();
+        }, [toggleAttrSelected])
+
         return (
             <div className={s['attr-container']}>
                 <label>Аттрибуты</label>
                 <div className={s.attr}>
                     {!!attributes?.length &&
                         attributes.map(attr => {
-                            return (
-                                <div className={s['attr-select']} key={attr.id}>
-                                    <h4>{attr.name}</h4>
-                                    <div id={attr.id} className={s['attr-choices']} onClick={clickChoice}>
-                                        {
-                                            attr.choices.map(item => {
-                                                return <span id={item.id} key={item.id} className={s['choice']}>{item.name}</span>
-                                            })
-                                        }
+                            if (!disabled || attributes_choices[attr.id]) {
+                                return (
+                                    <div className={s['attr-select']} key={attr.id}>
+                                        <h4>{attr.name}</h4>
+                                        <div id={attr.id} className={s['attr-choices']} onClick={!disabled && clickChoice}>
+                                            {
+                                                attr.choices.map(item => {
+                                                    if (!disabled || attributes_choices[attr.id] === item.id) {
+                                                        return (
+                                                            <span id={item.id} key={item.id} className={s['choice']}>
+                                                                {item.name}
+                                                            </span>
+                                                        )
+                                                    } else {
+                                                        return null;
+                                                    }
+                                                })
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })}
+                                )
+                            } else {
+                                return null;
+                            }
+                        })
+                    }
                 </div>
             </div>
         )

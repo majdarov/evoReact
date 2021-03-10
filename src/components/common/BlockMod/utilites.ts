@@ -1,11 +1,11 @@
 import { getUUID4 } from "../utillites";
 
-export const deleteFromArray = (id, arr) => {
+export const deleteFromArray = (id: string, arr: any[]) => {
   let i = arr.findIndex(item => item.id === id);
   arr.splice(i, 1);
 }
 
-export function addAttrChoices(ev, param) {
+export function addAttrChoices(ev: any, param: string) {
   const parentId = ev.target.parentNode.id;
   if ( parentId === 'add_attr' || parentId === 'add_choice') {
     let elem = ev.target.parentNode;

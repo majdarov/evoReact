@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import s from './Form.module.css';
 import { useState } from "react";
 import Preloader from '../../common/Preloader/Preloader';
-import { ComponentsProducts } from './schemas/ComponentsProducts';
+import { ComponentsProducts } from './schemas/ComponentsProducts.jsx';
 import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequiredData, dateToLocaleString } from './frmUtilites';
 import FormImg from './FormImg';
 import FormModalWrapper from './FormModalWrapper';
@@ -141,17 +141,6 @@ const FormProduct = props => {
     }
   }
 
-  function toggleAttrSelected() {
-    if (!!attrChoices && Object.keys(attrChoices)?.length) {
-      Object.keys(attrChoices).forEach(key => {
-        let elem = document.getElementById(attrChoices[key]);
-        if (elem) {
-          elem.classList.add(s['selected'])
-        }
-      })
-    }
-  }
-
   const clickChoice = (ev) => {
     if (ev.target.tagName !== 'SPAN') return;
     let elem = ev.target;
@@ -159,14 +148,15 @@ const FormProduct = props => {
     elem.parentNode.querySelectorAll('span').forEach(el => {
       el.classList.remove(s['selected']);
     });
-    elem.classList.toggle(s['selected']);
-    setAttrChoices({ ...attrChoices, [attrId]: elem.id })
+    if (!attrChoices[attrId]) {
+      setAttrChoices({ ...attrChoices, [attrId]: elem.id })
+      elem.classList.add(s['selected']);
+    } else {
+      delete attrChoices[attrId];
+      setAttrChoices({ ...attrChoices });
+    }
     // console.log('attrId', attrId, elem.id)
   }
-
-  useEffect(() => {
-    toggleAttrSelected();
-  })
 
   const handleBlur = ev => {
     let name = ev.target.name || ev.currentTarget.name;

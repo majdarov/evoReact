@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import s from './BlockMod.module.css';
-import { addAttrChoices } from './utilites';
+import { addAttrChoices } from './utilites.ts';
 
 export function BlockMod({ attributes, setAttributes, disabled }) {
 

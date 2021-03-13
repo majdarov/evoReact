@@ -7,7 +7,7 @@ import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequ
 import FormImg from './FormImg';
 import FormModalWrapper from './FormModalWrapper';
 import { useModifications } from './schemas/useModifications';
-import { BlockMod } from '../../common/BlockMod/BlockMod';
+import { BlockMod } from '../../common/BlockMod';
 
 const FormProduct = props => {
 

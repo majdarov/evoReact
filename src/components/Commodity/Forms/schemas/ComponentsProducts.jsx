@@ -196,7 +196,8 @@ export const ComponentsProducts = {
                                 return (
                                     <div className={s['attr-select']} key={attr.id}>
                                         <h4>{attr.name}</h4>
-                                        <div id={attr.id} className={s['attr-choices']} onClick={!disabled && clickChoice}>
+                                        <div id={attr.id} className={s['attr-choices']}
+                                            onClick={!disabled ? clickChoice : undefined}>
                                             {
                                                 attr.choices.map(item => {
                                                     if (!disabled || attributes_choices[attr.id] === item.id) {

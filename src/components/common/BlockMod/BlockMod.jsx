@@ -23,7 +23,7 @@ export function BlockMod({ attributes, setAttributes, disabled }) {
           {
             !!attributes.length &&
             attributes.map((attr, idx) => {
-              return <Attr key={idx} attr={attr} setAttributes={setAttributes} attributes={attributes} disabled={disabled}/>
+              return <Attr key={idx} attr={attr} setAttributes={setAttributes} attributes={attributes} disabled={disabled} />
             })
           }
         </div>
@@ -54,6 +54,28 @@ function Attr({ attr, setAttributes, attributes, disabled }) {
     }
   }
 
+  // TODO
+  // function editChoice(editId) {
+  //   console.log('edit:', editId, attr.name);
+  // }
+
+  // function deleteChoice(delId) {
+  //   console.log('delete:', delId, attr.name);
+  //   attr.choices.splice(attr.choices.findIndex(({ id }) => id === delId), 1);
+  //   setAttributes([...attributes]);
+  // }
+
+  // function clickEditBlock({ target }) {
+  //   let id = target.closest('li').id;
+  //   if (target.className.match(/fa-edit/)) {
+  //     editChoice(id);
+  //   } else if (target.className.match(/fa-trash/)) {
+  //     deleteChoice(id);
+  //   } else {
+  //     return;
+  //   }
+  // }
+
   return (
     <>
       <li key={attr.id} className={s['attribut']} id={attr.id}>
@@ -66,16 +88,26 @@ function Attr({ attr, setAttributes, attributes, disabled }) {
                 return (
                   <li id={choice.id} key={choice.id} className={s['choice']}>
                     <label>{choice.name}</label>
+                    {/* <div className={s['edit-block']} onClick={clickEditBlock}>
+                      <i className='fa fa-edit'></i>
+                      <i className='fa fa-trash'></i>
+                    </div> */}
                   </li>
                 )
               })
             }
           </div>
-          <li key='choiceIn' onClick={addChoice} hidden>
+          {/* <li key='choiceIn' onClick={addChoice} hidden>
             <label htmlFor="Choice">Значение</label>
             <input type="text" name={'Choice'} value={choiceName} onChange={(ev) => setChoiceName(ev.target.value)} />
             <i className='fa fa-plus'></i>
-          </li>
+          </li> */}
+          <FieldInput
+            value={choiceName}
+            onChange={(ev) => setChoiceName(ev.target.value)}
+            onClick={addChoice}
+            className='fa fa-plus'
+          />
           <li key='add_choice' id='add_choice' onClick={addChoice} style={{ cursor: 'pointer' }} hidden={disabled}>
             <strong>
               + choice
@@ -84,5 +116,15 @@ function Attr({ attr, setAttributes, attributes, disabled }) {
         </ul>
       </li>
     </>
+  )
+}
+
+function FieldInput({ value, onChange, onClick, className }) {
+  return (
+    <li key='choiceIn' onClick={onClick} hidden>
+      <label htmlFor="Choice">Значение</label>
+      <input type="text" name={'Choice'} value={value} onChange={onChange} />
+      <i className={className}></i>
+    </li>
   )
 }

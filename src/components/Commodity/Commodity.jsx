@@ -110,7 +110,7 @@ const Commodity = props => {
         <div className={s.head}>
           <div className={s.buttons}>
             <span className={`${s['button-add']} fa`} onClick={newData}>
-              +Товар
+              + Товар/Группу
             <i className='fa fa-file'></i>
             </span>
           </div>

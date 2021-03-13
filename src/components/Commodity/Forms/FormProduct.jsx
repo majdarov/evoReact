@@ -29,7 +29,7 @@ const FormProduct = props => {
   const [mod, setMod] = useState(false);
   const [attributes, setAttributes] = useState((!!props.formData.attributes && [...props.formData.attributes]) || []);
   const [attrChoices, setAttrChoices] =
-    useState((!!props.formData.attributes_choices && { ...props.formData.attributes_choices }) || null);
+    useState((!!props.formData.attributes_choices && { ...props.formData.attributes_choices }) || []);
   const disabled = !isNewData && !state.allow_edit;
   const setViewForm = props.setViewForm;
   const setFormData = props.setFormData;

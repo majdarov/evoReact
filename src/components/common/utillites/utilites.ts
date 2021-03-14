@@ -1,7 +1,9 @@
+export function randomMax(max: number): number {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 export function getUUID4(): string {
-  function randomMax(max: number): number {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
+
   let arr = [];
   while (arr.length < 16) {
     let byte = randomMax(16).toString(16).concat(randomMax(16).toString(16));

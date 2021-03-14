@@ -7,10 +7,10 @@ export function FieldInput(props: FieldInputProps) {
   const liHidden = hidden === undefined ? true : hidden;
 
   return (
-    <li key={name} onClick={onClick} hidden={liHidden}>
+    <li key={name}  hidden={liHidden}>
       <label htmlFor={name}>Значение</label>
       <input type="text" name={name} value={value} onChange={onChange} />
-      <i className={className}></i>
+      <i className={className} onClick={onClick}></i>
     </li>
   )
 }

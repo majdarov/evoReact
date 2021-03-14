@@ -2,17 +2,16 @@ import { ChangeEventHandler, MouseEventHandler } from "react";
 
 export interface BlockModProps {
   attributes: Attribut[];
-  setAttributes: Function;
+  setAttributes: (attributes: Attribut[]) => void;
   disabled: boolean;
 }
-
-export interface Attribut {
+export type Attribut = {
   id: string;
   name: string;
   choices?: Choice[];
 }
 
-export interface Choice {
+export type Choice = {
   id: string;
   name: string;
 }

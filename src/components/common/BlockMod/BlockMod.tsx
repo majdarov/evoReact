@@ -1,28 +1,29 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { useState } from 'react';
 import s from './BlockMod.module.css';
 import { BlockModProps, Attribut } from './BlockModTypes';
 import { Attr } from './components/Attr';
 import { FieldInput } from './components/FieldInput';
-import { addAttrChoices } from './utilites';
+import { getAttrChoice } from './utilites';
 
 export function BlockMod(props: BlockModProps) {
 
-  /**
-   * @property attributes - []
-   * @function setAttributes - formProduct.formData.attributes -> []
-   * @property disabled = formProduct.allow_edit ? false : true)
-   */
   let { attributes, setAttributes, disabled } = props;
 
   const [attrName, setAttrName] = useState('');
+  const [inputHidden, setInputHidden] = useState(true);
 
-  function addAttr(ev: MouseEvent) {
-    let attr: Attribut | undefined = addAttrChoices(ev, attrName);
+  function addAttr() {
+    let attr: Attribut | undefined = getAttrChoice(attrName);
     if (attr) {
       attr.choices = [];
       setAttributes([...attributes, attr]);
       setAttrName('');
     }
+    setInputHidden(true);
+  }
+
+  function toggleHidden() {
+    setInputHidden(!inputHidden);
   }
 
   return (
@@ -31,24 +32,21 @@ export function BlockMod(props: BlockModProps) {
         <div className={s['attributes-ul']}>
           {
             !!attributes.length &&
-            attributes.map((attr, idx) => {
+            attributes.map((attr: Attribut, idx) => {
               return <Attr key={idx} attr={attr} setAttributes={setAttributes} attributes={attributes} disabled={disabled} />
             })
           }
         </div>
-        {/* <li key={'attrIn'} onClick={addAttr} hidden>
-          <label htmlFor="Attr">Атрибут</label>
-          <input type="text" name={'Attr'} value={attrName} onChange={(ev) => setAttrName(ev.target.value)} />
-          <i className='fa fa-plus'></i>
-        </li> */}
         <FieldInput
           name='AttrIn'
           value={attrName}
           className='fa fa-plus'
           onClick={addAttr}
           onChange={(ev: any) => setAttrName(ev.target.value)}
+          hidden={inputHidden}
         />
-        <div key='add_attr' id='add_attr' onClick={addAttr} style={{ cursor: 'pointer' }} hidden={disabled}>
+        <div key='add_attr' id='add_attr' onClick={toggleHidden}
+          style={{ cursor: 'pointer' }} hidden={disabled || !inputHidden}>
           <strong>
             + Attribut
           </strong>

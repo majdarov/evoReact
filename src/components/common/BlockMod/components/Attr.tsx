@@ -1,16 +1,11 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { useState } from 'react';
 import s from '../BlockMod.module.css';
 import { Attribut, BlockModProps, Choice } from "../BlockModTypes";
-import { addAttrChoices, deleteFromArray } from '../utilites';
+import { deleteFromArray, getAttrChoice } from '../utilites';
+import { ChoiceElement } from './Choice';
 import { FieldInput } from './FieldInput';
 
-/**
- * @property AttrProps - аттрибут/модификация группы
- */
-
-interface AttrProps extends BlockModProps {
-  attr: Attribut;
-}
+type AttrProps = BlockModProps & { attr: Attribut };
 
 export function Attr(props: AttrProps) {
 
@@ -20,13 +15,18 @@ export function Attr(props: AttrProps) {
   const [inputHidden, setInputHidden] = useState(true);
   const [choiceId, setChoiceId] = useState('');
 
-  function addChoice(ev: MouseEvent) {
-    let choice: Choice | undefined = addAttrChoices(ev, choiceName)
+  function addChoice() {
+    let choice = getAttrChoice(choiceName);
     if (choice) {
       attr.choices?.push(choice);
       setAttributes([...attributes]);
       setChoiceName('');
     }
+    setInputHidden(true);
+  }
+
+  function toggleHidden() {
+    setInputHidden(!inputHidden);
   }
 
   function renameChoice(ev: any) {
@@ -60,24 +60,27 @@ export function Attr(props: AttrProps) {
               !!attr.choices?.length &&
               attr.choices.map((choice: Choice) => {
                 return (
-                  <li id={choice.id} key={choice.id} className={s['choice']}
-                    onClick={clickChoiceEdit} hidden={choice.id === choiceId}>
-                    <label>{choice.name}</label>
-                    {!disabled && <i className='fa fa-edit'></i>}
-                  </li>
+                  <ChoiceElement
+                    id={choice.id}
+                    callback={clickChoiceEdit}
+                    choiceId={choiceId}
+                    name={choice.name}
+                    disabled={disabled}
+                  />
                 )
               })
             }
           </div>
           <FieldInput
-            hidden={inputHidden}
             name='ChoiceIn'
             value={choiceName}
             onChange={(ev: any) => setChoiceName(ev.target.value)}
             onClick={!!choiceId ? renameChoice : addChoice}
             className='fa fa-plus'
+            hidden={inputHidden}
           />
-          <li key='add_choice' id='add_choice' onClick={addChoice} style={{ cursor: 'pointer' }} hidden={disabled || !inputHidden}>
+          <li key='add_choice' id='add_choice' onClick={toggleHidden}
+            style={{ cursor: 'pointer' }} hidden={disabled || !inputHidden}>
             <strong>
               + choice
             </strong>

@@ -3,28 +3,15 @@ import s from './BlockMod.module.css';
 import { BlockModProps, Attribut } from './BlockModTypes';
 import { Attr } from './components/Attr';
 import { FieldInput } from './components/FieldInput';
-import { getAttrChoice } from './utilites';
+import { useFunctions } from './Hooks/useFunctions';
 
 export function BlockMod(props: BlockModProps) {
 
   let { attributes, setAttributes, disabled } = props;
 
+  let { addParam, toggleHidden, inputHidden } = useFunctions(attributes, setAttributes);
+
   const [attrName, setAttrName] = useState('');
-  const [inputHidden, setInputHidden] = useState(true);
-
-  function addAttr() {
-    let attr: Attribut | undefined = getAttrChoice(attrName);
-    if (attr) {
-      attr.choices = [];
-      setAttributes([...attributes, attr]);
-      setAttrName('');
-    }
-    setInputHidden(true);
-  }
-
-  function toggleHidden() {
-    setInputHidden(!inputHidden);
-  }
 
   return (
     <div className={s['attributes']}>
@@ -33,7 +20,7 @@ export function BlockMod(props: BlockModProps) {
           {
             !!attributes.length &&
             attributes.map((attr: Attribut, idx) => {
-              return <Attr key={idx} attr={attr} setAttributes={setAttributes} attributes={attributes} disabled={disabled} />
+              return <Attr key={attr.id} attr={attr} {...props} />
             })
           }
         </div>
@@ -41,7 +28,7 @@ export function BlockMod(props: BlockModProps) {
           name='AttrIn'
           value={attrName}
           className='fa fa-plus'
-          onClick={addAttr}
+          onClick={() => addParam('attr', attrName)}
           onChange={(ev: any) => setAttrName(ev.target.value)}
           hidden={inputHidden}
         />

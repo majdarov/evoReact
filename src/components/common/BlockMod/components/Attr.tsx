@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import s from '../BlockMod.module.css';
 import { Attribut, BlockModProps, Choice } from "../BlockModTypes";
+import { useFunctions } from '../Hooks/useFunctions';
 import { deleteFromArray, getAttrChoice } from '../utilites';
 import { ChoiceElement } from './Choice';
 import { FieldInput } from './FieldInput';
@@ -12,22 +13,9 @@ export function Attr(props: AttrProps) {
   let { attr, setAttributes, attributes, disabled } = props;
 
   const [choiceName, setChoiceName] = useState('');
-  const [inputHidden, setInputHidden] = useState(true);
   const [choiceId, setChoiceId] = useState('');
 
-  function addChoice() {
-    let choice = getAttrChoice(choiceName);
-    if (choice) {
-      attr.choices?.push(choice);
-      setAttributes([...attributes]);
-      setChoiceName('');
-    }
-    setInputHidden(true);
-  }
-
-  function toggleHidden() {
-    setInputHidden(!inputHidden);
-  }
+  let { addParam, toggleHidden, inputHidden } = useFunctions(attributes, setAttributes, attr);
 
   function renameChoice(ev: any) {
     if (ev.target.tagName === 'I') {
@@ -37,22 +25,24 @@ export function Attr(props: AttrProps) {
       }
       setChoiceId('');
       setChoiceName('');
-      setInputHidden(true);
+      toggleHidden();
       setAttributes([...attributes]);
     }
   }
 
-  function clickChoiceEdit(ev: any) {
-    if (ev.target.tagName === 'I') {
-      let _id = ev.target.closest('li').id;
-      setChoiceId(_id);
-      setInputHidden(false);
+  function clickChoiceEdit(ev: any, id: string, name: string) {
+    let elem = ev.target;
+    console.log(ev)
+    if (elem?.tagName === 'I') {
+      setChoiceId(id);
+      setChoiceName(name);
+      toggleHidden();
     }
   }
 
   return (
     <>
-      <li key={attr.id} className={s['attribut']} id={attr.id}>
+      <li className={s['attribut']} id={attr.id}>
         <label>{attr.name}</label>
         <ul>
           <div className={s['choices-ul']}>
@@ -61,6 +51,7 @@ export function Attr(props: AttrProps) {
               attr.choices.map((choice: Choice) => {
                 return (
                   <ChoiceElement
+                    key={choice.id}
                     id={choice.id}
                     callback={clickChoiceEdit}
                     choiceId={choiceId}
@@ -75,7 +66,7 @@ export function Attr(props: AttrProps) {
             name='ChoiceIn'
             value={choiceName}
             onChange={(ev: any) => setChoiceName(ev.target.value)}
-            onClick={!!choiceId ? renameChoice : addChoice}
+            onClick={!!choiceId ? renameChoice : () => addParam('choice', choiceName)}
             className='fa fa-plus'
             hidden={inputHidden}
           />

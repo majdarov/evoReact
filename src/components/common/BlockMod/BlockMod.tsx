@@ -1,43 +1,47 @@
-import React, { useState } from 'react';
 import s from './BlockMod.module.css';
 import { BlockModProps, Attribut } from './BlockModTypes';
-import { Attr } from './components/Attr';
-import { FieldInput } from './components/FieldInput';
-import { useFunctions } from './Hooks/useFunctions';
+import { AddElement } from './components/AddElement';
+import { FormChangeName } from './components/FormChangeName';
+import { LiElement } from './components/LiElement';
+import { useAttributes } from './Hooks/useAttributes';
 
 export function BlockMod(props: BlockModProps) {
 
   let { attributes, setAttributes, disabled } = props;
-
-  let { addParam, toggleHidden, inputHidden } = useFunctions(attributes, setAttributes);
-
-  const [attrName, setAttrName] = useState('');
+  let { onBlocModClick, handleClick, changeParamName, paramName, action, inputHidden } = useAttributes(attributes, setAttributes);
 
   return (
-    <div className={s['attributes']}>
-      <ul>
-        <div className={s['attributes-ul']}>
-          {
-            !!attributes.length &&
-            attributes.map((attr: Attribut, idx) => {
-              return <Attr key={attr.id} attr={attr} {...props} />
-            })
-          }
-        </div>
-        <FieldInput
-          name='AttrIn'
-          value={attrName}
-          className='fa fa-plus'
-          onClick={() => addParam('attr', attrName)}
-          onChange={(ev: any) => setAttrName(ev.target.value)}
-          hidden={inputHidden}
-        />
-        <div key='add_attr' id='add_attr' onClick={toggleHidden}
-          style={{ cursor: 'pointer' }} hidden={disabled || !inputHidden}>
-          <strong>
-            + Attribut
-          </strong>
-        </div>
+    <div className={s['attributes']} onClick={onBlocModClick}>
+      {!inputHidden &&
+        <FormChangeName
+          label={action.split('-')[1] === 'attr' ? 'Аттрибут' : 'Значение'}
+          value={paramName}
+          onChange={changeParamName}
+          handleClick={handleClick}
+        />}
+      <ul className={s['attributes-ul']}>
+        {
+          !!attributes.length &&
+          attributes.map((attr: Attribut, idx) => {
+            return <LiElement
+              key={attr.id}
+              typeLi='attr'
+              inputHidden={inputHidden}
+              id={attr.id}
+              name={attr.name}
+              className={s['attribut']}
+              disabled={disabled}
+              children={attr.choices}
+            />
+          })
+        }
+        {(!disabled && inputHidden) &&
+          <AddElement
+            key='add-attr'
+            action='add'
+            typeElem='attr'
+            label='Аттрибут'
+          />}
       </ul>
     </div >
   )

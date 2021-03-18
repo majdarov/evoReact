@@ -1,4 +1,3 @@
-import React from 'react';
 import s from '../FormSearch.module.css';
 
 const ComponentsSearch = {

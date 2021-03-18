@@ -1,24 +1,40 @@
-.attributes-ul,
-.choices-ul {
+.attributes-ul {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
+.choices-ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
 .attribut {
-  border: 1px solid green;
+  /* border: 1px solid green; */
+  border-radius: .5rem;
+  box-shadow: grey 0 0 .5rem;
 }
 
 .choice > label {
   background-color: var(--forms-background-color);
 }
 
-.choice:hover > i {
-  /* background-color: lavender; */
+.choice:hover > i[class~='fa-edit'],
+.attribut:hover > i[class~='fa-edit'] {
   visibility: visible;
   transition: ease-in-out .5s .5s;
 }
 
-.choice > i {
+.choice > i[class~='fa-edit'],
+.attribut > i[class~='fa-edit'] {
   visibility: hidden;
+}
+
+.form-change-name {
+  position: absolute;
+  z-index: 9999;
+  background-color: whitesmoke;
+  border-radius: .5rem;
+  box-shadow: grey 0 0 1rem;
 }

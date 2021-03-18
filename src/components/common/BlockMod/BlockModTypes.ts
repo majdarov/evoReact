@@ -24,3 +24,10 @@ export interface FieldInputProps {
   onClick: MouseEventHandler;
   hidden?: boolean;
 }
+
+export type FormChangeNameProps = {
+  value: string;
+  label: string
+  onChange: (ev: any) => void;
+  handleClick: MouseEventHandler;
+}

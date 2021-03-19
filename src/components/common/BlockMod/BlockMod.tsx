@@ -18,7 +18,8 @@ export function BlockMod(props: BlockModProps) {
           value={paramName}
           onChange={changeParamName}
           handleClick={handleClick}
-        />}
+        />
+      }
       <ul className={s['attributes-ul']}>
         {
           !!attributes.length &&

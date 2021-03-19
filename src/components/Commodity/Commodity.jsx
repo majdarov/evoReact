@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import s from "./Commodity.module.css";
 import Preloader from "../common/Preloader/Preloader";
-import FormModalWrapper from "./Forms/FormModalWrapper";
 import FormProduct from "./Forms/FormProduct";
 import Table from "../common/Table";
 import { ProgressBar } from "../common/ProgressBar";
 import FormSearch from "./Forms/FormSearch";
 import useFilteredData from "../../Hooks/useFilteredData";
 import GroupsTree from "../common/GroupsTree";
+import { Modal } from "../common/Modal/Modal";
+import FormModalWrapper from "../common/Modal/FormModalWrapper";
 
 const Commodity = props => {
 
@@ -98,7 +99,7 @@ const Commodity = props => {
     setLabelGroup('');
   }
 
-  const formSearchProps = { searchProducts, returnBeforeSearch, setIsSearching,parent_id: pid }
+  const formSearchProps = { searchProducts, returnBeforeSearch, setIsSearching, parent_id: pid }
 
   if (props.error) {
     return <div>Ошибка...{props.error.message}</div>;
@@ -117,23 +118,21 @@ const Commodity = props => {
           <FormSearch {...formSearchProps} />
         </div>
         {props.viewForm &&
-          <FormModalWrapper
-            form={
-              <FormProduct
-                groups={props.groups}
-                formData={props.formData}
-                formPost={props.formPost}
-                formError={props.formError}
-                setViewForm={props.setViewForm}
-                setFormData={props.setFormData}
-                toggleFormPost={props.toggleFormPost}
-                postFormData={props.postFormData}
-                setFormError={props.setFormError}
-                pid={props.pid}
-                isGroup={props.isGroup}
-              />
-            }
-          />
+          <FormModalWrapper>
+            <FormProduct
+              groups={props.groups}
+              formData={props.formData}
+              formPost={props.formPost}
+              formError={props.formError}
+              setViewForm={props.setViewForm}
+              setFormData={props.setFormData}
+              toggleFormPost={props.toggleFormPost}
+              postFormData={props.postFormData}
+              setFormError={props.setFormError}
+              pid={props.pid}
+              isGroup={props.isGroup}
+            />
+          </FormModalWrapper>
         }
         <div className={s.container}>
           <GroupsTree

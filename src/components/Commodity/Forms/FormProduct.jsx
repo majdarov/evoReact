@@ -5,7 +5,7 @@ import Preloader from '../../common/Preloader/Preloader';
 import { ComponentsProducts } from './schemas/ComponentsProducts.jsx';
 import { setNewCode, newBarcode, validateBarcode, validateZeroData, validateRequiredData, dateToLocaleString } from './frmUtilites';
 import FormImg from './FormImg';
-import FormModalWrapper from './FormModalWrapper';
+import FormModalWrapper from '../../common/Modal/FormModalWrapper';
 import { useModifications } from './schemas/useModifications';
 import { BlockMod } from '../../common/BlockMod';
 

@@ -14,8 +14,10 @@ export function useAttributes(attributes, setAttributes) {
   const [action, setAction] = useState('')
   const [paramName, setParamName] = useState('');
 
+  /**@param {InputEvent} ev*/
   function changeParamName(ev) {
-    setParamName(ev.target.value);
+    // @ts-ignore
+    setParamName(ev.target.value || '');
   }
 
   /**@type {import('react').MouseEventHandler}*/
@@ -67,7 +69,7 @@ export function useAttributes(attributes, setAttributes) {
       default:
         break;
     }
-    console.log(action, `id: ${id}`, `attrId: ${attrId}`);
+    // console.log(action, `id: ${id}`, `attrId: ${attrId}`);
     toggleHidden();
   }
 

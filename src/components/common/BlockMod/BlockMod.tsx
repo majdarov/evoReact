@@ -1,3 +1,4 @@
+import { Modal } from '../Modal/Modal';
 import s from './BlockMod.module.css';
 import { BlockModProps, Attribut } from './BlockModTypes';
 import { AddElement } from './components/AddElement';
@@ -13,12 +14,14 @@ export function BlockMod(props: BlockModProps) {
   return (
     <div className={s['attributes']} onClick={onBlocModClick}>
       {!inputHidden &&
-        <FormChangeName
-          label={action.split('-')[1] === 'attr' ? 'Аттрибут' : 'Значение'}
-          value={paramName}
-          onChange={changeParamName}
-          handleClick={handleClick}
-        />
+        <Modal>
+          <FormChangeName
+            label={action.split('-')[1] === 'attr' ? 'Аттрибут' : 'Значение'}
+            value={paramName}
+            onChange={changeParamName}
+            handleClick={handleClick}
+          />
+        </Modal>
       }
       <ul className={s['attributes-ul']}>
         {

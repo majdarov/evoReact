@@ -118,7 +118,8 @@ const Commodity = props => {
           <FormSearch {...formSearchProps} />
         </div>
         {props.viewForm &&
-          <FormModalWrapper>
+          // <FormModalWrapper>
+          <Modal>
             <FormProduct
               groups={props.groups}
               formData={props.formData}
@@ -132,7 +133,8 @@ const Commodity = props => {
               pid={props.pid}
               isGroup={props.isGroup}
             />
-          </FormModalWrapper>
+          </Modal>
+          // </FormModalWrapper>
         }
         <div className={s.container}>
           <GroupsTree

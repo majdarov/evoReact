@@ -14,9 +14,8 @@ export function useAttributes(attributes, setAttributes) {
   const [action, setAction] = useState('')
   const [paramName, setParamName] = useState('');
 
-  /**@param {InputEvent} ev*/
+  /**@type {import('react').EventHandler<ev>}*/
   function changeParamName(ev) {
-    // @ts-ignore
     setParamName(ev.target.value || '');
   }
 
@@ -37,6 +36,7 @@ export function useAttributes(attributes, setAttributes) {
     toggleHidden();
   }
 
+  /**@type {import('react').EventHandler<ev>} */
   function onBlocModClick(ev) {
     if (ev.target.tagName !== 'I' && ev.target.tagName !== 'STRONG') return;
     let action = ev.target.dataset.action;

@@ -1,18 +1,25 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import FormModalWrapper from './FormModalWrapper';
+import style from './Modal.module.css';
 
 const modalRoot = document.getElementById('modal-root');
 
 export function Modal(props) {
-  const elemDiv = document.createElement('div');
-  const children = <FormModalWrapper>{props.children}</FormModalWrapper>
+
+  const [children, setChildren] = useState(null);
 
   useEffect(() => {
-    modalRoot.appendChild(elemDiv);
-    return () => {
-      modalRoot.removeChild(elemDiv)
-    };
-  })
-  return ReactDOM.createPortal(children, elemDiv)
+    const modalRootChildCount = modalRoot.childElementCount;
+    const zIndex = 9000 + modalRootChildCount + 1
+    const child =
+      <>
+        <div className={style['div-cover']} style={{zIndex}}></div>
+        <div className={style['div-container']} style={{zIndex: zIndex + 1}}>{props.children}</div>
+      </>
+    setChildren(child);
+    document.body.style.overflow = 'hidden';
+    return () => setChildren(null);
+  }, [props.children])
+
+  return ReactDOM.createPortal(children, modalRoot)
 }

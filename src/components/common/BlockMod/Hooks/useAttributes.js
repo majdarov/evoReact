@@ -19,7 +19,7 @@ export function useAttributes(attributes, setAttributes) {
     setParamName(ev.target.value || '');
   }
 
-  /**@type {import('react').MouseEventHandler}*/
+  /**@type {import('react').MouseEventHandler<ev>}*/
   function handleClick(ev) {
     ev.stopPropagation();
     let key = action.split('-')[0];
@@ -136,5 +136,5 @@ export function useAttributes(attributes, setAttributes) {
     setInputHidden(!inputHidden);
   }
 
-  return { onBlocModClick, handleClick, changeParamName, paramName, action, inputHidden };
+  return { onBlocModClick, handleClick, changeParamName, nameOfAttr: getAttribut(attrId)?.name , paramName, action, inputHidden };
 }

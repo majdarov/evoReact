@@ -27,7 +27,8 @@ export interface FieldInputProps {
 
 export type FormChangeNameProps = {
   value: string;
-  label: string
+  label: string;
+  nameOfAttr?: string;
   onChange: (ev: any) => void;
   handleClick: MouseEventHandler;
 }

@@ -32,9 +32,8 @@
 }
 
 .form-change-name {
-  position: absolute;
+  /* position: fixed; */
   top: calc(100vh/2);
-  left: calc(100vw/2);
   background-color: whitesmoke;
   border-radius: .5rem;
   box-shadow: grey 0 0 1rem;

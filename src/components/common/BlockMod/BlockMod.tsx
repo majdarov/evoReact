@@ -9,13 +9,14 @@ import { useAttributes } from './Hooks/useAttributes';
 export function BlockMod(props: BlockModProps) {
 
   let { attributes, setAttributes, disabled } = props;
-  let { onBlocModClick, handleClick, changeParamName, paramName, action, inputHidden } = useAttributes(attributes, setAttributes);
+  let { onBlocModClick, handleClick, changeParamName, nameOfAttr, paramName, action, inputHidden } = useAttributes(attributes, setAttributes);
 
   return (
     <div className={s['attributes']} onClick={onBlocModClick}>
       {!inputHidden &&
         <Modal>
           <FormChangeName
+            nameOfAttr={nameOfAttr || ''}
             label={action.split('-')[1] === 'attr' ? 'Аттрибут' : 'Значение'}
             value={paramName}
             onChange={changeParamName}

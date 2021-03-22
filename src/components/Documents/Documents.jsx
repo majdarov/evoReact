@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { apiForIdb } from '../../api/api';
-import { compose } from '../../api/apiUtils';
+// import { compose } from '../../api/apiUtils';
 import ProgressBar from '../common/ProgressBar/ProgressBar';
-import { blobFromObj, blobToUrl } from '../../api/apiFile'
+// import { blobFromObj, blobToUrl } from '../../api/apiFile'
 
 function dateToString(date = new Date()) {
     if (!date) return;
@@ -122,7 +122,7 @@ const Documents = (props) => {
             doc = await apiForIdb.getDocuments(null, null, id);
         }
         console.log(doc);
-        compose(blobToUrl, blobFromObj)({ obj: doc, fileName: docType });
+        // compose(blobToUrl, blobFromObj)({ obj: doc, fileName: docType });
     }
 
     function changeType(e) {

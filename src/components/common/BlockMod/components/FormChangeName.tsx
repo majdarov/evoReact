@@ -1,3 +1,4 @@
+import React from 'react';
 import { FormChangeNameProps } from "../BlockModTypes";
 import s from '../BlockMod.module.css';
 

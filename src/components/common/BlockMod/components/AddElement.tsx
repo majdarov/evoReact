@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function AddElement(props: {
   action: string;
   typeElem: string;

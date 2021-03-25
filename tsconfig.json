@@ -6,7 +6,7 @@
     "build"
   ],
   "include": [
-    "src/**/*",
+    "src/**/*"
   ],
   "compilerOptions": {
     "target": "es5",
@@ -32,5 +32,5 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noImplicitAny": true
-  },
+  }
 }

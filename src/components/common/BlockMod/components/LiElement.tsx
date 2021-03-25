@@ -1,3 +1,4 @@
+import React from 'react';
 import { Attribut, Choice } from '../BlockModTypes';
 import s from '../BlockMod.module.css';
 import { AddElement } from './AddElement';
@@ -9,16 +10,16 @@ export function LiElement(props: {
   name: string;
   className: string;
   disabled: boolean;
-  children?: Choice[] | Attribut[] | null;
+  children?: /* Choice[] | Attribut[] | null */ any;
 }) {
 
   const { id, name, className, disabled, children, typeLi, inputHidden } = props;
 
   const createSubLi = () => {
     if (children?.length) {
-      let map = children.map((item: Attribut) => {
+      let map = children.map((item: any) => {
         let choices, clsN;
-        if (item.choices) {
+        if (!item.choices) {
           choices = item.choices
           clsN = s['choice']
         } else {

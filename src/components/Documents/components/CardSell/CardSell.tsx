@@ -1,3 +1,4 @@
+import React from 'react';
 import s from './CardSell.module.css';
 
 export function CardSell(props: any) {

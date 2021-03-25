@@ -55,7 +55,7 @@ const Wrapper = (props) => {
             {count < 5 && <Example count={-1} />}
             {/* { (count < 3) && <ProgressBar limit={10} text='test' delay={500} /> } */}
             {/* <ProgressBar2 limit={20} text='test' delay={500} /> */}
-            <button onClick={postSchemes}>Post Schemes</button>
+            <button onClick={postSchemes} disabled>Post Schemes</button>
             <button onClick={getSchemes}>Get Schemes</button>
         </>
     );

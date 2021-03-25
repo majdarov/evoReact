@@ -1,0 +1,13 @@
+.card-container * {
+  margin-top: .5rem;
+  margin-left: .5rem;
+}
+
+.card-container {
+  display: block;
+  border-radius: .5rem;
+  box-shadow: grey 0 0 1rem;
+}
+ .card-footer {
+   border-top: 1px solid grey;
+ }

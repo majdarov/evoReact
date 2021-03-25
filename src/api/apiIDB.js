@@ -34,6 +34,8 @@ export const apiIDB = {
     let group;
     if (id === 'all') {
       group = await db.getAll('groups');
+    } else if (id === '0') {
+      return { name: 'Root', id: '0' };
     } else {
       group = await db.get('groups', id);
     }
@@ -103,5 +105,5 @@ export const apiIDB = {
     const db = await initDb();
     await db.clear(storeName);
     return true;
-  }
+  },
 };

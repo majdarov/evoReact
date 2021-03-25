@@ -8,7 +8,7 @@ import FormSearch from "./Forms/FormSearch";
 import useFilteredData from "../../Hooks/useFilteredData";
 import GroupsTree from "../common/GroupsTree";
 import { Modal } from "../common/Modal/Modal";
-import FormModalWrapper from "../common/Modal/FormModalWrapper";
+// import FormModalWrapper from "../common/Modal/FormModalWrapper";
 
 const Commodity = props => {
 
@@ -36,6 +36,9 @@ const Commodity = props => {
   if (!props.isInit) {
     props.history.push('/settings');
   }
+
+  const propsSetPid = props.setPid;
+  useEffect(() => { propsSetPid(pid) }, [pid, propsSetPid]);
 
   useEffect(() => { //get groups & products
     if (!props.isLoaded && props.isInit) {
@@ -84,7 +87,7 @@ const Commodity = props => {
   }
 
   function changePid(eId) {
-    if (props.pid === eId) return;
+    // if (props.pid === eId) return;
     props.setPid(eId);
     setPidSearch(eId);
   }

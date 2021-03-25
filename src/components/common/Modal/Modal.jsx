@@ -18,7 +18,10 @@ export function Modal(props) {
       </>
     setChildren(child);
     document.body.style.overflow = 'hidden';
-    return () => setChildren(null);
+    return () => {
+      setChildren(null);
+      document.body.style.overflowY = 'scrol';
+    }
   }, [props.children])
 
   return ReactDOM.createPortal(children, modalRoot)

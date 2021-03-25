@@ -88,7 +88,13 @@ export const ComponentsProducts = {
             <div className={s['tree-container']}>
                 {props.treeView &&
                     <div className={s.tree} >
-                        <Tree data={groups} price="Price" treeLabel="Groups" callback={props.callbackTree} />
+                        <Tree
+                            data={groups}
+                            price="Price"
+                            treeLabel="Groups"
+                            callback={props.callbackTree}
+                            pId={props.parent_id}
+                        />
                     </div>
                 }
                 <div className={s['g-tree']} onClick={onDivClick}>

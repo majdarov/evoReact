@@ -22,3 +22,28 @@ export function getUUID4(): string {
   strUuid += '-' + newStr.slice(20);
   return strUuid;
 }
+
+export function dateToString(date: Date = new Date()) {
+  if (!date) return;
+  function dblDigit(dgt: number) {
+      if (dgt.toString().length < 2) {
+          return `0${dgt}`;
+      } else { return dgt };
+  }
+  let strDate = `${date.getFullYear()}-${dblDigit(date.getMonth() + 1)}-${dblDigit(date.getDate())}`;
+  return strDate;
+}
+
+export function getMinData() {
+  let key = localStorage.getItem('storeKey');
+  if (!key) return '';
+  try {
+      let min = key.split('-')[0];
+      let year = min.slice(0, 4);
+      let month = min.slice(4, 6);
+      let day = min.slice(6)
+      return `${year}-${month}-${day}`;
+  } catch (e) {
+      console.error(e.message)
+  }
+}

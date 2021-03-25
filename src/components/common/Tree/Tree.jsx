@@ -23,7 +23,7 @@ const Tree = props => {
         return createSubTree(elem, lvl);
       });
     }
-    hidden = lvl > 1;
+    hidden = lvl > 1 && !arrNotHidden.includes(({id}) => id === item.id);
     return (
       <Node
         id={item.id}

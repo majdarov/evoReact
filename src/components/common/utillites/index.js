@@ -1,1 +1,1 @@
-export { getUUID4 } from './utilites.ts';
+export { getUUID4, randomMax, dateToString, getMinData } from './utilites.ts';

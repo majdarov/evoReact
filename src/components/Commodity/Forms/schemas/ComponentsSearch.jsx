@@ -1,17 +1,25 @@
-import React from 'react';
+import { dateToString, getMinData } from '../../../common/utillites/utilites';
 import s from '../FormSearch.module.css';
 
 const ComponentsSearch = {
     SearchPeriod({ head, name, type, viewPeriod, changeFormElement, changePeriod }) {
         const lblFrom = name.match('price', 'gi') ? (viewPeriod ? 'От' : 'Значение') : (viewPeriod ? 'Начало' : 'Дата');
         const lblTo = name.match('price', 'gi') ? 'До' : 'Конец';
+        function getInputEl(type, textName) {
+            if (type === 'date') {
+                return <input type={type} name={`${name}-${textName}`} onChange={changeFormElement}
+                    min={getMinData()} max={dateToString()} />
+            } else {
+                return <input type={type} name={`${name}-${textName}`} onChange={changeFormElement} />
+            }
+        }
         return (
             <>
                 <div className={s[`${name}-row`]}>
                     <span className='fa'>{head}</span>
                     <div className={s['input-row']}>
                         <label htmlFor={`${name}-from`}>{lblFrom}</label>
-                        <input type={type} name={`${name}-from`} onChange={changeFormElement} />
+                        {getInputEl(type, 'from')}
                     </div>
                     <div>
                         <input type="checkbox" name={`${name}-period`} onChange={changePeriod} />
@@ -20,7 +28,7 @@ const ComponentsSearch = {
                     {viewPeriod &&
                         <div className={s['input-row']}>
                             <label htmlFor={`${name}-to`}>{lblTo}</label>
-                            <input type={type} name={`${name}-to`} onChange={changeFormElement} />
+                            {getInputEl(type, 'to')}
                         </div>}
                 </div>
             </>

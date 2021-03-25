@@ -1,4 +1,5 @@
 import { apiIDB } from '../../../api/apiIDB';
+import { randomMax } from '../../common/utillites/utilites';
 
 export const setNewCode = async () => {
   //let maxCode = Math.floor(Math.random() * 1e5);//await productsApi.getData('products', { max: 'code' });
@@ -12,10 +13,13 @@ export const setNewCode = async () => {
 
 export function newBarcode(code, prefix = '0000') {
   // if (!prefix) prefix = '0000';
+  code = '';
+  for (let i = 1; i <= 6; i++) {
+    code += randomMax(9).toString();
+  }
   let A1 =
-    '20'.concat(prefix) +
-    '0'.repeat(6 - code.toString().length) +
-    code.toString();
+    '20'.concat(prefix) + code;
+    // '0'.repeat(6 - code.toString().length) + code.toString();
   let A2 = 0;
   A1.split('').forEach((item, i) => {
     if (i % 2 !== 0) {

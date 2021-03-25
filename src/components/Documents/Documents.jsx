@@ -1,38 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { apiForIdb } from '../../api/api';
-import { compose } from '../../api/apiUtils';
+// import { compose } from '../../api/apiUtils';
 import ProgressBar from '../common/ProgressBar/ProgressBar';
-import { blobFromObj, blobToUrl } from '../../api/apiFile'
-
-function dateToString(date = new Date()) {
-    if (!date) return;
-    function dblDigit(dgt) {
-        if (dgt.toString().length < 2) {
-            return `0${dgt}`;
-        } else { return dgt };
-    }
-    let strDate = `${date.getFullYear()}-${dblDigit(date.getMonth() + 1)}-${dblDigit(date.getDate())}`;
-    return strDate;
-}
-
-function getMinData(key) {
-    if (!key) return '';
-    try {
-        let min = key.split('-')[0];
-        let year = min.slice(0, 4);
-        let month = min.slice(4, 6);
-        let day = min.slice(6)
-        return `${year}-${month}-${day}`;
-    } catch (e) {
-        console.error(e.message)
-    }
-}
+import { dateToString, getMinData } from '../common/utillites/utilites';
+import { CardSell } from './components/CardSell/CardSell';
+// import { blobFromObj, blobToUrl } from '../../api/apiFile'
 
 const mapState = state => {
     return {
         isInit: state.app.isInit,
-        storeKey: state.app.storeKey,
     }
 }
 
@@ -61,7 +38,7 @@ const Documents = (props) => {
     const [period, setPeriod] = useState({
         dateStart: new Date(),
         dateEnd: new Date(),
-        dateMin: getMinData(props.storeKey)
+        dateMin: getMinData()
     });
 
     useEffect(() => {
@@ -122,7 +99,7 @@ const Documents = (props) => {
             doc = await apiForIdb.getDocuments(null, null, id);
         }
         console.log(doc);
-        compose(blobToUrl, blobFromObj)({ obj: doc, fileName: docType });
+        // compose(blobToUrl, blobFromObj)({ obj: doc, fileName: docType });
     }
 
     function changeType(e) {
@@ -148,7 +125,7 @@ const Documents = (props) => {
                     id="dateStart"
                     value={dateToString(period.dateStart)}
                     min={period.dateMin}
-                    max={dateToString(period.dateEnd)}
+                    max={dateToString()}
                     onChange={changeDate}
                 />
                 <label htmlFor="dateEnd">Date end:</label>
@@ -156,7 +133,7 @@ const Documents = (props) => {
                     id="dateEnd"
                     value={dateToString(period.dateEnd)}
                     min={period.dateMin}
-                    max={dateToString(period.dateEnd)}
+                    max={dateToString()}
                     onChange={changeDate}
                 />
             </div>
@@ -175,6 +152,7 @@ const Documents = (props) => {
             { !!docs.length &&
                 <ul>
                     {docs.map((item, idx) => {
+                        if (docType === 'SELL') return <CardSell key={item.id} {...item} />
                         return (idx < 20) && <li key={item.id} id={item.id} onClick={docClick} style={{ margin: '0.5rem' }}>
                             <span style={styleSpan}>{item.id}</span>
                         </li>

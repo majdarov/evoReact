@@ -1,0 +1,33 @@
+.div-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: whitesmoke;
+  opacity: 0.75;
+}
+
+.div-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  text-align: center;
+  padding-top: 1rem;
+}
+/*
+.div-container::before{
+  display: inline-block;
+  height: 100%;
+  content: '';
+  vertical-align: middle;
+} */
+
+.div-container * {
+  margin-top: .2rem;
+  padding: .2rem;
+  margin-left: .5rem;
+}

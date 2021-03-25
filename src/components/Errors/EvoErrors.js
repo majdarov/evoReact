@@ -9,6 +9,19 @@ export class EvoError extends Error {}
   }
 */
 
+/*
+errorFromEvo = {
+  code: 'validation_failed',
+  message: 'validation failed for specified payload',
+  violations: [
+    {
+      reason: 'размер должен находиться в диапазоне от 0 до 160',
+      subject: 'name',
+    },
+  ],
+};
+ */
+
 export class EvoValidationError extends EvoError {
   constructor(err) {
     let message = err.message;

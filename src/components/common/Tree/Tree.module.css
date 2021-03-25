@@ -1,6 +1,7 @@
 .tree {
-  padding: 0.5rem;
-  background-color: cornsilk;
+  padding: .5rem;
+  background-color: whitesmoke;
+  border-radius: 5%;
   cursor: default;
   font-family: var(--icon-font);
 }
@@ -60,8 +61,8 @@
 ul {
   padding-left: 1rem;
   list-style: none;
-  position: sticky;
-  top: 10rem;
+  /* position: sticky; */
+  /* top: 10rem; */
 }
 
 .tree h3 {

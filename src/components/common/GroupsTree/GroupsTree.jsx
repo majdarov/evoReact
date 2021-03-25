@@ -1,5 +1,6 @@
 import React from 'react';
 import { apiIDB } from '../../../api/apiIDB';
+import { Modal } from '../Modal/Modal';
 import Tree from '../Tree/Tree';
 import s from './GroupsTree.module.css';
 
@@ -24,15 +25,20 @@ const GroupsTree = props => {
     return (
         <div className={s['tree-container']}>
             {props.treeView &&
-                <div className={s.tree} >
-                    <Tree
-                        data={groups}
-                        price="Price"
-                        treeLabel="Groups"
-                        callback={props.callbackTree}
-                        viewEdit={props.viewEdit}
-                    />
-                </div>
+                // <div className={s.tree} >
+                <Modal>
+                    <div className={s['tree-modal']}>
+                        <Tree
+                            data={groups}
+                            price="Price"
+                            treeLabel="Groups"
+                            callback={props.callbackTree}
+                            viewEdit={props.viewEdit}
+                            pId={props.parent_id}
+                        />
+                    </div>
+                </Modal>
+                // </div>
             }
             {props.parent_id !== '0' &&
                 <div onClick={() => props.getProductId(props.parent_id, true)} className={s.edit}>

@@ -10,21 +10,21 @@ export function LiElement(props: {
   name: string;
   className: string;
   disabled: boolean;
-  children?: /* Choice[] | Attribut[] | null */ any;
+  children?: Choice[] | Attribut[] | null;
 }) {
 
   const { id, name, className, disabled, children, typeLi, inputHidden } = props;
 
   const createSubLi = () => {
     if (children?.length) {
-      let map = children.map((item: any) => {
+      let map = children.map((item: Choice | Attribut) => {
         let choices, clsN;
-        if (!item.choices) {
-          choices = item.choices
-          clsN = s['choice']
+        if ((item as Attribut).choices) {
+          choices = (item as Attribut).choices;
+          clsN = s['attribut'];
         } else {
           choices = null;
-          clsN = s['attribut']
+          clsN = s['choice'];
         }
         return (
           <LiElement

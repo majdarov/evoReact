@@ -5,13 +5,13 @@ export interface BlockModProps {
   setAttributes: (attributes: Attribut[]) => void;
   disabled: boolean;
 }
-export type Attribut = {
+export interface Attribut {
   id: string;
   name: string;
   choices?: Choice[];
 }
 
-export type Choice = {
+export interface Choice {
   id: string;
   name: string;
 }

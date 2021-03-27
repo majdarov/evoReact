@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from '../Modal/Modal';
 import s from './BlockMod.module.css';
-import { BlockModProps, Attribut } from './BlockModTypes';
+import { AttrChoice, BlockModProps } from './BlockModTypes';
 import { AddElement } from './components/AddElement';
 import { FormChangeName } from './components/FormChangeName';
 import { LiElement } from './components/LiElement';
@@ -28,7 +28,7 @@ export function BlockMod(props: BlockModProps) {
       <ul className={s['attributes-ul']}>
         {
           !!attributes.length &&
-          attributes.map((attr: Attribut, idx) => {
+          attributes.map((attr: AttrChoice, idx) => {
             return <LiElement
               key={attr.id}
               typeLi='attr'

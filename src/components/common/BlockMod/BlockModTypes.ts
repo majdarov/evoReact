@@ -29,6 +29,6 @@ export type FormChangeNameProps = {
   value: string;
   label: string;
   nameOfAttr?: string;
-  onChange: (ev: any) => void;
+  onChange: ChangeEventHandler;
   handleClick: MouseEventHandler;
 }

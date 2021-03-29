@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/evoReact/static/css/main.ae2c2a40.chunk.css",
-    "main.js": "/evoReact/static/js/main.8d98d536.chunk.js",
-    "main.js.map": "/evoReact/static/js/main.8d98d536.chunk.js.map",
-    "runtime-main.js": "/evoReact/static/js/runtime-main.04fb9f60.js",
-    "runtime-main.js.map": "/evoReact/static/js/runtime-main.04fb9f60.js.map",
-    "static/js/2.f7f0c495.chunk.js": "/evoReact/static/js/2.f7f0c495.chunk.js",
-    "static/js/2.f7f0c495.chunk.js.map": "/evoReact/static/js/2.f7f0c495.chunk.js.map",
-    "index.html": "/evoReact/index.html",
-    "static/css/main.ae2c2a40.chunk.css.map": "/evoReact/static/css/main.ae2c2a40.chunk.css.map",
-    "static/js/2.f7f0c495.chunk.js.LICENSE.txt": "/evoReact/static/js/2.f7f0c495.chunk.js.LICENSE.txt",
-    "static/media/App.css": "/evoReact/static/media/ean13.95f4b3ac.ttf",
-    "static/media/brands.css": "/evoReact/static/media/fa-brands-400.e1c1a88e.woff",
-    "static/media/regular.css": "/evoReact/static/media/fa-regular-400.eb99d507.eot",
-    "static/media/solid.css": "/evoReact/static/media/fa-solid-900.afbdcbcc.woff",
-    "static/media/placeholder.e2f04097.svg": "/evoReact/static/media/placeholder.e2f04097.svg",
-    "static/media/terminal-5.6357e026.png": "/evoReact/static/media/terminal-5.6357e026.png"
+    "main.css": "/static/css/main.1c481931.chunk.css",
+    "main.js": "/static/js/main.8d98d536.chunk.js",
+    "main.js.map": "/static/js/main.8d98d536.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.b2b368e0.js",
+    "runtime-main.js.map": "/static/js/runtime-main.b2b368e0.js.map",
+    "static/js/2.f7f0c495.chunk.js": "/static/js/2.f7f0c495.chunk.js",
+    "static/js/2.f7f0c495.chunk.js.map": "/static/js/2.f7f0c495.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.1c481931.chunk.css.map": "/static/css/main.1c481931.chunk.css.map",
+    "static/js/2.f7f0c495.chunk.js.LICENSE.txt": "/static/js/2.f7f0c495.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/static/media/ean13.95f4b3ac.ttf",
+    "static/media/brands.css": "/static/media/fa-brands-400.e1c1a88e.woff",
+    "static/media/regular.css": "/static/media/fa-regular-400.eb99d507.eot",
+    "static/media/solid.css": "/static/media/fa-solid-900.afbdcbcc.woff",
+    "static/media/placeholder.e2f04097.svg": "/static/media/placeholder.e2f04097.svg",
+    "static/media/terminal-5.6357e026.png": "/static/media/terminal-5.6357e026.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.04fb9f60.js",
+    "static/js/runtime-main.b2b368e0.js",
     "static/js/2.f7f0c495.chunk.js",
-    "static/css/main.ae2c2a40.chunk.css",
+    "static/css/main.1c481931.chunk.css",
     "static/js/main.8d98d536.chunk.js"
   ]
 }

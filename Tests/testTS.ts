@@ -15,3 +15,12 @@ function firstElement<T>(arr: T[]) {
 let arr = [10, 25, 30];;
 
 console.log(firstElement(arr));
+
+interface Box<Type> {
+  content: Type;
+}
+
+function boxToUpperCase<Type>(box: Box<Type>) {
+  if (typeof box.content === 'string') return box.content.toUpperCase;
+  return box.content;
+}

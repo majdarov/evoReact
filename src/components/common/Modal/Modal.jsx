@@ -20,7 +20,7 @@ export function Modal(props) {
     document.body.style.overflow = 'hidden';
     return () => {
       setChildren(null);
-      document.body.style.overflowY = 'scrol';
+      document.body.style.overflow = 'auto';
     }
   }, [props.children])
 

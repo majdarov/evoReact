@@ -9,7 +9,7 @@
     "src/**/*"
   ],
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES5",
     "module": "esnext",
     "outDir": "build",
     "rootDir": "src",

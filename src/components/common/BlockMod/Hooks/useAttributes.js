@@ -4,7 +4,7 @@ import { deleteFromArray, getAttrChoice } from '../utilites';
 
 /**
  * augments
- * @param {import('../BlockModTypes').Attribut[]} attributes - Attribut[]
+ * @param {import('../BlockModTypes').AttrChoice[]} attributes - Attribut[]
  * @param {Function} setAttributes - set
  */
 export function useAttributes(attributes, setAttributes) {
@@ -75,7 +75,7 @@ export function useAttributes(attributes, setAttributes) {
 
   /** getAttribut
    * @param {string} _id - id of attribute
-   * @returns {import('../BlockModTypes').Attribut | undefined}
+   * @returns {import('../BlockModTypes').AttrChoice | undefined}
    */
   function getAttribut(_id) {
     return attributes.find(({ id }) => id === _id);
@@ -116,7 +116,7 @@ export function useAttributes(attributes, setAttributes) {
   function editParam(paramId, newName, typeOfParam, attrId) {
     if (!paramId || !newName) return;
 
-    /**@type {import('../BlockModTypes').Attribut | undefined}*/
+    /**@type {import('../BlockModTypes').AttrChoice | undefined}*/
     let attr;
     if (attrId) attr = attributes.find(({ id }) => id === attrId);
     if (typeOfParam === 'choice') {
